@@ -1,0 +1,5 @@
+# Count total number of Stressors (Chemicals)
+SELECT (COUNT(DISTINCT ?stressor) AS ?total_Stressors)
+WHERE {
+  ?stressor a nci:C54571 .
+}

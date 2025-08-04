@@ -1,0 +1,5 @@
+# Count total number of Key Events (KEs)
+SELECT (COUNT(DISTINCT ?ke) AS ?total_KEs)
+WHERE {
+  ?ke a aopo:KeyEvent .
+}

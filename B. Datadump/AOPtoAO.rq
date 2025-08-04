@@ -1,0 +1,8 @@
+SELECT DISTINCT ?aop ?aopLabel ?ao ?aoLabel
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+       aopo:has_adverse_outcome ?ao ;
+       dc:title ?aopLabel .
+  ?ao dc:title ?aoLabel .
+}
+ORDER BY ?aop

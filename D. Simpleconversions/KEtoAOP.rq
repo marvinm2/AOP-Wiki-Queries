@@ -1,0 +1,9 @@
+SELECT DISTINCT ?ke ?keLabel ?aop ?aopLabel
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+       aopo:has_key_event ?ke ;
+       dc:title ?aopLabel .
+  ?ke dc:title ?keLabel .
+}
+ORDER BY ?keLabel
+

@@ -1,0 +1,5 @@
+# Count total number of Key Event Relationships (KERs)
+SELECT (COUNT(DISTINCT ?ker) AS ?total_KERs)
+WHERE {
+  ?ker a aopo:KeyEventRelationship .
+}

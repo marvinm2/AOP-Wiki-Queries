@@ -1,0 +1,29 @@
+# Export all AOPs with their status, MIEs, AOs, Stressors, and number of KEs
+SELECT DISTINCT ?aop ?aopTitle ?status
+       (GROUP_CONCAT(DISTINCT ?mieTitle; separator=", ") AS ?MIEs)
+       (GROUP_CONCAT(DISTINCT ?aoTitle; separator=", ") AS ?AOs)
+       (GROUP_CONCAT(DISTINCT ?stressorTitle; separator=", ") AS ?Stressors)
+       (COUNT(DISTINCT ?ke) AS ?numKEs)
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+       dc:title ?aopTitle .
+  OPTIONAL { ?aop nci:C25688 ?status . }
+  OPTIONAL { 
+    ?aop aopo:has_molecular_initiating_event ?mie .
+    ?mie dc:title ?mieTitle .
+  }
+  OPTIONAL { 
+    ?aop aopo:has_adverse_outcome ?ao .
+    ?ao dc:title ?aoTitle .
+  }
+  OPTIONAL { 
+    ?aop nci:C54571 ?stressor .
+    ?stressor dc:title ?stressorTitle .
+  }
+  OPTIONAL { 
+    ?aop aopo:has_key_event ?ke .
+  }
+}
+GROUP BY ?aop ?aopTitle ?status
+ORDER BY ?aopTitle
+
