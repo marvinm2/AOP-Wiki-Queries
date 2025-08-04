@@ -1,1 +1,0 @@
-select (COUNT(?p) as ?Predicates)  where {?s ?p ?o. FILTER regex(?p, "http://aopkb.org/aop_ontology#")}

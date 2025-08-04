@@ -12,11 +12,7 @@ WHERE{
      skos:exactMatch ?mappedid .
    ?LinkedStressor dcterms:isPartOf ?LinkedAOPURI .
    ?LinkedAOPURI a aopo:AdverseOutcomePathway ; rdfs:label ?LinkedAOP.
-   ?mappedid a cheminf:000407; cheminf:000407 ?ChEBI.
-   # Adjust the format of the ChEBI ID to match WikiPathways' structure
-   BIND(IRI(CONCAT("https://identifiers.org/chebi/CHEBI:", STRAFTER(STR(?mappedid), "https://identifiers.org/chebi/"))) AS ?ChEBI_URI)
-   SERVICE <https://sparql.wikipathways.org/sparql/>{ 
-     ?metabolite wp:bdbChEBI ?ChEBI_URI ; dcterms:isPartOf ?PathwayURI.
-     ?PathwayURI a wp:Pathway ; dcterms:identifier ?PathwayID ; 
-                   dc:title ?PathwayTitle ; wp:organismName "Homo sapiens" .}}
-ORDER BY DESC (?ChemicalName)
+   SERVICE <http://sparql.wikipathways.org/sparql>{ 
+     ?metabolite wp:bdbChEBI ?chemid ; dcterms:isPartOf ?PathwayURI.
+     ?PathwayURI a wp:Pathway ; dcterms:identifier ?PathwayID ; dc:title ?PathwayTitle ;
+        wp:organismName "Homo sapiens"^^xsd:string .}}
