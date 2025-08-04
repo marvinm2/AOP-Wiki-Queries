@@ -5,4 +5,4 @@ SELECT ?MIEwebpage ?MolecularInitiatingEventName ?AOwebpage  ?AdverseOutcomeName
   aopo:has_molecular_initiating_event ?MIELookup; 
   aopo:has_adverse_outcome ?AOwebpage. 
   ?AOwebpage dc:title ?AdverseOutcomeName .
-  FILTER (?MIEwebpage = aop.events:18)}
+  FILTER (?MIEwebpage = aop.events:18)} #Adjust ID to filter for other MIE

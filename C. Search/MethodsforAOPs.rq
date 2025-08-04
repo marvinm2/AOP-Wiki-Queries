@@ -6,7 +6,7 @@ WHERE {
     ?ke ncbitaxon:131567 ?taxon.
     ?taxon a ncbitaxon:131567; dc:title ?speciesname
     OPTIONAL {?ke mmo:0000000 ?method.}
-VALUES ?aop_id {"AOP 12" "AOP 57"}
+VALUES ?aop_id {"AOP 12" "AOP 57"} #Use this line to filter for AOPs of interest
 } 
 GROUP BY ?aop ?ke ?method
 ORDER BY ASC (?aop)
