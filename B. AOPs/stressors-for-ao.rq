@@ -1,0 +1,15 @@
+# title: List stressors and their MIEs
+# description: Returns all stressors and the Molecular Initiating Events they are linked to through AOPs.
+# category: AOPs
+
+SELECT DISTINCT ?stressor ?stressorLabel ?mie ?mieLabel
+WHERE {
+  ?stressor a nci:C54571 ;
+    dc:title ?stressorLabel .
+  ?aop a aopo:AdverseOutcomePathway ;
+    nci:C54571 ?stressor ;
+    aopo:has_molecular_initiating_event ?mie .
+  ?mie a aopo:KeyEvent ;
+    dc:title ?mieLabel .
+}
+ORDER BY ?stressorLabel

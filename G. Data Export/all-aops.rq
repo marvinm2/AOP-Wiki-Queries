@@ -1,0 +1,9 @@
+# title: Export all AOPs
+# description: Returns all Adverse Outcome Pathways with their names.
+# category: Data Export
+
+SELECT ?AOP ?AOPName
+WHERE {
+  ?AOP a aopo:AdverseOutcomePathway ;
+    dc:title ?AOPName .
+}

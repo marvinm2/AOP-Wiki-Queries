@@ -1,0 +1,15 @@
+# title: Get AO for a specific MIE
+# description: Returns the Adverse Outcome linked to a specific Molecular Initiating Event by its identifier URI.
+# category: AOPs
+# param: mie_id|uri|https://identifiers.org/aop.events/18|MIE identifier URI
+
+SELECT ?MIEwebpage ?MolecularInitiatingEventName ?AOwebpage ?AdverseOutcomeName
+WHERE {
+  ?MIEwebpage dc:identifier ?MIELookup ;
+    dc:title ?MolecularInitiatingEventName .
+  ?AOPwebpage a aopo:AdverseOutcomePathway ;
+    aopo:has_molecular_initiating_event ?MIELookup ;
+    aopo:has_adverse_outcome ?AOwebpage .
+  ?AOwebpage dc:title ?AdverseOutcomeName .
+  FILTER (?MIEwebpage = <{{mie_id}}>)
+}

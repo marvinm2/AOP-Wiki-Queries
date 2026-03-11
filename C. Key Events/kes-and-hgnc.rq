@@ -1,0 +1,12 @@
+# title: List Key Events with HGNC symbols
+# description: Returns Key Events and their linked HGNC gene symbols through gene/protein annotations.
+# category: Key Events
+
+SELECT DISTINCT ?keid ?ketitle ?hgnc
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    edam:data_1025 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object edam:data_2298 ?hgnc .
+}

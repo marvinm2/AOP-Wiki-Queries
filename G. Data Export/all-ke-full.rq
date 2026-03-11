@@ -1,0 +1,20 @@
+# title: Export all Key Events with full details
+# description: Returns all Key Events with their biological level, AOP membership, and descriptions.
+# category: Data Export
+
+SELECT DISTINCT ?ke ?keTitle ?bioLevel
+  (GROUP_CONCAT(DISTINCT ?aop; separator=", ") AS ?inAOPs)
+  ?description
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    dc:title ?keTitle .
+  OPTIONAL { ?ke nci:C25664 ?bioLevel . }
+  OPTIONAL {
+    ?aop a aopo:AdverseOutcomePathway ;
+      aopo:has_key_event ?ke ;
+      dc:title ?aopTitle .
+  }
+  OPTIONAL {
+    ?ke dc:description ?description .
+  }
+}

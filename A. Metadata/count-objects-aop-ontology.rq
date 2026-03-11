@@ -1,0 +1,9 @@
+# title: Count objects using AOP ontology
+# description: Returns the number of RDF objects that reference the AOP ontology namespace.
+# category: Metadata
+
+SELECT (COUNT(?o) AS ?Objects)
+WHERE {
+  ?s ?p ?o .
+  FILTER regex(?o, "http://aopkb.org/aop_ontology#")
+}

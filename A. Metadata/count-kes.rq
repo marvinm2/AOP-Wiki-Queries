@@ -1,0 +1,8 @@
+# title: Count Key Events
+# description: Returns the total number of Key Events in the dataset.
+# category: Metadata
+
+SELECT (COUNT(DISTINCT ?ke) AS ?total_KEs)
+WHERE {
+  ?ke a aopo:KeyEvent .
+}

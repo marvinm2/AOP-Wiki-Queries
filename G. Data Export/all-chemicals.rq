@@ -1,0 +1,10 @@
+# title: Export all chemicals
+# description: Returns all chemicals in the AOP-Wiki with their CAS registry numbers.
+# category: Data Export
+
+SELECT ?CAS ?ChemicalName
+WHERE {
+  ?cas a cheminf:000000 ;
+    dc:title ?ChemicalName ;
+    cheminf:000446 ?CAS .
+}

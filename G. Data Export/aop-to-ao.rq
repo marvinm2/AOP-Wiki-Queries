@@ -1,0 +1,12 @@
+# title: Export AOP to AO mappings
+# description: Returns all Adverse Outcome Pathways and their linked Adverse Outcomes, ordered by AOP.
+# category: Data Export
+
+SELECT DISTINCT ?aop ?aopLabel ?ao ?aoLabel
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+    aopo:has_adverse_outcome ?ao ;
+    dc:title ?aopLabel .
+  ?ao dc:title ?aoLabel .
+}
+ORDER BY ?aop

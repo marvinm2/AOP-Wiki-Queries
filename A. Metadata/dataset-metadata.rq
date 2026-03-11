@@ -1,0 +1,9 @@
+# title: Get dataset metadata
+# description: Returns the VoID dataset description and creation date for the AOP-Wiki RDF dataset.
+# category: Metadata
+
+SELECT DISTINCT ?dataset ?date
+WHERE {
+  ?dataset a void:Dataset ;
+    pav:createdOn ?date .
+}

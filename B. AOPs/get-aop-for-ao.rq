@@ -1,0 +1,11 @@
+# title: Get AOPs for a specific AO
+# description: Returns all Adverse Outcome Pathways that include a specific Adverse Outcome by its identifier URI.
+# category: AOPs
+# param: ao_id|uri|https://identifiers.org/aop.events/1276|AO identifier URI
+
+SELECT ?AOP ?AOPTitle
+WHERE {
+  ?AOP a aopo:AdverseOutcomePathway ;
+    dc:title ?AOPTitle ;
+    aopo:has_adverse_outcome <{{ao_id}}> .
+}

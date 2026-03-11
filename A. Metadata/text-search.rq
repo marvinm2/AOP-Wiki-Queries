@@ -1,0 +1,12 @@
+# title: Search all fields by text
+# description: Searches all text fields in the AOP-Wiki RDF for a keyword match using regular expressions.
+# category: Metadata
+# param: search_term|string|nanotube|Search term
+
+SELECT ?item ?name ?predicate ?text
+WHERE {
+  ?item ?predicate ?text ;
+    dc:title ?name .
+  FILTER regex(?text, "{{search_term}}", "i")
+}
+ORDER BY DESC(?item)

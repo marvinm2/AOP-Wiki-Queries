@@ -1,0 +1,8 @@
+# title: Count Key Event Relationships
+# description: Returns the total number of Key Event Relationships in the dataset.
+# category: Metadata
+
+SELECT (COUNT(DISTINCT ?ker) AS ?total_KERs)
+WHERE {
+  ?ker a aopo:KeyEventRelationship .
+}

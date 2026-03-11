@@ -1,0 +1,8 @@
+# title: Count AOPs
+# description: Returns the total number of Adverse Outcome Pathways in the dataset.
+# category: Metadata
+
+SELECT (COUNT(DISTINCT ?aop) AS ?total_AOPs)
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway .
+}

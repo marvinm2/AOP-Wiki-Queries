@@ -1,0 +1,14 @@
+# title: List Key Events with NCBI gene IDs
+# description: Returns Key Events and their linked NCBI gene identifiers through gene/protein annotations.
+# category: Key Events
+
+SELECT DISTINCT ?keid ?ketitle ?id ?ncbi
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    edam:data_1025 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object skos:exactMatch ?id .
+  ?id a edam:data_1027 ;
+    edam:data_1027 ?ncbi .
+}

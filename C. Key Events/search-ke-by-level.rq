@@ -1,0 +1,11 @@
+# title: Search Key Events by biological level
+# description: Returns all Key Events with their labels and biological organization levels, ordered by level.
+# category: Key Events
+
+SELECT DISTINCT ?ke ?label ?bioLevel
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    dc:title ?label ;
+    nci:C25664 ?bioLevel .
+}
+ORDER BY ?bioLevel

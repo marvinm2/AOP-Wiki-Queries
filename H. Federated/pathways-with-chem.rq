@@ -1,0 +1,30 @@
+# title: Find WikiPathways for AOP chemicals
+# description: Looks up stressor chemicals in the AOP-Wiki, maps them to ChEBI identifiers, and queries WikiPathways for linked human molecular pathways.
+# category: Federated
+
+PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
+
+SELECT DISTINCT ?ChemicalName ?mappedid ?LinkedStressor
+  (GROUP_CONCAT(?LinkedAOP; separator=',') AS ?AOPs)
+  (STR(?PathwayID) AS ?Pathway_ID)
+  (STR(?PathwayTitle) AS ?PathwayName)
+  ?PathwayURI
+WHERE {
+  ?cheLook a cheminf:000000 ;
+    dc:title ?ChemicalName ;
+    dcterms:isPartOf ?LinkedStressor ;
+    skos:exactMatch ?mappedid .
+  ?LinkedStressor dcterms:isPartOf ?LinkedAOPURI .
+  ?LinkedAOPURI a aopo:AdverseOutcomePathway ;
+    rdfs:label ?LinkedAOP .
+  ?mappedid a cheminf:000407 ;
+    cheminf:000407 ?ChEBI .
+  SERVICE <https://sparql.wikipathways.org/sparql/> {
+    ?metabolite wp:bdbChEBI ?chemid ;
+      dcterms:isPartOf ?PathwayURI .
+    ?PathwayURI a wp:Pathway ;
+      dcterms:identifier ?PathwayID ;
+      dc:title ?PathwayTitle ;
+      wp:organismName "Homo sapiens" .
+  }
+}

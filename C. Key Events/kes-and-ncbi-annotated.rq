@@ -1,0 +1,16 @@
+# title: List Key Events with annotated NCBI gene IDs
+# description: Returns Key Events with their annotated protein objects and linked NCBI gene identifiers, through AOP membership.
+# category: Key Events
+
+SELECT DISTINCT ?keid ?ketitle ?objectname ?prot
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+    rdfs:label ?aop_id ;
+    aopo:has_key_event ?ke .
+  ?ke pato:0001241 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object dc:title ?objectname ;
+    skos:exactMatch ?prot .
+  ?prot a edam:data_1027 .
+}

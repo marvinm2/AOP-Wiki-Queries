@@ -1,0 +1,19 @@
+# title: List annotated genes for AOPs
+# description: Returns all genes annotated in Key Events across AOPs, including the protein identifiers and object names.
+# category: Key Events
+
+SELECT DISTINCT ?aop ?aoptitle ?ketitle ?objectname ?prot
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+    aopo:has_key_event ?ke ;
+    dc:title ?aoptitle .
+  ?ke pato:0001241 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object dc:title ?objectname ;
+    skos:exactMatch ?prot .
+  ?prot a edam:data_1027 .
+  # Uncomment the line below to filter for a specific AOP:
+  # FILTER (?aop = aop:98)
+}
+ORDER BY DESC(?aop)

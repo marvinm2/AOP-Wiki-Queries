@@ -1,1 +1,0 @@
-select (COUNT(?o) as ?Objects)  where {?s ?p ?o. FILTER regex(?o, "http://aopkb.org/aop_ontology#")}

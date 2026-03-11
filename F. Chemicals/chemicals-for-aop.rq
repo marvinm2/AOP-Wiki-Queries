@@ -1,0 +1,13 @@
+# title: List chemicals for AOPs
+# description: Returns all AOPs with their associated stressor chemicals and CAS registry numbers.
+# category: Chemicals
+
+SELECT ?aop ?aoptitle ?CASID ?chemicalname
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+    nci:C54571 ?Stressor ;
+    dc:title ?aoptitle .
+  ?Stressor aopo:has_chemical_entity ?Chemical .
+  ?Chemical cheminf:000446 ?CASID ;
+    dc:title ?chemicalname .
+}

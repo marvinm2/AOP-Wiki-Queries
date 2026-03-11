@@ -1,5 +1,0 @@
-# Count total number of Adverse Outcome Pathways (AOPs)
-SELECT (COUNT(DISTINCT ?aop) AS ?total_AOPs)
-WHERE {
-  ?aop a aopo:AdverseOutcomePathway .
-}

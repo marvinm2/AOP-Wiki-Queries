@@ -1,0 +1,25 @@
+# title: Export all Key Event components
+# description: Returns all Key Events with their biological event components including processes, objects, and actions.
+# category: Data Export
+
+SELECT DISTINCT ?ke ?keTitle ?bioEvent
+  ?process ?processName ?object ?objectName ?action
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    dc:title ?keTitle .
+  OPTIONAL {
+    ?ke aopo:hasBiologicalEvent ?bioEvent .
+    ?bioEvent aopo:hasProcess ?process .
+    ?process dc:title ?processName .
+  }
+  OPTIONAL {
+    ?ke aopo:hasBiologicalEvent ?bioEvent .
+    ?bioEvent aopo:hasObject ?object .
+    ?object dc:title ?objectName .
+  }
+  OPTIONAL {
+    ?ke aopo:hasBiologicalEvent ?bioEvent .
+    ?bioEvent aopo:hasAction ?action .
+  }
+}
+ORDER BY ?ke

@@ -1,9 +1,0 @@
-SELECT  distinct  ?keid ?ketitle ?objectname ?uniprotID ?uniprot
-WHERE {
-    ?aop a aopo:AdverseOutcomePathway ;
-        rdfs:label ?aop_id;
-        aopo:has_key_event ?ke.
-    ?ke pato:0001241 ?object; dc:title ?ketitle; rdfs:label ?keid.
-    ?object dc:title ?objectname; skos:exactMatch ?uniprot.
-    ?uniprot a edam:data_2291; edam:data_2291 ?uniprotID.
-} 

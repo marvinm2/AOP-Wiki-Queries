@@ -1,7 +1,0 @@
-SELECT DISTINCT ?ke ?label ?bioLevel
-WHERE {
-  ?ke a aopo:KeyEvent ;
-      dc:title ?label ;
-      nci:C25664 ?bioLevel .
-}
-ORDER BY ?bioLevel

@@ -1,0 +1,6 @@
+# title: Count total triples
+# description: Returns the total number of RDF triples in the AOP-Wiki dataset.
+# category: Metadata
+
+SELECT (COUNT(DISTINCT *) AS ?Triples)
+WHERE { ?s ?p ?o }

@@ -1,0 +1,22 @@
+# title: Find applicable species in taxonomic tree
+# description: Queries the UniProt taxonomy to find all species under a given taxon that have Key Events or Key Event Relationships in the AOP-Wiki.
+# category: Federated
+# param: taxon_id|string|39107|NCBI Taxon ID
+
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+
+SELECT DISTINCT ?tax
+  (GROUP_CONCAT(DISTINCT ?name; separator=" | ") AS ?names)
+  (COUNT(DISTINCT ?keker) AS ?n)
+WHERE {
+  ?keker ncbitaxon:131567 ?taxon2 .
+  ?taxon2 a ncbitaxon:131567 ;
+    dc:title ?name .
+  BIND(fn:substring(?taxon2, 48) AS ?tax2)
+  SERVICE <http://sparql.uniprot.org/sparql/> {
+    ?taxon rdfs:subClassOf* taxon:{{taxon_id}} .
+  }
+  BIND(fn:substring(?taxon, 34) AS ?tax)
+  FILTER (?tax = ?tax2)
+}
+ORDER BY DESC(?n)

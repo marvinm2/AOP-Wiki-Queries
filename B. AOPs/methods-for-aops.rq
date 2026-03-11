@@ -1,0 +1,20 @@
+# title: List methods for AOPs
+# description: Returns Key Events with their applicable species and measurement methods for a specific AOP.
+# category: AOPs
+# param: aop_id|string|AOP 12|AOP identifier
+
+SELECT DISTINCT ?aop ?ke
+  (GROUP_CONCAT(DISTINCT ?speciesname; separator=" | ") AS ?speciesnames)
+  ?method
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+    rdfs:label ?aop_id ;
+    aopo:has_key_event ?ke .
+  ?ke ncbitaxon:131567 ?taxon .
+  ?taxon a ncbitaxon:131567 ;
+    dc:title ?speciesname .
+  OPTIONAL { ?ke mmo:0000000 ?method . }
+  VALUES ?aop_id {"{{aop_id}}"}
+}
+GROUP BY ?aop ?ke ?method
+ORDER BY ASC(?aop)

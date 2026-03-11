@@ -1,7 +1,0 @@
-SELECT ?CASID ?ChemicalName ?MatchingIDs
-WHERE {
- ?CAS a cheminf:000000 ;
- dc:title ?ChemicalName ; 
- cheminf:000446 ?CASID ;  
- skos:exactMatch ?MatchingIDs . 
-}

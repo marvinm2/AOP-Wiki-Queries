@@ -1,0 +1,12 @@
+# title: Map Key Events to AOPs
+# description: Returns all Key Events and the Adverse Outcome Pathways they belong to, ordered by Key Event name.
+# category: Key Events
+
+SELECT DISTINCT ?ke ?keLabel ?aop ?aopLabel
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+    aopo:has_key_event ?ke ;
+    dc:title ?aopLabel .
+  ?ke dc:title ?keLabel .
+}
+ORDER BY ?keLabel

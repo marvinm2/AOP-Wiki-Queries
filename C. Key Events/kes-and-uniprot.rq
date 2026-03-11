@@ -1,0 +1,14 @@
+# title: List Key Events with UniProt IDs
+# description: Returns Key Events and their linked UniProt protein identifiers through gene/protein annotations.
+# category: Key Events
+
+SELECT DISTINCT ?keid ?ketitle ?id ?uniprot
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    edam:data_1025 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object skos:exactMatch ?id .
+  ?id a edam:data_2291 ;
+    edam:data_2291 ?uniprot .
+}
