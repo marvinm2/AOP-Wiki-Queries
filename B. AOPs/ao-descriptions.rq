@@ -1,0 +1,7 @@
+SELECT ?AOP ?AOPTitle (GROUP_CONCAT(DISTINCT ?description; SEPARATOR=", ") AS ?Description) ?abstract
+WHERE {
+  ?AOP a aopo:AdverseOutcomePathway ;
+    dc:title ?AOPTitle  .
+    OPTIONAL {?AOP dcterms:abstract ?abstract.}
+    OPTIONAL {?AOP dc:description ?description. }
+} GROUP BY ?AOP ?AOPTitle ?abstract
