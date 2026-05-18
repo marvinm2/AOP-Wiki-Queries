@@ -1,0 +1,14 @@
+# title: Genes found only by BERN2 NER (not by regex)
+# description: Lists gene-Key Event associations detected by the BERN2 NER+EL mapper that the legacy regex mapper did not find. These are the net-new genes contributed by named-entity recognition over Key Event descriptions.
+# category: Key Events
+
+PREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>
+
+SELECT ?ke ?ketitle ?gene ?symbol
+WHERE {
+  ?ke p:geneDetectedByNER ?gene .
+  FILTER NOT EXISTS { ?ke p:geneDetectedByRegex ?gene }
+  OPTIONAL { ?ke dc:title ?ketitle }
+  OPTIONAL { ?gene rdfs:label ?symbol }
+}
+ORDER BY ?ke

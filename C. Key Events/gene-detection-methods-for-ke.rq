@@ -1,0 +1,17 @@
+# title: Gene detection methods for a Key Event
+# description: For a given Key Event, shows which genes were found by the regex mapper, by the BERN2 NER mapper, or by both.
+# category: Key Events
+# param: ke_id|uri|https://identifiers.org/aop.events/1003|Key Event identifier URI
+
+PREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>
+
+SELECT ?method ?gene ?symbol
+WHERE {
+  VALUES (?method ?pred) {
+    ("regex" p:geneDetectedByRegex)
+    ("NER"   p:geneDetectedByNER)
+  }
+  <{{ke_id}}> ?pred ?gene .
+  OPTIONAL { ?gene rdfs:label ?symbol }
+}
+ORDER BY ?method ?symbol
