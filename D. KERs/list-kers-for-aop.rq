@@ -1,0 +1,13 @@
+# title: List KERs in an AOP
+# description: Returns all Key Event Relationships in a specific AOP, with the upstream and downstream Key Event titles for each.
+# param: aop_id|autocomplete:aop|12|AOP
+
+SELECT ?KER ?upstreamKE ?upstreamTitle ?downstreamKE ?downstreamTitle
+WHERE {
+  aop:{{aop_id}} aopo:has_key_event_relationship ?KER .
+  ?KER aopo:has_upstream_key_event ?upstreamKE ;
+       aopo:has_downstream_key_event ?downstreamKE .
+  ?upstreamKE dc:title ?upstreamTitle .
+  ?downstreamKE dc:title ?downstreamTitle .
+}
+ORDER BY ?upstreamKE
