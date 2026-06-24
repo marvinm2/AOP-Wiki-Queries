@@ -1,6 +1,7 @@
 # title: Find WikiPathways for AOP chemicals
 # description: Looks up stressor chemicals in the AOP-Wiki, maps them to ChEBI identifiers, and queries WikiPathways for linked human molecular pathways.
 # category: Federated
+# param: chem_name|string||Filter by chemical name (blank = all)
 
 PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
 
@@ -14,6 +15,8 @@ WHERE {
     dc:title ?ChemicalName ;
     dcterms:isPartOf ?LinkedStressor ;
     skos:exactMatch ?mappedid .
+  # Optional name filter — narrows before the federated call; blank = all.
+  FILTER("{{chem_name}}" = "" || regex(?ChemicalName, "{{chem_name}}", "i"))
   ?LinkedStressor dcterms:isPartOf ?LinkedAOPURI .
   ?LinkedAOPURI a aopo:AdverseOutcomePathway ;
     rdfs:label ?LinkedAOP .

@@ -1,6 +1,7 @@
 # title: List annotated genes for AOPs
 # description: Returns all genes annotated in Key Events across AOPs, including the protein identifiers and object names.
 # category: Key Events
+# param: aop_id|string||Filter by AOP id (blank = all)
 
 SELECT DISTINCT ?aop ?aoptitle ?ketitle ?objectname ?prot
 WHERE {
@@ -13,7 +14,7 @@ WHERE {
   ?object dc:title ?objectname ;
     skos:exactMatch ?prot .
   ?prot a edam:data_1027 .
-  # Uncomment the line below to filter for a specific AOP:
-  # FILTER (?aop = aop:98)
+  # Optional AOP filter — blank aop_id returns all AOPs.
+  FILTER("{{aop_id}}" = "" || ?aop = aop:{{aop_id}})
 }
 ORDER BY DESC(?aop)
