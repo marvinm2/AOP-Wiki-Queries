@@ -1,0 +1,24 @@
+# title: Find AOPs applicable to a taxonomic group (e.g. mammals)
+# description: Expands a higher NCBI taxon (default 40674 = Mammalia) into all its descendant species via the UniProt taxonomy, then returns every AOP whose taxonomic applicability falls within that group. Federated: the UniProt SERVICE call transfers a large taxon set and can be slow — re-run if it times out.
+# category: Federated
+# param: taxon_id|string|40674|NCBI Taxon ID (40674 = Mammalia)
+
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+
+SELECT ?aop ?aopTitle
+  (GROUP_CONCAT(DISTINCT ?species; separator=" | ") AS ?mammalianSpecies)
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+       dc:title ?aopTitle ;
+       ncbitaxon:131567 ?taxon2 .
+  ?taxon2 a ncbitaxon:131567 ;
+          dc:title ?species .
+  BIND(STRAFTER(STR(?taxon2), "NCBITAXON/") AS ?tax2)
+  SERVICE <https://sparql.uniprot.org/sparql/> {
+    ?taxon rdfs:subClassOf* taxon:{{taxon_id}} .
+    BIND(STRAFTER(STR(?taxon), "taxonomy/") AS ?taxu)
+  }
+  FILTER(?tax2 = ?taxu)
+}
+GROUP BY ?aop ?aopTitle
+ORDER BY ?aopTitle
