@@ -1,6 +1,7 @@
 # title: List identifier-mapped genes for AOPs
 # description: Returns all non-annotated genes from Key Events of AOPs, with HGNC symbols and NCBI gene identifiers.
 # category: Key Events
+# param: aop_id|string||Filter by AOP id (blank = all)
 
 SELECT DISTINCT ?aop ?aoptitle ?ketitle ?HGNC ?id
 WHERE {
@@ -15,7 +16,7 @@ WHERE {
     skos:exactMatch ?id .
   ?id a edam:data_1027 ;
     edam:data_1027 ?ncbi .
-  # Uncomment the line below to filter for a specific AOP:
-  # FILTER (?aop = aop:57)
+  # Optional AOP filter — blank aop_id returns all AOPs.
+  FILTER("{{aop_id}}" = "" || ?aop = aop:{{aop_id}})
 }
 ORDER BY DESC(?aop)
