@@ -1,0 +1,26 @@
+# title: Find AOPs applicable to mammals
+# description: Returns every AOP that has taxonomic applicability to a mammalian taxon (Mammalia, NCBI taxon 40674) — species, sub-species and higher mammalian groups. The mammalian taxon set was resolved once from the UniProt taxonomy (rdfs:subClassOf* taxon:40674) over the taxa actually used in AOP-Wiki, then inlined as VALUES so this query is self-contained and always resolves — no live federated call. To refresh the list (e.g. after new species are curated), re-run the UniProt expansion in H. Federated/aops-for-taxon.rq. Currently matches 175 AOPs across 50 mammalian taxa.
+# category: AOPs
+
+SELECT ?aop ?aopTitle
+  (GROUP_CONCAT(DISTINCT ?species; separator=" | ") AS ?mammalianSpecies)
+WHERE {
+  VALUES ?taxon {
+    ncbitaxon:9258   ncbitaxon:9261   ncbitaxon:9395   ncbitaxon:9483   ncbitaxon:9534   ncbitaxon:9541
+    ncbitaxon:9544   ncbitaxon:9555   ncbitaxon:9595   ncbitaxon:9606   ncbitaxon:9615   ncbitaxon:9627
+    ncbitaxon:9651   ncbitaxon:9666   ncbitaxon:9669   ncbitaxon:9678   ncbitaxon:9685   ncbitaxon:9689
+    ncbitaxon:9696   ncbitaxon:9823   ncbitaxon:9833   ncbitaxon:9872   ncbitaxon:9874   ncbitaxon:9913
+    ncbitaxon:9986   ncbitaxon:10036  ncbitaxon:10090  ncbitaxon:10095  ncbitaxon:10116  ncbitaxon:10117
+    ncbitaxon:10118  ncbitaxon:10141  ncbitaxon:10185  ncbitaxon:29064  ncbitaxon:34880  ncbitaxon:37347
+    ncbitaxon:39108  ncbitaxon:39442  ncbitaxon:58060  ncbitaxon:61383  ncbitaxon:61388  ncbitaxon:69158
+    ncbitaxon:70699  ncbitaxon:94180  ncbitaxon:230844 ncbitaxon:310402 ncbitaxon:419130 ncbitaxon:435435
+    ncbitaxon:447135 ncbitaxon:452597
+  }
+  ?aop a aopo:AdverseOutcomePathway ;
+       dc:title ?aopTitle ;
+       ncbitaxon:131567 ?taxon .
+  ?taxon a ncbitaxon:131567 ;
+         dc:title ?species .
+}
+GROUP BY ?aop ?aopTitle
+ORDER BY ?aopTitle
