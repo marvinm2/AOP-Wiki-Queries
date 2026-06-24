@@ -1,12 +1,9 @@
 # title: Find AOs for all MIEs
-# description: Returns Molecular Initiating Event to Adverse Outcome links across all AOPs. Leave the MIE filter blank for all MIEs, or enter an event id to focus on one.
+# description: Returns all Molecular Initiating Event to Adverse Outcome links across every AOP. For a single MIE with an autocomplete picker, use "Get AO for a specific MIE".
 # category: AOPs
-# param: mie_id|string||Filter by MIE event id (blank = all)
 
 SELECT DISTINCT ?MIE ?MolecularInitiatingEventName ?AOwebpage ?AdverseOutcomeName
 WHERE {
-  # Optional MIE filter — blank mie_id returns all MIEs.
-  FILTER("{{mie_id}}" = "" || ?MIE = aop.events:{{mie_id}})
   ?MIE dc:identifier ?MIELookup ;
     dc:title ?MolecularInitiatingEventName .
   ?AOPwebpage a aopo:AdverseOutcomePathway ;
