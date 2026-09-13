@@ -1,7 +1,7 @@
 # title: Find stressors for an adverse outcome
 # description: Searches for Adverse Outcomes by name and returns linked AOPs, MIEs, stressors, and chemical annotations.
 # category: Stressors
-# param: ao_name|string|fibrosis|Adverse outcome name
+# param: ao_name|autocomplete:keyEvent|fibrosis|Adverse outcome: pick one, or type part of a name
 
 SELECT ?AO ?AOname ?AOP ?MIETitle
   (CONCAT('"', GROUP_CONCAT(?StressorName; SEPARATOR='","'), '"') AS ?StressorNames)
@@ -20,6 +20,10 @@ WHERE {
     ?Stressor aopo:has_chemical_entity ?Chemical .
     ?Chemical dc:title ?ChemicalName .
   }
-  FILTER regex(?AOname, "{{ao_name}}", "i")
+  # A picked Key Event substitutes its numeric id, matched exactly; any other text is a
+  # case-insensitive substring of the adverse outcome name.
+  FILTER(IF(regex("{{ao_name}}", "^[0-9]+$"),
+    STR(?AO) = CONCAT("https://identifiers.org/aop.events/", "{{ao_name}}"),
+    regex(?AOname, "{{ao_name}}", "i")))
 }
 ORDER BY DESC(?AO)

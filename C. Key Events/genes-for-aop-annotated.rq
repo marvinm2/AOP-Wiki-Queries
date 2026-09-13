@@ -1,7 +1,7 @@
 # title: List annotated genes for AOPs
 # description: Returns all genes annotated in Key Events across AOPs, including the protein identifiers and object names.
 # category: Key Events
-# param: aop_id|string||Filter by AOP id (blank = all)
+# param: aop_id|autocomplete:aop||AOP (blank = all)
 
 SELECT DISTINCT ?aop ?aoptitle ?ketitle ?objectname ?prot
 WHERE {

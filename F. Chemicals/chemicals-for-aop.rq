@@ -1,7 +1,7 @@
 # title: List chemicals for AOPs
 # description: Returns all AOPs with their associated stressor chemicals and CAS registry numbers.
 # category: Chemicals
-# param: aop_id|string||Filter by AOP id (blank = all)
+# param: aop_id|autocomplete:aop||AOP (blank = all)
 
 SELECT ?aop ?aoptitle ?CASID ?chemicalname
 WHERE {

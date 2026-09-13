@@ -1,9 +1,15 @@
 # title: List identifier-mapped genes for AOPs
 # description: Returns all non-annotated genes from Key Events of AOPs, with HGNC symbols and NCBI gene identifiers.
+#   Genes are text-mined from Key Event descriptions by two detectors: an HGNC dictionary matcher (regex) and
+#   BERN2 named-entity recognition (NER). The detectedBy column says which found each gene, and the
+#   Detection method filter restricts the list, e.g. to genes confirmed by both.
 # category: Key Events
-# param: aop_id|string||Filter by AOP id (blank = all)
+# param: aop_id|autocomplete:aop||AOP (blank = all)
+# param: method|enum:any=Any detector,regex=Dictionary (incl. both),ner=BERN2 NER (incl. both),both=Both detectors,regex_only=Dictionary only,ner_only=BERN2 NER only|any|Detection method
 
-SELECT DISTINCT ?aop ?aoptitle ?ketitle ?HGNC ?id
+PREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>
+
+SELECT DISTINCT ?aop ?aoptitle ?ketitle ?HGNC ?id ?detectedBy
 WHERE {
   ?aop a aopo:AdverseOutcomePathway ;
     dc:title ?aoptitle ;
@@ -16,7 +22,17 @@ WHERE {
     skos:exactMatch ?id .
   ?id a edam:data_1027 ;
     edam:data_1027 ?ncbi .
+  # Detector provenance for this Key Event–gene link.
+  OPTIONAL { ?ke p:geneDetectedByRegex ?object . BIND(1 AS ?byRegex) }
+  OPTIONAL { ?ke p:geneDetectedByNER ?object . BIND(1 AS ?byNER) }
+  BIND(IF(BOUND(?byRegex) && BOUND(?byNER), "both",
+       IF(BOUND(?byRegex), "regex_only",
+       IF(BOUND(?byNER), "ner_only", "unrecorded"))) AS ?detectedBy)
   # Optional AOP filter — blank aop_id returns all AOPs.
   FILTER("{{aop_id}}" = "" || ?aop = aop:{{aop_id}})
+  # Detection method filter — "regex" and "ner" include links found by both detectors.
+  FILTER("{{method}}" = "any" || "{{method}}" = ?detectedBy ||
+    ("{{method}}" = "regex" && BOUND(?byRegex)) ||
+    ("{{method}}" = "ner" && BOUND(?byNER)))
 }
 ORDER BY DESC(?aop)

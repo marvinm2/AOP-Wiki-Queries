@@ -1,7 +1,7 @@
 # title: Get matching identifiers for chemicals
 # description: Returns all chemicals with their CAS numbers and cross-referenced database identifiers.
 # category: Chemicals
-# param: chem_name|string||Filter by chemical name (blank = all)
+# param: chem_name|autocomplete:chemical||Chemical: pick one, or type part of a name (blank = all)
 
 SELECT ?CASID ?ChemicalName ?MatchingIDs
 WHERE {
@@ -9,6 +9,10 @@ WHERE {
     dc:title ?ChemicalName ;
     cheminf:000446 ?CASID ;
     skos:exactMatch ?MatchingIDs .
-  # Optional name filter (case-insensitive substring) — blank returns all.
-  FILTER("{{chem_name}}" = "" || regex(?ChemicalName, "{{chem_name}}", "i"))
+  # Optional chemical filter — blank returns all. A picked chemical substitutes its CAS number,
+  # which is matched exactly; any other text is a case-insensitive name substring.
+  FILTER("{{chem_name}}" = "" ||
+    IF(regex("{{chem_name}}", "^[0-9]+-[0-9]+-[0-9]$"),
+       STR(?CASID) = "{{chem_name}}",
+       regex(?ChemicalName, "{{chem_name}}", "i")))
 }
