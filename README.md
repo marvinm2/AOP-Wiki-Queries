@@ -22,9 +22,11 @@ On every push to `main`, CI publishes the `examples-index` branch, which the edi
 also holds every past version of every example and plain `.rq` copies. Once a week CI runs every
 example against the endpoint.
 
-The examples used to be `.rq` files with a comment header. `scripts/migrate_rq_to_ttl.py`
-converted them and `scripts/compare_live.py` checked that each `.ttl` query returns what its
-`.rq` returned. Old links to an `.rq` path still open the right example.
+The examples used to be `.rq` files with a comment header; the last commit with them is
+`23d5204`. `scripts/migrate_rq_to_ttl.py` converted them and `scripts/compare_live.py` checked
+that each `.ttl` query returns what its `.rq` returned (both scripts need that commit checked
+out). Old links to an `.rq` path still open the right example, and the `rq/` folder of the
+`examples-index` branch has generated `.rq` copies for tools that read that format.
 
 ## License
 
