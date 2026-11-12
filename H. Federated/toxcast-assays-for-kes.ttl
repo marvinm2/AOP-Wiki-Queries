@@ -36,6 +36,12 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT DISTINCT ?keid ?ketitle ?objectname ?prot ?assaytitle ?assay
 WHERE {
+  # Fetch the protein-assay links from AOP-DB once (a few hundred), then join locally.
+  # With the SERVICE call last, Virtuoso sends one request per protein and times out.
+  SERVICE <https://aopdb.rdf.bigcat-bioinformatics.org/sparql> {
+    ?prot mmo:0000441 ?assay .
+    ?assay dc:title ?assaytitle .
+  }
   ?aop a aopo:AdverseOutcomePathway ;
     rdfs:label ?aop_id ;
     aopo:has_key_event ?ke .
@@ -45,8 +51,4 @@ WHERE {
   ?object dc:title ?objectname ;
     skos:exactMatch ?prot .
   ?prot a edam:data_1027 .
-  SERVICE <https://aopdb.rdf.bigcat-bioinformatics.org/sparql> {
-    ?prot mmo:0000441 ?assay .
-    ?assay dc:title ?assaytitle .
-  }
 }""" .

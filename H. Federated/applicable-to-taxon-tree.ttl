@@ -22,7 +22,7 @@ aopq:AOPQ041 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
     dcterms:subject aopcat:Federated ;
     schema:keywords "federated" ;
     schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
-    spex:federatesWith <http://sparql.uniprot.org/sparql/> ;
+    spex:federatesWith <https://sparql.uniprot.org/sparql> ;
     snorql:alias "H. Federated/applicable-to-taxon-tree.rq" ;
     prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/applicable-to-taxon-tree.rq> ;
     snorql:expect [ snorql:minResults 1 ] ;
@@ -34,20 +34,27 @@ aopq:AOPQ041 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
     sh:select """PREFIX dc: <http://purl.org/dc/elements/1.1/>
 PREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT DISTINCT ?tax
+SELECT ?tax
   (GROUP_CONCAT(DISTINCT ?name; separator=" | ") AS ?names)
   (COUNT(DISTINCT ?keker) AS ?n)
 WHERE {
+  # Fetch the taxa under the given taxon from UniProt once, as AOP-Wiki taxon IRIs,
+  # then join locally on the IRI.
+  SERVICE <https://sparql.uniprot.org/sparql> {
+    VALUES ?taxonGroup { <http://purl.uniprot.org/taxonomy/39107> }
+    # The group and everything under it. UniProt stores every ancestor of a taxon, so no
+    # property path is needed (Virtuoso is slow to federate a path with a variable).
+    { ?taxon rdfs:subClassOf ?taxonGroup }
+    UNION
+    { ?taxonGroup a up:Taxon . BIND(?taxonGroup AS ?taxon) }
+    BIND(STRAFTER(STR(?taxon), "taxonomy/") AS ?tax)
+    BIND(IRI(CONCAT("http://purl.bioontology.org/ontology/NCBITAXON/", ?tax)) AS ?taxon2)
+  }
   ?keker ncbitaxon:131567 ?taxon2 .
   ?taxon2 a ncbitaxon:131567 ;
     dc:title ?name .
-  BIND(SUBSTR(STR(?taxon2), 48) AS ?tax2)
-  SERVICE <http://sparql.uniprot.org/sparql/> {
-    VALUES ?taxonGroup { <http://purl.uniprot.org/taxonomy/39107> }
-    ?taxon rdfs:subClassOf* ?taxonGroup .
-  }
-  BIND(SUBSTR(STR(?taxon), 34) AS ?tax)
-  FILTER (?tax = ?tax2)
 }
+GROUP BY ?tax
 ORDER BY DESC(?n)""" .

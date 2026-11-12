@@ -44,4 +44,5 @@ WHERE {
   OPTIONAL {
     ?ke dc:description ?description .
   }
-}""" .
+}
+GROUP BY ?ke ?keTitle ?bioLevel ?description""" .

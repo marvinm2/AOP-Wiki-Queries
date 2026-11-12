@@ -58,4 +58,5 @@ WHERE {
     STR(?AO) = CONCAT("https://identifiers.org/aop.events/", ?ao_name),
     regex(?AOname, ?ao_name, "i")))
 }
+GROUP BY ?AO ?AOname ?AOP ?MIETitle
 ORDER BY DESC(?AO)""" .

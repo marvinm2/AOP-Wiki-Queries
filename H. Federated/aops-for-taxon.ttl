@@ -14,7 +14,7 @@
 aopq:AOPQ040 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
     dcterms:identifier "AOPQ040" ;
     rdfs:label "Find AOPs applicable to a taxonomic group (e.g. mammals)"@en ;
-    rdfs:comment "Expands a higher NCBI taxon (default 40674 = Mammalia) into all its descendant species via the UniProt taxonomy, then returns every AOP whose taxonomic applicability falls within that group. Federated: the UniProt SERVICE call transfers a large taxon set and can be slow — re-run if it times out."@en ;
+    rdfs:comment "Expands a higher NCBI taxon (default 40674 = Mammalia) into all its descendant species via the UniProt taxonomy, then returns every AOP whose taxonomic applicability falls within that group. The taxa come from UniProt."@en ;
     schema:version "1.0.0" ;
     dcterms:created "2026-06-24"^^xsd:date ;
     dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
@@ -22,7 +22,7 @@ aopq:AOPQ040 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
     dcterms:subject aopcat:Federated ;
     schema:keywords "federated" ;
     schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
-    spex:federatesWith <https://sparql.uniprot.org/sparql/> ;
+    spex:federatesWith <https://sparql.uniprot.org/sparql> ;
     snorql:alias "H. Federated/aops-for-taxon.rq" ;
     prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/aops-for-taxon.rq> ;
     snorql:expect [ snorql:minResults 1 ] ;
@@ -35,22 +35,27 @@ aopq:AOPQ040 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
 PREFIX dc: <http://purl.org/dc/elements/1.1/>
 PREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT ?aop ?aopTitle
   (GROUP_CONCAT(DISTINCT ?species; separator=" | ") AS ?mammalianSpecies)
 WHERE {
+  # Fetch the taxa in the group from UniProt once, as AOP-Wiki taxon IRIs, then join
+  # locally on the IRI.
+  SERVICE <https://sparql.uniprot.org/sparql> {
+    VALUES ?taxonGroup { <http://purl.uniprot.org/taxonomy/40674> }
+    # The group and everything under it. UniProt stores every ancestor of a taxon, so no
+    # property path is needed (Virtuoso is slow to federate a path with a variable).
+    { ?taxon rdfs:subClassOf ?taxonGroup }
+    UNION
+    { ?taxonGroup a up:Taxon . BIND(?taxonGroup AS ?taxon) }
+    BIND(IRI(CONCAT("http://purl.bioontology.org/ontology/NCBITAXON/", STRAFTER(STR(?taxon), "taxonomy/"))) AS ?taxon2)
+  }
   ?aop a aopo:AdverseOutcomePathway ;
        dc:title ?aopTitle ;
        ncbitaxon:131567 ?taxon2 .
   ?taxon2 a ncbitaxon:131567 ;
           dc:title ?species .
-  BIND(STRAFTER(STR(?taxon2), "NCBITAXON/") AS ?tax2)
-  SERVICE <https://sparql.uniprot.org/sparql/> {
-    VALUES ?taxonGroup { <http://purl.uniprot.org/taxonomy/40674> }
-    ?taxon rdfs:subClassOf* ?taxonGroup .
-    BIND(STRAFTER(STR(?taxon), "taxonomy/") AS ?taxu)
-  }
-  FILTER(?tax2 = ?taxu)
 }
 GROUP BY ?aop ?aopTitle
 ORDER BY ?aopTitle""" .
