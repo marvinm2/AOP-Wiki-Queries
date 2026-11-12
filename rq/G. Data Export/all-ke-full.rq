@@ -1,0 +1,28 @@
+# title: Export all Key Events with full details
+# category: Data Export
+# description: Returns all Key Events with their biological level, AOP membership, and descriptions.
+#
+# AOPQ038 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ038
+# Generated from G. Data Export/all-ke-full.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT DISTINCT ?ke ?keTitle ?bioLevel
+  (GROUP_CONCAT(DISTINCT ?aop; separator=", ") AS ?inAOPs)
+  ?description
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    dc:title ?keTitle .
+  OPTIONAL { ?ke nci:C25664 ?bioLevel . }
+  OPTIONAL {
+    ?aop a aopo:AdverseOutcomePathway ;
+      aopo:has_key_event ?ke ;
+      dc:title ?aopTitle .
+  }
+  OPTIONAL {
+    ?ke dc:description ?description .
+  }
+}
+GROUP BY ?ke ?keTitle ?bioLevel ?description

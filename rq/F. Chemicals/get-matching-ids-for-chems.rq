@@ -1,0 +1,25 @@
+# title: Get matching identifiers for chemicals
+# category: Chemicals
+# description: Returns all chemicals with their CAS numbers and cross-referenced database identifiers.
+#
+# AOPQ033 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ033
+# Generated from F. Chemicals/get-matching-ids-for-chems.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?CASID ?ChemicalName ?MatchingIDs
+WHERE {
+  # Optional chemical: left blank, all chemicals are returned. A picked chemical gives its
+  # CAS number, which is matched exactly; any other text is a case-insensitive name substring.
+  VALUES ?chem_name { UNDEF }
+  ?CAS a cheminf:000000 ;
+    dc:title ?ChemicalName ;
+    cheminf:000446 ?CASID ;
+    skos:exactMatch ?MatchingIDs .
+  FILTER(!BOUND(?chem_name) ||
+    IF(regex(?chem_name, "^[0-9]+-[0-9]+-[0-9]$"),
+       STR(?CASID) = ?chem_name,
+       regex(?ChemicalName, ?chem_name, "i")))
+}

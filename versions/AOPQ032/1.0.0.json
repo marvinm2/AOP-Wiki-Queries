@@ -1,0 +1,58 @@
+{
+ "id": "AOPQ032",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ032",
+ "label": "List chemicals for AOPs",
+ "description": "Returns all AOPs with their associated stressor chemicals and CAS registry numbers.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Chemicals"
+ ],
+ "keywords": [
+  "chemical"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/F.%20Chemicals/chemicals-for-aop.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT ?aop ?aoptitle ?CASID ?chemicalname\nWHERE {\n  # Optional AOP: left blank, ?aop stays unbound and all AOPs are returned.\n  VALUES ?aop { UNDEF }\n  ?aop a aopo:AdverseOutcomePathway ;\n    nci:C54571 ?Stressor ;\n    dc:title ?aoptitle .\n  ?Stressor aopo:has_chemical_entity ?Chemical .\n  ?Chemical cheminf:000446 ?CASID ;\n    dc:title ?chemicalname .\n}",
+ "params": [
+  {
+   "name": "aop_id",
+   "variable": "aop",
+   "label": "AOP (blank = all)",
+   "description": null,
+   "order": 1,
+   "kind": "iri",
+   "valueTemplate": "https://identifiers.org/aop/{value}",
+   "default": "",
+   "optional": true,
+   "autocomplete": "aop",
+   "options": null
+  }
+ ],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "F. Chemicals/chemicals-for-aop.ttl",
+ "aliases": [
+  "F. Chemicals/chemicals-for-aop.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

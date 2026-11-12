@@ -1,0 +1,96 @@
+{
+ "id": "AOPQ019",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ019",
+ "label": "List identifier-mapped genes for AOPs",
+ "description": "Returns all non-annotated genes from Key Events of AOPs, with HGNC symbols and NCBI gene identifiers. Genes are text-mined from Key Event descriptions by two detectors: an HGNC dictionary matcher (regex) and BERN2 named-entity recognition (NER). The detectedBy column says which found each gene, and the Detection method filter restricts the list, e.g. to genes confirmed by both.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+ ],
+ "keywords": [
+  "key event"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/genes-for-aop-mapped.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\nPREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>\n\nSELECT DISTINCT ?aop ?aoptitle ?ketitle ?HGNC ?id ?detectedBy\nWHERE {\n  # Optional AOP: left blank, ?aop stays unbound and all AOPs are returned.\n  VALUES ?aop { UNDEF }\n  VALUES ?method { \"any\" }\n  ?aop a aopo:AdverseOutcomePathway ;\n    dc:title ?aoptitle ;\n    aopo:has_key_event ?ke .\n  ?ke a aopo:KeyEvent ;\n    edam:data_1025 ?object ;\n    dc:title ?ketitle ;\n    rdfs:label ?keid .\n  ?object edam:data_2298 ?HGNC ;\n    skos:exactMatch ?id .\n  ?id a edam:data_1027 ;\n    edam:data_1027 ?ncbi .\n  # Detector provenance for this Key Event–gene link.\n  OPTIONAL { ?ke p:geneDetectedByRegex ?object . BIND(1 AS ?byRegex) }\n  OPTIONAL { ?ke p:geneDetectedByNER ?object . BIND(1 AS ?byNER) }\n  BIND(IF(BOUND(?byRegex) && BOUND(?byNER), \"both\",\n       IF(BOUND(?byRegex), \"regex_only\",\n       IF(BOUND(?byNER), \"ner_only\", \"unrecorded\"))) AS ?detectedBy)\n  # Detection method filter — \"regex\" and \"ner\" include links found by both detectors.\n  FILTER(?method = \"any\" || ?method = ?detectedBy ||\n    (?method = \"regex\" && BOUND(?byRegex)) ||\n    (?method = \"ner\" && BOUND(?byNER)))\n}\nORDER BY DESC(?aop)",
+ "params": [
+  {
+   "name": "aop_id",
+   "variable": "aop",
+   "label": "AOP (blank = all)",
+   "description": null,
+   "order": 1,
+   "kind": "iri",
+   "valueTemplate": "https://identifiers.org/aop/{value}",
+   "default": "",
+   "optional": true,
+   "autocomplete": "aop",
+   "options": null
+  },
+  {
+   "name": "method",
+   "variable": "method",
+   "label": "Detection method",
+   "description": null,
+   "order": 2,
+   "kind": "literal",
+   "valueTemplate": null,
+   "default": "any",
+   "optional": false,
+   "autocomplete": null,
+   "options": [
+    {
+     "value": "any",
+     "label": "Any detector"
+    },
+    {
+     "value": "regex",
+     "label": "Dictionary (incl. both)"
+    },
+    {
+     "value": "ner",
+     "label": "BERN2 NER (incl. both)"
+    },
+    {
+     "value": "both",
+     "label": "Both detectors"
+    },
+    {
+     "value": "regex_only",
+     "label": "Dictionary only"
+    },
+    {
+     "value": "ner_only",
+     "label": "BERN2 NER only"
+    }
+   ]
+  }
+ ],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "C. Key Events/genes-for-aop-mapped.ttl",
+ "aliases": [
+  "C. Key Events/genes-for-aop-mapped.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

@@ -1,0 +1,44 @@
+{
+ "id": "AOPQ026",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ026",
+ "label": "List Key Events with annotated UniProt IDs",
+ "description": "Returns Key Events with their annotated protein objects and linked UniProt identifiers, through AOP membership.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+ ],
+ "keywords": [
+  "key event"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-uniprot-annotated.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX pato: <http://purl.obolibrary.org/obo/PATO_>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n\nSELECT DISTINCT ?keid ?ketitle ?objectname ?uniprotID ?uniprot\nWHERE {\n  ?aop a aopo:AdverseOutcomePathway ;\n    rdfs:label ?aop_id ;\n    aopo:has_key_event ?ke .\n  ?ke pato:0001241 ?object ;\n    dc:title ?ketitle ;\n    rdfs:label ?keid .\n  ?object dc:title ?objectname ;\n    skos:exactMatch ?uniprot .\n  ?uniprot a edam:data_2291 ;\n    edam:data_2291 ?uniprotID .\n}",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "C. Key Events/kes-and-uniprot-annotated.ttl",
+ "aliases": [
+  "C. Key Events/kes-and-uniprot-annotated.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

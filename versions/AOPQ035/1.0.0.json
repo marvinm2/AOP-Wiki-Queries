@@ -1,0 +1,44 @@
+{
+ "id": "AOPQ035",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ035",
+ "label": "Export all AOPs",
+ "description": "Returns all Adverse Outcome Pathways with their names.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport"
+ ],
+ "keywords": [
+  "export"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-aops.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT ?AOP ?AOPName\nWHERE {\n  ?AOP a aopo:AdverseOutcomePathway ;\n    dc:title ?AOPName .\n}",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "G. Data Export/all-aops.ttl",
+ "aliases": [
+  "G. Data Export/all-aops.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

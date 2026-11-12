@@ -1,0 +1,2194 @@
+{
+ "schema": 1,
+ "generated": "2026-11-12T11:23:45Z",
+ "repository": "marvinm2/AOP-Wiki-Queries",
+ "commit": "b61004db0307dbc592dd82ce44b12eb2ecc08bfd",
+ "collection": {
+  "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples",
+  "name": "AOP-Wiki SPARQL examples",
+  "description": "Example SPARQL queries for the AOP-Wiki RDF SPARQL endpoint, shown in the query editor at https://aopwiki.rdf.bigcat-bioinformatics.org/.",
+  "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+  "iriBase": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/",
+  "idPrefix": "AOPQ"
+ },
+ "categories": [
+  {
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata",
+   "label": "Metadata",
+   "order": 1,
+   "notation": "",
+   "parent": null
+  },
+  {
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs",
+   "label": "AOPs",
+   "order": 2,
+   "notation": "",
+   "parent": null
+  },
+  {
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents",
+   "label": "Key Events",
+   "order": 3,
+   "notation": "",
+   "parent": null
+  },
+  {
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KERs",
+   "label": "Key Event Relationships",
+   "order": 4,
+   "notation": "",
+   "parent": null
+  },
+  {
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Stressors",
+   "label": "Stressors",
+   "order": 5,
+   "notation": "",
+   "parent": null
+  },
+  {
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Chemicals",
+   "label": "Chemicals",
+   "order": 6,
+   "notation": "",
+   "parent": null
+  },
+  {
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport",
+   "label": "Data Export",
+   "order": 7,
+   "notation": "",
+   "parent": null
+  },
+  {
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Federated",
+   "label": "Federated",
+   "order": 8,
+   "notation": "",
+   "parent": null
+  }
+ ],
+ "examples": [
+  {
+   "id": "AOPQ001",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ001",
+   "label": "Count AOPs",
+   "description": "Returns the total number of Adverse Outcome Pathways in the dataset.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+   ],
+   "keywords": [
+    "metadata"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-aops.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\n\nSELECT (COUNT(DISTINCT ?aop) AS ?total_AOPs)\nWHERE {\n  ?aop a aopo:AdverseOutcomePathway .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "A. Metadata/count-aops.ttl",
+   "aliases": [
+    "A. Metadata/count-aops.rq"
+   ]
+  },
+  {
+   "id": "AOPQ002",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ002",
+   "label": "Count all entities",
+   "description": "Returns the total number of AOPs, Key Events, Key Event Relationships, and Stressors in the AOP-Wiki RDF.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+   ],
+   "keywords": [
+    "metadata"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-entities.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT ?total_AOPs ?total_KEs ?total_KERs ?total_Stressors\nWHERE {\n  # One count per subquery: counting all four in one pattern multiplies them.\n  { SELECT (COUNT(DISTINCT ?aop) AS ?total_AOPs) WHERE { ?aop a aopo:AdverseOutcomePathway . } }\n  { SELECT (COUNT(DISTINCT ?ke) AS ?total_KEs) WHERE { ?ke a aopo:KeyEvent . } }\n  { SELECT (COUNT(DISTINCT ?ker) AS ?total_KERs) WHERE { ?ker a aopo:KeyEventRelationship . } }\n  { SELECT (COUNT(DISTINCT ?stressor) AS ?total_Stressors) WHERE { ?stressor a nci:C54571 . } }\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "A. Metadata/count-entities.ttl",
+   "aliases": [
+    "A. Metadata/count-entities.rq"
+   ]
+  },
+  {
+   "id": "AOPQ003",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ003",
+   "label": "Count Key Event Relationships",
+   "description": "Returns the total number of Key Event Relationships in the dataset.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+   ],
+   "keywords": [
+    "metadata"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-kers.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\n\nSELECT (COUNT(DISTINCT ?ker) AS ?total_KERs)\nWHERE {\n  ?ker a aopo:KeyEventRelationship .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "A. Metadata/count-kers.ttl",
+   "aliases": [
+    "A. Metadata/count-kers.rq"
+   ]
+  },
+  {
+   "id": "AOPQ004",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ004",
+   "label": "Count Key Events",
+   "description": "Returns the total number of Key Events in the dataset.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+   ],
+   "keywords": [
+    "metadata"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-kes.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\n\nSELECT (COUNT(DISTINCT ?ke) AS ?total_KEs)\nWHERE {\n  ?ke a aopo:KeyEvent .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "A. Metadata/count-kes.ttl",
+   "aliases": [
+    "A. Metadata/count-kes.rq"
+   ]
+  },
+  {
+   "id": "AOPQ005",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ005",
+   "label": "Count objects using AOP ontology",
+   "description": "Returns the number of RDF objects that reference the AOP ontology namespace.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+   ],
+   "keywords": [
+    "metadata"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-objects-aop-ontology.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "SELECT (COUNT(?o) AS ?Objects)\nWHERE {\n  ?s ?p ?o .\n  FILTER regex(?o, \"http://aopkb.org/aop_ontology#\")\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "A. Metadata/count-objects-aop-ontology.ttl",
+   "aliases": [
+    "A. Metadata/count-objects-aop-ontology.rq"
+   ]
+  },
+  {
+   "id": "AOPQ006",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ006",
+   "label": "Count predicates using AOP ontology",
+   "description": "Returns the number of RDF predicates that reference the AOP ontology namespace.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+   ],
+   "keywords": [
+    "metadata"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-predicates-aop-ontology.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "SELECT (COUNT(?p) AS ?Predicates)\nWHERE {\n  ?s ?p ?o .\n  FILTER regex(?p, \"http://aopkb.org/aop_ontology#\")\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "A. Metadata/count-predicates-aop-ontology.ttl",
+   "aliases": [
+    "A. Metadata/count-predicates-aop-ontology.rq"
+   ]
+  },
+  {
+   "id": "AOPQ007",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ007",
+   "label": "Count stressors",
+   "description": "Returns the total number of Stressors (chemicals) in the dataset.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+   ],
+   "keywords": [
+    "metadata"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-stressors.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT (COUNT(DISTINCT ?stressor) AS ?total_Stressors)\nWHERE {\n  ?stressor a nci:C54571 .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "A. Metadata/count-stressors.ttl",
+   "aliases": [
+    "A. Metadata/count-stressors.rq"
+   ]
+  },
+  {
+   "id": "AOPQ008",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ008",
+   "label": "Count total triples",
+   "description": "Returns the total number of RDF triples in the AOP-Wiki dataset.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+   ],
+   "keywords": [
+    "metadata"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-triples.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "SELECT (COUNT(DISTINCT *) AS ?Triples)\nWHERE { ?s ?p ?o }",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "A. Metadata/count-triples.ttl",
+   "aliases": [
+    "A. Metadata/count-triples.rq"
+   ]
+  },
+  {
+   "id": "AOPQ009",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ009",
+   "label": "Get dataset metadata",
+   "description": "Returns the VoID dataset description and creation date for the AOP-Wiki RDF dataset.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+   ],
+   "keywords": [
+    "metadata"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/dataset-metadata.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX pav: <http://purl.org/pav/>\nPREFIX void: <http://rdfs.org/ns/void#>\n\nSELECT DISTINCT ?dataset ?date\nWHERE {\n  ?dataset a void:Dataset ;\n    pav:createdOn ?date .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "A. Metadata/dataset-metadata.ttl",
+   "aliases": [
+    "A. Metadata/dataset-metadata.rq"
+   ]
+  },
+  {
+   "id": "AOPQ010",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ010",
+   "label": "Search all fields by text",
+   "description": "Searches all text fields in the AOP-Wiki RDF for a keyword match using regular expressions.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+   ],
+   "keywords": [
+    "metadata"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/text-search.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT ?item ?name ?predicate ?text\nWHERE {\n  VALUES ?search_term { \"nanotube\" }\n  ?item ?predicate ?text ;\n    dc:title ?name .\n  FILTER regex(?text, ?search_term, \"i\")\n}\nORDER BY DESC(?item)",
+   "params": [
+    {
+     "name": "search_term",
+     "variable": "search_term",
+     "label": "Search term",
+     "description": null,
+     "order": 1,
+     "kind": "literal",
+     "valueTemplate": null,
+     "default": "nanotube",
+     "optional": false,
+     "autocomplete": null,
+     "options": null
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "A. Metadata/text-search.ttl",
+   "aliases": [
+    "A. Metadata/text-search.rq"
+   ]
+  },
+  {
+   "id": "AOPQ011",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ011",
+   "label": "Find AOs for all MIEs",
+   "description": "Returns all Molecular Initiating Event to Adverse Outcome links across every AOP. For a single MIE with an autocomplete picker, use \"Get AO for a specific MIE\".",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs"
+   ],
+   "keywords": [
+    "AOP"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/ao-for-mie.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT DISTINCT ?MIE ?MolecularInitiatingEventName ?AOwebpage ?AdverseOutcomeName\nWHERE {\n  ?MIE dc:identifier ?MIELookup ;\n    dc:title ?MolecularInitiatingEventName .\n  ?AOPwebpage a aopo:AdverseOutcomePathway ;\n    aopo:has_molecular_initiating_event ?MIELookup ;\n    aopo:has_adverse_outcome ?AOwebpage .\n  ?AOwebpage dc:title ?AdverseOutcomeName .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "B. AOPs/ao-for-mie.ttl",
+   "aliases": [
+    "B. AOPs/ao-for-mie.rq"
+   ]
+  },
+  {
+   "id": "AOPQ012",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ012",
+   "label": "Find AOPs applicable to mammals",
+   "description": "Returns every AOP that has taxonomic applicability to a mammalian taxon (Mammalia, NCBI taxon 40674) — species, sub-species and higher mammalian groups. The mammalian taxon set was resolved once from the UniProt taxonomy (rdfs:subClassOf* taxon:40674) over the taxa actually used in AOP-Wiki, then inlined as VALUES so this query is self-contained and always resolves — no live federated call. To refresh the list (e.g. after new species are curated), re-run the UniProt expansion in H. Federated/aops-for-taxon.rq. Currently matches 175 AOPs across 50 mammalian taxa.",
+   "version": "1.0.0",
+   "created": "2026-06-24",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs"
+   ],
+   "keywords": [
+    "AOP"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/aops-in-mammals.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>\n\nSELECT ?aop ?aopTitle\n  (GROUP_CONCAT(DISTINCT ?species; separator=\" | \") AS ?mammalianSpecies)\nWHERE {\n  VALUES ?taxon {\n    ncbitaxon:9258   ncbitaxon:9261   ncbitaxon:9395   ncbitaxon:9483   ncbitaxon:9534   ncbitaxon:9541\n    ncbitaxon:9544   ncbitaxon:9555   ncbitaxon:9595   ncbitaxon:9606   ncbitaxon:9615   ncbitaxon:9627\n    ncbitaxon:9651   ncbitaxon:9666   ncbitaxon:9669   ncbitaxon:9678   ncbitaxon:9685   ncbitaxon:9689\n    ncbitaxon:9696   ncbitaxon:9823   ncbitaxon:9833   ncbitaxon:9872   ncbitaxon:9874   ncbitaxon:9913\n    ncbitaxon:9986   ncbitaxon:10036  ncbitaxon:10090  ncbitaxon:10095  ncbitaxon:10116  ncbitaxon:10117\n    ncbitaxon:10118  ncbitaxon:10141  ncbitaxon:10185  ncbitaxon:29064  ncbitaxon:34880  ncbitaxon:37347\n    ncbitaxon:39108  ncbitaxon:39442  ncbitaxon:58060  ncbitaxon:61383  ncbitaxon:61388  ncbitaxon:69158\n    ncbitaxon:70699  ncbitaxon:94180  ncbitaxon:230844 ncbitaxon:310402 ncbitaxon:419130 ncbitaxon:435435\n    ncbitaxon:447135 ncbitaxon:452597\n  }\n  ?aop a aopo:AdverseOutcomePathway ;\n       dc:title ?aopTitle ;\n       ncbitaxon:131567 ?taxon .\n  ?taxon a ncbitaxon:131567 ;\n         dc:title ?species .\n}\nGROUP BY ?aop ?aopTitle\nORDER BY ?aopTitle",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "B. AOPs/aops-in-mammals.ttl",
+   "aliases": [
+    "B. AOPs/aops-in-mammals.rq"
+   ]
+  },
+  {
+   "id": "AOPQ013",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ013",
+   "label": "Get AO for a specific MIE",
+   "description": "Returns the Adverse Outcome linked to a specific Molecular Initiating Event.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs"
+   ],
+   "keywords": [
+    "AOP"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/get-ao-for-mie.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT ?MIEwebpage ?MolecularInitiatingEventName ?AOwebpage ?AdverseOutcomeName\nWHERE {\n  VALUES ?MIEwebpage { <https://identifiers.org/aop.events/18> }\n  ?MIEwebpage dc:identifier ?MIELookup ;\n    dc:title ?MolecularInitiatingEventName .\n  ?AOPwebpage a aopo:AdverseOutcomePathway ;\n    aopo:has_molecular_initiating_event ?MIELookup ;\n    aopo:has_adverse_outcome ?AOwebpage .\n  ?AOwebpage dc:title ?AdverseOutcomeName .\n}",
+   "params": [
+    {
+     "name": "mie_id",
+     "variable": "MIEwebpage",
+     "label": "MIE",
+     "description": null,
+     "order": 1,
+     "kind": "iri",
+     "valueTemplate": "https://identifiers.org/aop.events/{value}",
+     "default": "18",
+     "optional": false,
+     "autocomplete": "keyEvent",
+     "options": null
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "B. AOPs/get-ao-for-mie.ttl",
+   "aliases": [
+    "B. AOPs/get-ao-for-mie.rq"
+   ]
+  },
+  {
+   "id": "AOPQ014",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ014",
+   "label": "Get AOPs for a specific AO",
+   "description": "Returns all Adverse Outcome Pathways that include a specific Adverse Outcome.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs"
+   ],
+   "keywords": [
+    "AOP"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/get-aop-for-ao.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT ?AOP ?AOPTitle\nWHERE {\n  VALUES ?AO { <https://identifiers.org/aop.events/1276> }\n  ?AOP a aopo:AdverseOutcomePathway ;\n    dc:title ?AOPTitle ;\n    aopo:has_adverse_outcome ?AO .\n}",
+   "params": [
+    {
+     "name": "ao_id",
+     "variable": "AO",
+     "label": "AO",
+     "description": null,
+     "order": 1,
+     "kind": "iri",
+     "valueTemplate": "https://identifiers.org/aop.events/{value}",
+     "default": "1276",
+     "optional": false,
+     "autocomplete": "keyEvent",
+     "options": null
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "B. AOPs/get-aop-for-ao.ttl",
+   "aliases": [
+    "B. AOPs/get-aop-for-ao.rq"
+   ]
+  },
+  {
+   "id": "AOPQ015",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ015",
+   "label": "List methods for AOPs",
+   "description": "Returns Key Events with their applicable species and measurement methods for a specific AOP.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs"
+   ],
+   "keywords": [
+    "AOP"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/methods-for-aops.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX mmo: <http://purl.obolibrary.org/obo/MMO_>\nPREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>\n\nSELECT DISTINCT ?aop ?ke\n  (GROUP_CONCAT(DISTINCT ?speciesname; separator=\" | \") AS ?speciesnames)\n  ?method\nWHERE {\n  VALUES ?aop { <https://identifiers.org/aop/12> }\n  ?aop aopo:has_key_event ?ke .\n  ?ke ncbitaxon:131567 ?taxon .\n  ?taxon a ncbitaxon:131567 ;\n    dc:title ?speciesname .\n  OPTIONAL { ?ke mmo:0000000 ?method . }\n}\nGROUP BY ?aop ?ke ?method\nORDER BY ASC(?aop)",
+   "params": [
+    {
+     "name": "aop_id",
+     "variable": "aop",
+     "label": "AOP",
+     "description": null,
+     "order": 1,
+     "kind": "iri",
+     "valueTemplate": "https://identifiers.org/aop/{value}",
+     "default": "12",
+     "optional": false,
+     "autocomplete": "aop",
+     "options": null
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "B. AOPs/methods-for-aops.ttl",
+   "aliases": [
+    "B. AOPs/methods-for-aops.rq"
+   ]
+  },
+  {
+   "id": "AOPQ016",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ016",
+   "label": "List stressors and their MIEs",
+   "description": "Returns all stressors and the Molecular Initiating Events they are linked to through AOPs.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs"
+   ],
+   "keywords": [
+    "AOP"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/stressors-for-ao.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT DISTINCT ?stressor ?stressorLabel ?mie ?mieLabel\nWHERE {\n  ?stressor a nci:C54571 ;\n    dc:title ?stressorLabel .\n  ?aop a aopo:AdverseOutcomePathway ;\n    nci:C54571 ?stressor ;\n    aopo:has_molecular_initiating_event ?mie .\n  ?mie a aopo:KeyEvent ;\n    dc:title ?mieLabel .\n}\nORDER BY ?stressorLabel",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "B. AOPs/stressors-for-ao.ttl",
+   "aliases": [
+    "B. AOPs/stressors-for-ao.rq"
+   ]
+  },
+  {
+   "id": "AOPQ017",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ017",
+   "label": "Gene detection method summary (regex vs BERN2 NER)",
+   "description": "Counts gene-Key Event associations by detection method. edam:data_1025 holds the union of all detected genes; :geneDetectedByRegex and :geneDetectedByNER record provenance. Shows total NER associations, how many were also found by the regex mapper, and how many were found only by NER.",
+   "version": "1.0.0",
+   "created": "2026-05-18",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+   ],
+   "keywords": [
+    "key event"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/gene-detection-method-summary.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>\n\nSELECT\n  (COUNT(*) AS ?ner_total)\n  (SUM(IF(EXISTS { ?ke p:geneDetectedByRegex ?gene }, 1, 0)) AS ?ner_and_regex)\n  (SUM(IF(EXISTS { ?ke p:geneDetectedByRegex ?gene }, 0, 1)) AS ?ner_only)\nWHERE {\n  ?ke p:geneDetectedByNER ?gene .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "C. Key Events/gene-detection-method-summary.ttl",
+   "aliases": [
+    "C. Key Events/gene-detection-method-summary.rq"
+   ]
+  },
+  {
+   "id": "AOPQ018",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ018",
+   "label": "List annotated genes for AOPs",
+   "description": "Returns all genes annotated in Key Events across AOPs, including the protein identifiers and object names.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+   ],
+   "keywords": [
+    "key event"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/genes-for-aop-annotated.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX pato: <http://purl.obolibrary.org/obo/PATO_>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n\nSELECT DISTINCT ?aop ?aoptitle ?ketitle ?objectname ?prot\nWHERE {\n  # Optional AOP: left blank, ?aop stays unbound and all AOPs are returned.\n  VALUES ?aop { UNDEF }\n  ?aop a aopo:AdverseOutcomePathway ;\n    aopo:has_key_event ?ke ;\n    dc:title ?aoptitle .\n  ?ke pato:0001241 ?object ;\n    dc:title ?ketitle ;\n    rdfs:label ?keid .\n  ?object dc:title ?objectname ;\n    skos:exactMatch ?prot .\n  ?prot a edam:data_1027 .\n}\nORDER BY DESC(?aop)",
+   "params": [
+    {
+     "name": "aop_id",
+     "variable": "aop",
+     "label": "AOP (blank = all)",
+     "description": null,
+     "order": 1,
+     "kind": "iri",
+     "valueTemplate": "https://identifiers.org/aop/{value}",
+     "default": "",
+     "optional": true,
+     "autocomplete": "aop",
+     "options": null
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "C. Key Events/genes-for-aop-annotated.ttl",
+   "aliases": [
+    "C. Key Events/genes-for-aop-annotated.rq"
+   ]
+  },
+  {
+   "id": "AOPQ019",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ019",
+   "label": "List identifier-mapped genes for AOPs",
+   "description": "Returns all non-annotated genes from Key Events of AOPs, with HGNC symbols and NCBI gene identifiers. Genes are text-mined from Key Event descriptions by two detectors: an HGNC dictionary matcher (regex) and BERN2 named-entity recognition (NER). The detectedBy column says which found each gene, and the Detection method filter restricts the list, e.g. to genes confirmed by both.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+   ],
+   "keywords": [
+    "key event"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/genes-for-aop-mapped.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\nPREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>\n\nSELECT DISTINCT ?aop ?aoptitle ?ketitle ?HGNC ?id ?detectedBy\nWHERE {\n  # Optional AOP: left blank, ?aop stays unbound and all AOPs are returned.\n  VALUES ?aop { UNDEF }\n  VALUES ?method { \"any\" }\n  ?aop a aopo:AdverseOutcomePathway ;\n    dc:title ?aoptitle ;\n    aopo:has_key_event ?ke .\n  ?ke a aopo:KeyEvent ;\n    edam:data_1025 ?object ;\n    dc:title ?ketitle ;\n    rdfs:label ?keid .\n  ?object edam:data_2298 ?HGNC ;\n    skos:exactMatch ?id .\n  ?id a edam:data_1027 ;\n    edam:data_1027 ?ncbi .\n  # Detector provenance for this Key Event–gene link.\n  OPTIONAL { ?ke p:geneDetectedByRegex ?object . BIND(1 AS ?byRegex) }\n  OPTIONAL { ?ke p:geneDetectedByNER ?object . BIND(1 AS ?byNER) }\n  BIND(IF(BOUND(?byRegex) && BOUND(?byNER), \"both\",\n       IF(BOUND(?byRegex), \"regex_only\",\n       IF(BOUND(?byNER), \"ner_only\", \"unrecorded\"))) AS ?detectedBy)\n  # Detection method filter — \"regex\" and \"ner\" include links found by both detectors.\n  FILTER(?method = \"any\" || ?method = ?detectedBy ||\n    (?method = \"regex\" && BOUND(?byRegex)) ||\n    (?method = \"ner\" && BOUND(?byNER)))\n}\nORDER BY DESC(?aop)",
+   "params": [
+    {
+     "name": "aop_id",
+     "variable": "aop",
+     "label": "AOP (blank = all)",
+     "description": null,
+     "order": 1,
+     "kind": "iri",
+     "valueTemplate": "https://identifiers.org/aop/{value}",
+     "default": "",
+     "optional": true,
+     "autocomplete": "aop",
+     "options": null
+    },
+    {
+     "name": "method",
+     "variable": "method",
+     "label": "Detection method",
+     "description": null,
+     "order": 2,
+     "kind": "literal",
+     "valueTemplate": null,
+     "default": "any",
+     "optional": false,
+     "autocomplete": null,
+     "options": [
+      {
+       "value": "any",
+       "label": "Any detector"
+      },
+      {
+       "value": "regex",
+       "label": "Dictionary (incl. both)"
+      },
+      {
+       "value": "ner",
+       "label": "BERN2 NER (incl. both)"
+      },
+      {
+       "value": "both",
+       "label": "Both detectors"
+      },
+      {
+       "value": "regex_only",
+       "label": "Dictionary only"
+      },
+      {
+       "value": "ner_only",
+       "label": "BERN2 NER only"
+      }
+     ]
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "C. Key Events/genes-for-aop-mapped.ttl",
+   "aliases": [
+    "C. Key Events/genes-for-aop-mapped.rq"
+   ]
+  },
+  {
+   "id": "AOPQ020",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ020",
+   "label": "Genes found only by BERN2 NER (not by regex)",
+   "description": "Lists gene-Key Event associations detected by the BERN2 NER+EL mapper that the legacy regex mapper did not find. These are the net-new genes contributed by named-entity recognition over Key Event descriptions.",
+   "version": "1.0.0",
+   "created": "2026-05-18",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+   ],
+   "keywords": [
+    "key event"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/genes-found-only-by-ner.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>\n\nSELECT ?ke ?ketitle ?gene ?symbol\nWHERE {\n  ?ke p:geneDetectedByNER ?gene .\n  FILTER NOT EXISTS { ?ke p:geneDetectedByRegex ?gene }\n  OPTIONAL { ?ke dc:title ?ketitle }\n  OPTIONAL { ?gene rdfs:label ?symbol }\n}\nORDER BY ?ke",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "C. Key Events/genes-found-only-by-ner.ttl",
+   "aliases": [
+    "C. Key Events/genes-found-only-by-ner.rq"
+   ]
+  },
+  {
+   "id": "AOPQ021",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ021",
+   "label": "Map Key Events to AOPs",
+   "description": "Returns all Key Events and the Adverse Outcome Pathways they belong to, ordered by Key Event name.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+   ],
+   "keywords": [
+    "key event"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/ke-to-aop.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT DISTINCT ?ke ?keLabel ?aop ?aopLabel\nWHERE {\n  ?aop a aopo:AdverseOutcomePathway ;\n    aopo:has_key_event ?ke ;\n    dc:title ?aopLabel .\n  ?ke dc:title ?keLabel .\n}\nORDER BY ?keLabel",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "C. Key Events/ke-to-aop.ttl",
+   "aliases": [
+    "C. Key Events/ke-to-aop.rq"
+   ]
+  },
+  {
+   "id": "AOPQ022",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ022",
+   "label": "List Key Events with Ensembl IDs",
+   "description": "Returns Key Events and their linked Ensembl gene identifiers through gene/protein annotations.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+   ],
+   "keywords": [
+    "key event"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-ensembl.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n\nSELECT DISTINCT ?keid ?ketitle ?id ?ensembl\nWHERE {\n  ?ke a aopo:KeyEvent ;\n    edam:data_1025 ?object ;\n    dc:title ?ketitle ;\n    rdfs:label ?keid .\n  ?object skos:exactMatch ?id .\n  ?id a edam:data_1033 ;\n    edam:data_1033 ?ensembl .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "C. Key Events/kes-and-ensembl.ttl",
+   "aliases": [
+    "C. Key Events/kes-and-ensembl.rq"
+   ]
+  },
+  {
+   "id": "AOPQ023",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ023",
+   "label": "List Key Events with HGNC symbols",
+   "description": "Returns Key Events and their linked HGNC gene symbols through gene/protein annotations.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+   ],
+   "keywords": [
+    "key event"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-hgnc.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?keid ?ketitle ?hgnc\nWHERE {\n  ?ke a aopo:KeyEvent ;\n    edam:data_1025 ?object ;\n    dc:title ?ketitle ;\n    rdfs:label ?keid .\n  ?object edam:data_2298 ?hgnc .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "C. Key Events/kes-and-hgnc.ttl",
+   "aliases": [
+    "C. Key Events/kes-and-hgnc.rq"
+   ]
+  },
+  {
+   "id": "AOPQ024",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ024",
+   "label": "List Key Events with annotated NCBI gene IDs",
+   "description": "Returns Key Events with their annotated protein objects and linked NCBI gene identifiers, through AOP membership.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+   ],
+   "keywords": [
+    "key event"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-ncbi-annotated.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX pato: <http://purl.obolibrary.org/obo/PATO_>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n\nSELECT DISTINCT ?keid ?ketitle ?objectname ?prot\nWHERE {\n  ?aop a aopo:AdverseOutcomePathway ;\n    rdfs:label ?aop_id ;\n    aopo:has_key_event ?ke .\n  ?ke pato:0001241 ?object ;\n    dc:title ?ketitle ;\n    rdfs:label ?keid .\n  ?object dc:title ?objectname ;\n    skos:exactMatch ?prot .\n  ?prot a edam:data_1027 .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "C. Key Events/kes-and-ncbi-annotated.ttl",
+   "aliases": [
+    "C. Key Events/kes-and-ncbi-annotated.rq"
+   ]
+  },
+  {
+   "id": "AOPQ025",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ025",
+   "label": "List Key Events with NCBI gene IDs",
+   "description": "Returns Key Events and their linked NCBI gene identifiers through gene/protein annotations.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+   ],
+   "keywords": [
+    "key event"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-ncbi.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n\nSELECT DISTINCT ?keid ?ketitle ?id ?ncbi\nWHERE {\n  ?ke a aopo:KeyEvent ;\n    edam:data_1025 ?object ;\n    dc:title ?ketitle ;\n    rdfs:label ?keid .\n  ?object skos:exactMatch ?id .\n  ?id a edam:data_1027 ;\n    edam:data_1027 ?ncbi .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "C. Key Events/kes-and-ncbi.ttl",
+   "aliases": [
+    "C. Key Events/kes-and-ncbi.rq"
+   ]
+  },
+  {
+   "id": "AOPQ026",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ026",
+   "label": "List Key Events with annotated UniProt IDs",
+   "description": "Returns Key Events with their annotated protein objects and linked UniProt identifiers, through AOP membership.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+   ],
+   "keywords": [
+    "key event"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-uniprot-annotated.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX pato: <http://purl.obolibrary.org/obo/PATO_>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n\nSELECT DISTINCT ?keid ?ketitle ?objectname ?uniprotID ?uniprot\nWHERE {\n  ?aop a aopo:AdverseOutcomePathway ;\n    rdfs:label ?aop_id ;\n    aopo:has_key_event ?ke .\n  ?ke pato:0001241 ?object ;\n    dc:title ?ketitle ;\n    rdfs:label ?keid .\n  ?object dc:title ?objectname ;\n    skos:exactMatch ?uniprot .\n  ?uniprot a edam:data_2291 ;\n    edam:data_2291 ?uniprotID .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "C. Key Events/kes-and-uniprot-annotated.ttl",
+   "aliases": [
+    "C. Key Events/kes-and-uniprot-annotated.rq"
+   ]
+  },
+  {
+   "id": "AOPQ027",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ027",
+   "label": "List Key Events with UniProt IDs",
+   "description": "Returns Key Events and their linked UniProt protein identifiers through gene/protein annotations.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+   ],
+   "keywords": [
+    "key event"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-uniprot.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n\nSELECT DISTINCT ?keid ?ketitle ?id ?uniprot\nWHERE {\n  ?ke a aopo:KeyEvent ;\n    edam:data_1025 ?object ;\n    dc:title ?ketitle ;\n    rdfs:label ?keid .\n  ?object skos:exactMatch ?id .\n  ?id a edam:data_2291 ;\n    edam:data_2291 ?uniprot .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "C. Key Events/kes-and-uniprot.ttl",
+   "aliases": [
+    "C. Key Events/kes-and-uniprot.rq"
+   ]
+  },
+  {
+   "id": "AOPQ028",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ028",
+   "label": "Search Key Events by biological level",
+   "description": "Returns Key Events with their labels and biological organization levels. Choose a level or leave as All.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+   ],
+   "keywords": [
+    "key event"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/search-ke-by-level.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT DISTINCT ?ke ?label ?bioLevel\nWHERE {\n  VALUES ?level { \"All\" }\n  ?ke a aopo:KeyEvent ;\n    dc:title ?label ;\n    nci:C25664 ?bioLevel .\n  # \"All\" returns every level.\n  FILTER(?level = \"All\" || ?bioLevel = ?level)\n}\nORDER BY ?bioLevel",
+   "params": [
+    {
+     "name": "level",
+     "variable": "level",
+     "label": "Biological level",
+     "description": null,
+     "order": 1,
+     "kind": "literal",
+     "valueTemplate": null,
+     "default": "All",
+     "optional": false,
+     "autocomplete": null,
+     "options": [
+      {
+       "value": "All",
+       "label": "All"
+      },
+      {
+       "value": "Molecular",
+       "label": "Molecular"
+      },
+      {
+       "value": "Cellular",
+       "label": "Cellular"
+      },
+      {
+       "value": "Tissue",
+       "label": "Tissue"
+      },
+      {
+       "value": "Organ",
+       "label": "Organ"
+      },
+      {
+       "value": "Individual",
+       "label": "Individual"
+      },
+      {
+       "value": "Population",
+       "label": "Population"
+      }
+     ]
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "C. Key Events/search-ke-by-level.ttl",
+   "aliases": [
+    "C. Key Events/search-ke-by-level.rq"
+   ]
+  },
+  {
+   "id": "AOPQ029",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ029",
+   "label": "List KERs in an AOP",
+   "description": "Returns all Key Event Relationships in a specific AOP, with the upstream and downstream Key Event titles for each.",
+   "version": "1.0.0",
+   "created": "2026-05-24",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KERs"
+   ],
+   "keywords": [
+    "key event relationship"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/D.%20KERs/list-kers-for-aop.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT ?KER ?upstreamKE ?upstreamTitle ?downstreamKE ?downstreamTitle\nWHERE {\n  VALUES ?aop { <https://identifiers.org/aop/12> }\n  ?aop aopo:has_key_event_relationship ?KER .\n  ?KER aopo:has_upstream_key_event ?upstreamKE ;\n       aopo:has_downstream_key_event ?downstreamKE .\n  ?upstreamKE dc:title ?upstreamTitle .\n  ?downstreamKE dc:title ?downstreamTitle .\n}\nORDER BY ?upstreamKE",
+   "params": [
+    {
+     "name": "aop_id",
+     "variable": "aop",
+     "label": "AOP",
+     "description": null,
+     "order": 1,
+     "kind": "iri",
+     "valueTemplate": "https://identifiers.org/aop/{value}",
+     "default": "12",
+     "optional": false,
+     "autocomplete": "aop",
+     "options": null
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "D. KERs/list-kers-for-aop.ttl",
+   "aliases": [
+    "D. KERs/list-kers-for-aop.rq"
+   ]
+  },
+  {
+   "id": "AOPQ030",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ030",
+   "label": "Find stressors for an adverse outcome",
+   "description": "Searches for Adverse Outcomes by name and returns linked AOPs, MIEs, stressors, and chemical annotations.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Stressors"
+   ],
+   "keywords": [
+    "stressor"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/E.%20Stressors/stressors-for-ao-searched.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT ?AO ?AOname ?AOP ?MIETitle\n  (CONCAT('\"', GROUP_CONCAT(?StressorName; SEPARATOR='\",\"'), '\"') AS ?StressorNames)\n  (CONCAT('\"', GROUP_CONCAT(?ChemicalName; SEPARATOR='\",\"'), '\"') AS ?ChemicalNames)\nWHERE {\n  VALUES ?ao_name { \"fibrosis\" }\n  ?AO a aopo:KeyEvent ;\n    dc:identifier ?AOLookup ;\n    dc:title ?AOname .\n  ?AOP a aopo:AdverseOutcomePathway ;\n    aopo:has_adverse_outcome ?AOLookup ;\n    aopo:has_molecular_initiating_event ?MIE ;\n    nci:C54571 ?Stressor .\n  ?MIE dc:title ?MIETitle .\n  ?Stressor dc:title ?StressorName .\n  OPTIONAL {\n    ?Stressor aopo:has_chemical_entity ?Chemical .\n    ?Chemical dc:title ?ChemicalName .\n  }\n  # A picked Key Event gives its numeric id, matched exactly; any other text is a\n  # case-insensitive substring of the adverse outcome name.\n  FILTER(IF(regex(?ao_name, \"^[0-9]+$\"),\n    STR(?AO) = CONCAT(\"https://identifiers.org/aop.events/\", ?ao_name),\n    regex(?AOname, ?ao_name, \"i\")))\n}\nGROUP BY ?AO ?AOname ?AOP ?MIETitle\nORDER BY DESC(?AO)",
+   "params": [
+    {
+     "name": "ao_name",
+     "variable": "ao_name",
+     "label": "Adverse outcome: pick one, or type part of a name",
+     "description": null,
+     "order": 1,
+     "kind": "literal",
+     "valueTemplate": null,
+     "default": "fibrosis",
+     "optional": false,
+     "autocomplete": "keyEvent",
+     "options": null
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "E. Stressors/stressors-for-ao-searched.ttl",
+   "aliases": [
+    "E. Stressors/stressors-for-ao-searched.rq"
+   ]
+  },
+  {
+   "id": "AOPQ031",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ031",
+   "label": "List chemicals for adverse outcomes",
+   "description": "Returns Adverse Outcomes with their linked AOPs and aggregated chemical names from stressor annotations.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Chemicals"
+   ],
+   "keywords": [
+    "chemical"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/F.%20Chemicals/chemicals-for-ao.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT ?AO ?AOname ?AOP\n  (CONCAT('\"', GROUP_CONCAT(?ChemicalName; SEPARATOR='\",\"'), '\"') AS ?ChemicalNames)\nWHERE {\n  ?AO a aopo:KeyEvent ;\n    dc:identifier ?AOLookup ;\n    dc:title ?AOname .\n  ?AOP a aopo:AdverseOutcomePathway ;\n    aopo:has_adverse_outcome ?AOLookup ;\n    nci:C54571 ?Stressor .\n  ?Stressor dc:title ?StressorName .\n  OPTIONAL {\n    ?Stressor aopo:has_chemical_entity ?Chemical .\n    ?Chemical dc:title ?ChemicalName .\n  }\n}\nGROUP BY ?AO ?AOname ?AOP\nORDER BY DESC(?AO)",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "F. Chemicals/chemicals-for-ao.ttl",
+   "aliases": [
+    "F. Chemicals/chemicals-for-ao.rq"
+   ]
+  },
+  {
+   "id": "AOPQ032",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ032",
+   "label": "List chemicals for AOPs",
+   "description": "Returns all AOPs with their associated stressor chemicals and CAS registry numbers.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Chemicals"
+   ],
+   "keywords": [
+    "chemical"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/F.%20Chemicals/chemicals-for-aop.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT ?aop ?aoptitle ?CASID ?chemicalname\nWHERE {\n  # Optional AOP: left blank, ?aop stays unbound and all AOPs are returned.\n  VALUES ?aop { UNDEF }\n  ?aop a aopo:AdverseOutcomePathway ;\n    nci:C54571 ?Stressor ;\n    dc:title ?aoptitle .\n  ?Stressor aopo:has_chemical_entity ?Chemical .\n  ?Chemical cheminf:000446 ?CASID ;\n    dc:title ?chemicalname .\n}",
+   "params": [
+    {
+     "name": "aop_id",
+     "variable": "aop",
+     "label": "AOP (blank = all)",
+     "description": null,
+     "order": 1,
+     "kind": "iri",
+     "valueTemplate": "https://identifiers.org/aop/{value}",
+     "default": "",
+     "optional": true,
+     "autocomplete": "aop",
+     "options": null
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "F. Chemicals/chemicals-for-aop.ttl",
+   "aliases": [
+    "F. Chemicals/chemicals-for-aop.rq"
+   ]
+  },
+  {
+   "id": "AOPQ033",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ033",
+   "label": "Get matching identifiers for chemicals",
+   "description": "Returns all chemicals with their CAS numbers and cross-referenced database identifiers.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Chemicals"
+   ],
+   "keywords": [
+    "chemical"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/F.%20Chemicals/get-matching-ids-for-chems.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n\nSELECT ?CASID ?ChemicalName ?MatchingIDs\nWHERE {\n  # Optional chemical: left blank, all chemicals are returned. A picked chemical gives its\n  # CAS number, which is matched exactly; any other text is a case-insensitive name substring.\n  VALUES ?chem_name { UNDEF }\n  ?CAS a cheminf:000000 ;\n    dc:title ?ChemicalName ;\n    cheminf:000446 ?CASID ;\n    skos:exactMatch ?MatchingIDs .\n  FILTER(!BOUND(?chem_name) ||\n    IF(regex(?chem_name, \"^[0-9]+-[0-9]+-[0-9]$\"),\n       STR(?CASID) = ?chem_name,\n       regex(?ChemicalName, ?chem_name, \"i\")))\n}",
+   "params": [
+    {
+     "name": "chem_name",
+     "variable": "chem_name",
+     "label": "Chemical: pick one, or type part of a name (blank = all)",
+     "description": null,
+     "order": 1,
+     "kind": "literal",
+     "valueTemplate": null,
+     "default": "",
+     "optional": true,
+     "autocomplete": "chemical",
+     "options": null
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "F. Chemicals/get-matching-ids-for-chems.ttl",
+   "aliases": [
+    "F. Chemicals/get-matching-ids-for-chems.rq"
+   ]
+  },
+  {
+   "id": "AOPQ034",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ034",
+   "label": "Export all AOPs with full details",
+   "description": "Returns all AOPs with their status, MIEs, Adverse Outcomes, stressors, and number of Key Events.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport"
+   ],
+   "keywords": [
+    "export"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-aops-full.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT DISTINCT ?aop ?aopTitle ?status\n  (GROUP_CONCAT(DISTINCT ?mieTitle; separator=\", \") AS ?MIEs)\n  (GROUP_CONCAT(DISTINCT ?aoTitle; separator=\", \") AS ?AOs)\n  (GROUP_CONCAT(DISTINCT ?stressorTitle; separator=\", \") AS ?Stressors)\n  (COUNT(DISTINCT ?ke) AS ?numKEs)\nWHERE {\n  ?aop a aopo:AdverseOutcomePathway ;\n    dc:title ?aopTitle .\n  OPTIONAL { ?aop nci:C25688 ?status . }\n  OPTIONAL {\n    ?aop aopo:has_molecular_initiating_event ?mie .\n    ?mie dc:title ?mieTitle .\n  }\n  OPTIONAL {\n    ?aop aopo:has_adverse_outcome ?ao .\n    ?ao dc:title ?aoTitle .\n  }\n  OPTIONAL {\n    ?aop nci:C54571 ?stressor .\n    ?stressor dc:title ?stressorTitle .\n  }\n  OPTIONAL {\n    ?aop aopo:has_key_event ?ke .\n  }\n}\nGROUP BY ?aop ?aopTitle ?status\nORDER BY ?aopTitle",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "G. Data Export/all-aops-full.ttl",
+   "aliases": [
+    "G. Data Export/all-aops-full.rq"
+   ]
+  },
+  {
+   "id": "AOPQ035",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ035",
+   "label": "Export all AOPs",
+   "description": "Returns all Adverse Outcome Pathways with their names.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport"
+   ],
+   "keywords": [
+    "export"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-aops.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT ?AOP ?AOPName\nWHERE {\n  ?AOP a aopo:AdverseOutcomePathway ;\n    dc:title ?AOPName .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "G. Data Export/all-aops.ttl",
+   "aliases": [
+    "G. Data Export/all-aops.rq"
+   ]
+  },
+  {
+   "id": "AOPQ036",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ036",
+   "label": "Export all chemicals",
+   "description": "Returns all chemicals in the AOP-Wiki with their CAS registry numbers.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport"
+   ],
+   "keywords": [
+    "export"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-chemicals.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT ?CAS ?ChemicalName\nWHERE {\n  ?cas a cheminf:000000 ;\n    dc:title ?ChemicalName ;\n    cheminf:000446 ?CAS .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "G. Data Export/all-chemicals.ttl",
+   "aliases": [
+    "G. Data Export/all-chemicals.rq"
+   ]
+  },
+  {
+   "id": "AOPQ037",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ037",
+   "label": "Export all Key Event components",
+   "description": "Returns all Key Events with their biological event components including processes, objects, and actions.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport"
+   ],
+   "keywords": [
+    "export"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-ke-components.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT DISTINCT ?ke ?keTitle ?bioEvent\n  ?process ?processName ?object ?objectName ?action\nWHERE {\n  ?ke a aopo:KeyEvent ;\n    dc:title ?keTitle .\n  OPTIONAL {\n    ?ke aopo:hasBiologicalEvent ?bioEvent .\n    ?bioEvent aopo:hasProcess ?process .\n    ?process dc:title ?processName .\n  }\n  OPTIONAL {\n    ?ke aopo:hasBiologicalEvent ?bioEvent .\n    ?bioEvent aopo:hasObject ?object .\n    ?object dc:title ?objectName .\n  }\n  OPTIONAL {\n    ?ke aopo:hasBiologicalEvent ?bioEvent .\n    ?bioEvent aopo:hasAction ?action .\n  }\n}\nORDER BY ?ke",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "G. Data Export/all-ke-components.ttl",
+   "aliases": [
+    "G. Data Export/all-ke-components.rq"
+   ]
+  },
+  {
+   "id": "AOPQ038",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ038",
+   "label": "Export all Key Events with full details",
+   "description": "Returns all Key Events with their biological level, AOP membership, and descriptions.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport"
+   ],
+   "keywords": [
+    "export"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-ke-full.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT DISTINCT ?ke ?keTitle ?bioLevel\n  (GROUP_CONCAT(DISTINCT ?aop; separator=\", \") AS ?inAOPs)\n  ?description\nWHERE {\n  ?ke a aopo:KeyEvent ;\n    dc:title ?keTitle .\n  OPTIONAL { ?ke nci:C25664 ?bioLevel . }\n  OPTIONAL {\n    ?aop a aopo:AdverseOutcomePathway ;\n      aopo:has_key_event ?ke ;\n      dc:title ?aopTitle .\n  }\n  OPTIONAL {\n    ?ke dc:description ?description .\n  }\n}\nGROUP BY ?ke ?keTitle ?bioLevel ?description",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "G. Data Export/all-ke-full.ttl",
+   "aliases": [
+    "G. Data Export/all-ke-full.rq"
+   ]
+  },
+  {
+   "id": "AOPQ039",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ039",
+   "label": "Export AOP to AO mappings",
+   "description": "Returns all Adverse Outcome Pathways and their linked Adverse Outcomes, ordered by AOP.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport"
+   ],
+   "keywords": [
+    "export"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/aop-to-ao.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT DISTINCT ?aop ?aopLabel ?ao ?aoLabel\nWHERE {\n  ?aop a aopo:AdverseOutcomePathway ;\n    aopo:has_adverse_outcome ?ao ;\n    dc:title ?aopLabel .\n  ?ao dc:title ?aoLabel .\n}\nORDER BY ?aop",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "G. Data Export/aop-to-ao.ttl",
+   "aliases": [
+    "G. Data Export/aop-to-ao.rq"
+   ]
+  },
+  {
+   "id": "AOPQ040",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ040",
+   "label": "Find AOPs applicable to a taxonomic group (e.g. mammals)",
+   "description": "Expands a higher NCBI taxon (default 40674 = Mammalia) into all its descendant species via the UniProt taxonomy, then returns every AOP whose taxonomic applicability falls within that group. The taxa come from UniProt.",
+   "version": "1.0.0",
+   "created": "2026-06-24",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Federated"
+   ],
+   "keywords": [
+    "federated"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [
+    "https://sparql.uniprot.org/sparql"
+   ],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/aops-for-taxon.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX up: <http://purl.uniprot.org/core/>\n\nSELECT ?aop ?aopTitle\n  (GROUP_CONCAT(DISTINCT ?species; separator=\" | \") AS ?mammalianSpecies)\nWHERE {\n  # Fetch the taxa in the group from UniProt once, as AOP-Wiki taxon IRIs, then join\n  # locally on the IRI.\n  SERVICE <https://sparql.uniprot.org/sparql> {\n    VALUES ?taxonGroup { <http://purl.uniprot.org/taxonomy/40674> }\n    # The group and everything under it. UniProt stores every ancestor of a taxon, so no\n    # property path is needed (Virtuoso is slow to federate a path with a variable).\n    { ?taxon rdfs:subClassOf ?taxonGroup }\n    UNION\n    { ?taxonGroup a up:Taxon . BIND(?taxonGroup AS ?taxon) }\n    BIND(IRI(CONCAT(\"http://purl.bioontology.org/ontology/NCBITAXON/\", STRAFTER(STR(?taxon), \"taxonomy/\"))) AS ?taxon2)\n  }\n  ?aop a aopo:AdverseOutcomePathway ;\n       dc:title ?aopTitle ;\n       ncbitaxon:131567 ?taxon2 .\n  ?taxon2 a ncbitaxon:131567 ;\n          dc:title ?species .\n}\nGROUP BY ?aop ?aopTitle\nORDER BY ?aopTitle",
+   "params": [
+    {
+     "name": "taxon_id",
+     "variable": "taxonGroup",
+     "label": "NCBI Taxon ID (40674 = Mammalia)",
+     "description": null,
+     "order": 1,
+     "kind": "iri",
+     "valueTemplate": "http://purl.uniprot.org/taxonomy/{value}",
+     "default": "40674",
+     "optional": false,
+     "autocomplete": null,
+     "options": null
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "H. Federated/aops-for-taxon.ttl",
+   "aliases": [
+    "H. Federated/aops-for-taxon.rq"
+   ]
+  },
+  {
+   "id": "AOPQ041",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ041",
+   "label": "Find applicable species in taxonomic tree",
+   "description": "Queries the UniProt taxonomy to find all species under a given taxon that have Key Events or Key Event Relationships in the AOP-Wiki.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Federated"
+   ],
+   "keywords": [
+    "federated"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [
+    "https://sparql.uniprot.org/sparql"
+   ],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/applicable-to-taxon-tree.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX up: <http://purl.uniprot.org/core/>\n\nSELECT ?tax\n  (GROUP_CONCAT(DISTINCT ?name; separator=\" | \") AS ?names)\n  (COUNT(DISTINCT ?keker) AS ?n)\nWHERE {\n  # Fetch the taxa under the given taxon from UniProt once, as AOP-Wiki taxon IRIs,\n  # then join locally on the IRI.\n  SERVICE <https://sparql.uniprot.org/sparql> {\n    VALUES ?taxonGroup { <http://purl.uniprot.org/taxonomy/39107> }\n    # The group and everything under it. UniProt stores every ancestor of a taxon, so no\n    # property path is needed (Virtuoso is slow to federate a path with a variable).\n    { ?taxon rdfs:subClassOf ?taxonGroup }\n    UNION\n    { ?taxonGroup a up:Taxon . BIND(?taxonGroup AS ?taxon) }\n    BIND(STRAFTER(STR(?taxon), \"taxonomy/\") AS ?tax)\n    BIND(IRI(CONCAT(\"http://purl.bioontology.org/ontology/NCBITAXON/\", ?tax)) AS ?taxon2)\n  }\n  ?keker ncbitaxon:131567 ?taxon2 .\n  ?taxon2 a ncbitaxon:131567 ;\n    dc:title ?name .\n}\nGROUP BY ?tax\nORDER BY DESC(?n)",
+   "params": [
+    {
+     "name": "taxon_id",
+     "variable": "taxonGroup",
+     "label": "NCBI Taxon ID",
+     "description": null,
+     "order": 1,
+     "kind": "iri",
+     "valueTemplate": "http://purl.uniprot.org/taxonomy/{value}",
+     "default": "39107",
+     "optional": false,
+     "autocomplete": null,
+     "options": null
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "H. Federated/applicable-to-taxon-tree.ttl",
+   "aliases": [
+    "H. Federated/applicable-to-taxon-tree.rq"
+   ]
+  },
+  {
+   "id": "AOPQ042",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ042",
+   "label": "Find WikiPathways for AOP chemicals",
+   "description": "Finds human WikiPathways pathways that contain stressor chemicals of an AOP, matched on ChEBI. Leave the AOP blank to list all AOPs.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Federated"
+   ],
+   "keywords": [
+    "federated"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [
+    "https://sparql.wikipathways.org/sparql"
+   ],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/pathways-with-chem.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX dcterms: <http://purl.org/dc/terms/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\nPREFIX wp: <http://vocabularies.wikipathways.org/wp#>\n\nSELECT ?ChemicalName ?ChEBI ?LinkedStressor\n  (GROUP_CONCAT(DISTINCT ?LinkedAOP; separator=', ') AS ?AOPs)\n  (STR(?PathwayID) AS ?Pathway_ID)\n  (STR(?PathwayTitle) AS ?PathwayName)\n  ?PathwayURI\nWHERE {\n  # Fetch human pathway metabolites from WikiPathways once, then join locally on the ChEBI\n  # number. Joining the other way round sends one remote request per chemical and times out.\n  SERVICE <https://sparql.wikipathways.org/sparql> {\n    ?metabolite wp:bdbChEBI ?wpChebi ;\n      dcterms:isPartOf ?PathwayURI .\n    ?PathwayURI a wp:Pathway ;\n      dcterms:identifier ?PathwayID ;\n      dc:title ?PathwayTitle ;\n      wp:organismName \"Homo sapiens\" .\n  }\n  BIND(STRAFTER(STR(?wpChebi), \"CHEBI:\") AS ?ChEBI)\n  ?chebiRef cheminf:000407 ?ChEBI .\n  ?cheLook a cheminf:000000 ;\n    dc:title ?ChemicalName ;\n    dcterms:isPartOf ?LinkedStressor ;\n    skos:exactMatch ?chebiRef .\n  # Optional AOP: left blank, ?LinkedAOPURI stays unbound and all AOPs are returned.\n  VALUES ?LinkedAOPURI { UNDEF }\n  ?LinkedStressor dcterms:isPartOf ?LinkedAOPURI .\n  ?LinkedAOPURI a aopo:AdverseOutcomePathway ;\n    rdfs:label ?LinkedAOP .\n}\nGROUP BY ?ChemicalName ?ChEBI ?LinkedStressor ?PathwayID ?PathwayTitle ?PathwayURI\nORDER BY ?ChemicalName ?PathwayTitle",
+   "params": [
+    {
+     "name": "aop_id",
+     "variable": "LinkedAOPURI",
+     "label": "AOP (blank = all)",
+     "description": null,
+     "order": 1,
+     "kind": "iri",
+     "valueTemplate": "https://identifiers.org/aop/{value}",
+     "default": "",
+     "optional": true,
+     "autocomplete": "aop",
+     "options": null
+    }
+   ],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "H. Federated/pathways-with-chem.ttl",
+   "aliases": [
+    "H. Federated/pathways-with-chem.rq"
+   ]
+  },
+  {
+   "id": "AOPQ043",
+   "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ043",
+   "label": "Find ToxCast assays for Key Events",
+   "description": "Returns Key Events with their annotated proteins and linked ToxCast assay information from the AOP-DB endpoint.",
+   "version": "1.0.0",
+   "created": "2026-03-11",
+   "modified": "2026-11-12",
+   "creators": [
+    {
+     "iri": "https://orcid.org/0000-0003-2230-0840",
+     "name": "Marvin Martens"
+    }
+   ],
+   "contributors": [],
+   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+   "categories": [
+    "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Federated"
+   ],
+   "keywords": [
+    "federated"
+   ],
+   "level": null,
+   "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+   "federatesWith": [
+    "https://aopdb.rdf.bigcat-bioinformatics.org/sparql"
+   ],
+   "references": [],
+   "derivedFrom": [
+    "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/toxcast-assays-for-kes.rq"
+   ],
+   "testedAgainst": null,
+   "deprecated": false,
+   "replacedBy": null,
+   "queryType": "select",
+   "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX mmo: <http://purl.obolibrary.org/obo/MMO_>\nPREFIX pato: <http://purl.obolibrary.org/obo/PATO_>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n\nSELECT DISTINCT ?keid ?ketitle ?objectname ?prot ?assaytitle ?assay\nWHERE {\n  # Fetch the protein-assay links from AOP-DB once (a few hundred), then join locally.\n  # With the SERVICE call last, Virtuoso sends one request per protein and times out.\n  SERVICE <https://aopdb.rdf.bigcat-bioinformatics.org/sparql> {\n    ?prot mmo:0000441 ?assay .\n    ?assay dc:title ?assaytitle .\n  }\n  ?aop a aopo:AdverseOutcomePathway ;\n    rdfs:label ?aop_id ;\n    aopo:has_key_event ?ke .\n  ?ke pato:0001241 ?object ;\n    dc:title ?ketitle ;\n    rdfs:label ?keid .\n  ?object dc:title ?objectname ;\n    skos:exactMatch ?prot .\n  ?prot a edam:data_1027 .\n}",
+   "params": [],
+   "expect": {
+    "minResults": 1
+   },
+   "path": "H. Federated/toxcast-assays-for-kes.ttl",
+   "aliases": [
+    "H. Federated/toxcast-assays-for-kes.rq"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+# title: Export AOP to AO mappings
+# category: Data Export
+# description: Returns all Adverse Outcome Pathways and their linked Adverse Outcomes, ordered by AOP.
+#
+# AOPQ039 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ039
+# Generated from G. Data Export/aop-to-ao.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT DISTINCT ?aop ?aopLabel ?ao ?aoLabel
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+    aopo:has_adverse_outcome ?ao ;
+    dc:title ?aopLabel .
+  ?ao dc:title ?aoLabel .
+}
+ORDER BY ?aop

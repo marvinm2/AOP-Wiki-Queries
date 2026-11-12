@@ -1,0 +1,23 @@
+# title: List Key Events with Ensembl IDs
+# category: Key Events
+# description: Returns Key Events and their linked Ensembl gene identifiers through gene/protein annotations.
+#
+# AOPQ022 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ022
+# Generated from C. Key Events/kes-and-ensembl.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?keid ?ketitle ?id ?ensembl
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    edam:data_1025 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object skos:exactMatch ?id .
+  ?id a edam:data_1033 ;
+    edam:data_1033 ?ensembl .
+}

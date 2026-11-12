@@ -1,0 +1,16 @@
+# title: Export all chemicals
+# category: Data Export
+# description: Returns all chemicals in the AOP-Wiki with their CAS registry numbers.
+#
+# AOPQ036 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ036
+# Generated from G. Data Export/all-chemicals.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT ?CAS ?ChemicalName
+WHERE {
+  ?cas a cheminf:000000 ;
+    dc:title ?ChemicalName ;
+    cheminf:000446 ?CAS .
+}

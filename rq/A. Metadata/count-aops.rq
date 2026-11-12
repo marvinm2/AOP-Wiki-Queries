@@ -1,0 +1,13 @@
+# title: Count AOPs
+# category: Metadata
+# description: Returns the total number of Adverse Outcome Pathways in the dataset.
+#
+# AOPQ001 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ001
+# Generated from A. Metadata/count-aops.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+
+SELECT (COUNT(DISTINCT ?aop) AS ?total_AOPs)
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway .
+}

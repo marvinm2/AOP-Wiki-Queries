@@ -1,0 +1,44 @@
+{
+ "id": "AOPQ006",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ006",
+ "label": "Count predicates using AOP ontology",
+ "description": "Returns the number of RDF predicates that reference the AOP ontology namespace.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+ ],
+ "keywords": [
+  "metadata"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-predicates-aop-ontology.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "SELECT (COUNT(?p) AS ?Predicates)\nWHERE {\n  ?s ?p ?o .\n  FILTER regex(?p, \"http://aopkb.org/aop_ontology#\")\n}",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "A. Metadata/count-predicates-aop-ontology.ttl",
+ "aliases": [
+  "A. Metadata/count-predicates-aop-ontology.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

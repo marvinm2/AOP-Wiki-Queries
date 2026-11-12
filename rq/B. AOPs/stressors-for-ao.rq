@@ -1,0 +1,22 @@
+# title: List stressors and their MIEs
+# category: AOPs
+# description: Returns all stressors and the Molecular Initiating Events they are linked to through AOPs.
+#
+# AOPQ016 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ016
+# Generated from B. AOPs/stressors-for-ao.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT DISTINCT ?stressor ?stressorLabel ?mie ?mieLabel
+WHERE {
+  ?stressor a nci:C54571 ;
+    dc:title ?stressorLabel .
+  ?aop a aopo:AdverseOutcomePathway ;
+    nci:C54571 ?stressor ;
+    aopo:has_molecular_initiating_event ?mie .
+  ?mie a aopo:KeyEvent ;
+    dc:title ?mieLabel .
+}
+ORDER BY ?stressorLabel

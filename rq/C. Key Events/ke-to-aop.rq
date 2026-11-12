@@ -1,0 +1,18 @@
+# title: Map Key Events to AOPs
+# category: Key Events
+# description: Returns all Key Events and the Adverse Outcome Pathways they belong to, ordered by Key Event name.
+#
+# AOPQ021 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ021
+# Generated from C. Key Events/ke-to-aop.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT DISTINCT ?ke ?keLabel ?aop ?aopLabel
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+    aopo:has_key_event ?ke ;
+    dc:title ?aopLabel .
+  ?ke dc:title ?keLabel .
+}
+ORDER BY ?keLabel

@@ -1,0 +1,18 @@
+# title: Get AOPs for a specific AO
+# category: AOPs
+# description: Returns all Adverse Outcome Pathways that include a specific Adverse Outcome.
+# param: ao_id|autocomplete:keyEvent|1276|AO
+#
+# AOPQ014 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ014
+# Generated from B. AOPs/get-aop-for-ao.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT ?AOP ?AOPTitle
+WHERE {
+  VALUES ?AO { <https://identifiers.org/aop.events/{{ao_id}}> }
+  ?AOP a aopo:AdverseOutcomePathway ;
+    dc:title ?AOPTitle ;
+    aopo:has_adverse_outcome ?AO .
+}

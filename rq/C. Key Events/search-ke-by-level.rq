@@ -1,0 +1,22 @@
+# title: Search Key Events by biological level
+# category: Key Events
+# description: Returns Key Events with their labels and biological organization levels. Choose a level or leave as All.
+# param: level|enum:All=All,Molecular=Molecular,Cellular=Cellular,Tissue=Tissue,Organ=Organ,Individual=Individual,Population=Population|All|Biological level
+#
+# AOPQ028 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ028
+# Generated from C. Key Events/search-ke-by-level.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT DISTINCT ?ke ?label ?bioLevel
+WHERE {
+  VALUES ?level { "{{level}}" }
+  ?ke a aopo:KeyEvent ;
+    dc:title ?label ;
+    nci:C25664 ?bioLevel .
+  # "All" returns every level.
+  FILTER(?level = "All" || ?bioLevel = ?level)
+}
+ORDER BY ?bioLevel

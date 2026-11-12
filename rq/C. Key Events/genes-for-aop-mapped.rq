@@ -1,0 +1,43 @@
+# title: List identifier-mapped genes for AOPs
+# category: Key Events
+# description: Returns all non-annotated genes from Key Events of AOPs, with HGNC symbols and NCBI gene identifiers. Genes are text-mined from Key Event descriptions by two detectors: an HGNC dictionary matcher (regex) and BERN2 named-entity recognition (NER). The detectedBy column says which found each gene, and the Detection method filter restricts the list, e.g. to genes confirmed by both.
+# param: method|enum:any=Any detector,regex=Dictionary (incl. both),ner=BERN2 NER (incl. both),both=Both detectors,regex_only=Dictionary only,ner_only=BERN2 NER only|any|Detection method
+#
+# AOPQ019 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ019
+# Generated from C. Key Events/genes-for-aop-mapped.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>
+
+SELECT DISTINCT ?aop ?aoptitle ?ketitle ?HGNC ?id ?detectedBy
+WHERE {
+  # Optional AOP: left blank, ?aop stays unbound and all AOPs are returned.
+  VALUES ?aop { UNDEF }
+  VALUES ?method { "{{method}}" }
+  ?aop a aopo:AdverseOutcomePathway ;
+    dc:title ?aoptitle ;
+    aopo:has_key_event ?ke .
+  ?ke a aopo:KeyEvent ;
+    edam:data_1025 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object edam:data_2298 ?HGNC ;
+    skos:exactMatch ?id .
+  ?id a edam:data_1027 ;
+    edam:data_1027 ?ncbi .
+  # Detector provenance for this Key Event–gene link.
+  OPTIONAL { ?ke p:geneDetectedByRegex ?object . BIND(1 AS ?byRegex) }
+  OPTIONAL { ?ke p:geneDetectedByNER ?object . BIND(1 AS ?byNER) }
+  BIND(IF(BOUND(?byRegex) && BOUND(?byNER), "both",
+       IF(BOUND(?byRegex), "regex_only",
+       IF(BOUND(?byNER), "ner_only", "unrecorded"))) AS ?detectedBy)
+  # Detection method filter — "regex" and "ner" include links found by both detectors.
+  FILTER(?method = "any" || ?method = ?detectedBy ||
+    (?method = "regex" && BOUND(?byRegex)) ||
+    (?method = "ner" && BOUND(?byNER)))
+}
+ORDER BY DESC(?aop)

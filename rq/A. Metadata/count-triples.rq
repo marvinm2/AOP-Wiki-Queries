@@ -1,0 +1,9 @@
+# title: Count total triples
+# category: Metadata
+# description: Returns the total number of RDF triples in the AOP-Wiki dataset.
+#
+# AOPQ008 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ008
+# Generated from A. Metadata/count-triples.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+SELECT (COUNT(DISTINCT *) AS ?Triples)
+WHERE { ?s ?p ?o }

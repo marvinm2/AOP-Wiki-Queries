@@ -1,0 +1,44 @@
+{
+ "id": "AOPQ012",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ012",
+ "label": "Find AOPs applicable to mammals",
+ "description": "Returns every AOP that has taxonomic applicability to a mammalian taxon (Mammalia, NCBI taxon 40674) — species, sub-species and higher mammalian groups. The mammalian taxon set was resolved once from the UniProt taxonomy (rdfs:subClassOf* taxon:40674) over the taxa actually used in AOP-Wiki, then inlined as VALUES so this query is self-contained and always resolves — no live federated call. To refresh the list (e.g. after new species are curated), re-run the UniProt expansion in H. Federated/aops-for-taxon.rq. Currently matches 175 AOPs across 50 mammalian taxa.",
+ "version": "1.0.0",
+ "created": "2026-06-24",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs"
+ ],
+ "keywords": [
+  "AOP"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/aops-in-mammals.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>\n\nSELECT ?aop ?aopTitle\n  (GROUP_CONCAT(DISTINCT ?species; separator=\" | \") AS ?mammalianSpecies)\nWHERE {\n  VALUES ?taxon {\n    ncbitaxon:9258   ncbitaxon:9261   ncbitaxon:9395   ncbitaxon:9483   ncbitaxon:9534   ncbitaxon:9541\n    ncbitaxon:9544   ncbitaxon:9555   ncbitaxon:9595   ncbitaxon:9606   ncbitaxon:9615   ncbitaxon:9627\n    ncbitaxon:9651   ncbitaxon:9666   ncbitaxon:9669   ncbitaxon:9678   ncbitaxon:9685   ncbitaxon:9689\n    ncbitaxon:9696   ncbitaxon:9823   ncbitaxon:9833   ncbitaxon:9872   ncbitaxon:9874   ncbitaxon:9913\n    ncbitaxon:9986   ncbitaxon:10036  ncbitaxon:10090  ncbitaxon:10095  ncbitaxon:10116  ncbitaxon:10117\n    ncbitaxon:10118  ncbitaxon:10141  ncbitaxon:10185  ncbitaxon:29064  ncbitaxon:34880  ncbitaxon:37347\n    ncbitaxon:39108  ncbitaxon:39442  ncbitaxon:58060  ncbitaxon:61383  ncbitaxon:61388  ncbitaxon:69158\n    ncbitaxon:70699  ncbitaxon:94180  ncbitaxon:230844 ncbitaxon:310402 ncbitaxon:419130 ncbitaxon:435435\n    ncbitaxon:447135 ncbitaxon:452597\n  }\n  ?aop a aopo:AdverseOutcomePathway ;\n       dc:title ?aopTitle ;\n       ncbitaxon:131567 ?taxon .\n  ?taxon a ncbitaxon:131567 ;\n         dc:title ?species .\n}\nGROUP BY ?aop ?aopTitle\nORDER BY ?aopTitle",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "B. AOPs/aops-in-mammals.ttl",
+ "aliases": [
+  "B. AOPs/aops-in-mammals.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

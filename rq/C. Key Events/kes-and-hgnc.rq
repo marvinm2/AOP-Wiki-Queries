@@ -1,0 +1,20 @@
+# title: List Key Events with HGNC symbols
+# category: Key Events
+# description: Returns Key Events and their linked HGNC gene symbols through gene/protein annotations.
+#
+# AOPQ023 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ023
+# Generated from C. Key Events/kes-and-hgnc.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?keid ?ketitle ?hgnc
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    edam:data_1025 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object edam:data_2298 ?hgnc .
+}

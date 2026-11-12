@@ -1,0 +1,13 @@
+# title: Count Key Event Relationships
+# category: Metadata
+# description: Returns the total number of Key Event Relationships in the dataset.
+#
+# AOPQ003 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ003
+# Generated from A. Metadata/count-kers.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+
+SELECT (COUNT(DISTINCT ?ker) AS ?total_KERs)
+WHERE {
+  ?ker a aopo:KeyEventRelationship .
+}

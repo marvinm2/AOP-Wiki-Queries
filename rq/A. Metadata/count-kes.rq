@@ -1,0 +1,13 @@
+# title: Count Key Events
+# category: Metadata
+# description: Returns the total number of Key Events in the dataset.
+#
+# AOPQ004 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ004
+# Generated from A. Metadata/count-kes.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+
+SELECT (COUNT(DISTINCT ?ke) AS ?total_KEs)
+WHERE {
+  ?ke a aopo:KeyEvent .
+}

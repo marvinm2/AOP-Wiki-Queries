@@ -1,0 +1,33 @@
+# title: Find ToxCast assays for Key Events
+# category: Federated
+# description: Returns Key Events with their annotated proteins and linked ToxCast assay information from the AOP-DB endpoint.
+#
+# AOPQ043 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ043
+# Generated from H. Federated/toxcast-assays-for-kes.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX mmo: <http://purl.obolibrary.org/obo/MMO_>
+PREFIX pato: <http://purl.obolibrary.org/obo/PATO_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?keid ?ketitle ?objectname ?prot ?assaytitle ?assay
+WHERE {
+  # Fetch the protein-assay links from AOP-DB once (a few hundred), then join locally.
+  # With the SERVICE call last, Virtuoso sends one request per protein and times out.
+  SERVICE <https://aopdb.rdf.bigcat-bioinformatics.org/sparql> {
+    ?prot mmo:0000441 ?assay .
+    ?assay dc:title ?assaytitle .
+  }
+  ?aop a aopo:AdverseOutcomePathway ;
+    rdfs:label ?aop_id ;
+    aopo:has_key_event ?ke .
+  ?ke pato:0001241 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object dc:title ?objectname ;
+    skos:exactMatch ?prot .
+  ?prot a edam:data_1027 .
+}

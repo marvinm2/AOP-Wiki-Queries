@@ -1,0 +1,1599 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix param: <https://w3id.org/snorql/param#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix snorql: <https://w3id.org/snorql/ns#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples> a schema:Dataset,
+        snorql:ExampleCollection ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    void:uriSpace "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/" ;
+    schema:codeRepository <https://github.com/marvinm2/AOP-Wiki-Queries> ;
+    schema:description "Example SPARQL queries for the AOP-Wiki RDF SPARQL endpoint, shown in the query editor at https://aopwiki.rdf.bigcat-bioinformatics.org/."@en ;
+    schema:name "AOP-Wiki SPARQL examples" ;
+    schema:url <https://aopwiki.rdf.bigcat-bioinformatics.org/> ;
+    snorql:identifierPrefix "AOPQ" .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ001> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Count AOPs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ001" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata> ;
+    rdfs:comment "Returns the total number of Adverse Outcome Pathways in the dataset."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-aops.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+
+SELECT (COUNT(DISTINCT ?aop) AS ?total_AOPs)
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway .
+}""" ;
+    schema:keywords "metadata" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "A. Metadata/count-aops.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ002> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Count all entities"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ002" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata> ;
+    rdfs:comment "Returns the total number of AOPs, Key Events, Key Event Relationships, and Stressors in the AOP-Wiki RDF."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-entities.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT ?total_AOPs ?total_KEs ?total_KERs ?total_Stressors
+WHERE {
+  # One count per subquery: counting all four in one pattern multiplies them.
+  { SELECT (COUNT(DISTINCT ?aop) AS ?total_AOPs) WHERE { ?aop a aopo:AdverseOutcomePathway . } }
+  { SELECT (COUNT(DISTINCT ?ke) AS ?total_KEs) WHERE { ?ke a aopo:KeyEvent . } }
+  { SELECT (COUNT(DISTINCT ?ker) AS ?total_KERs) WHERE { ?ker a aopo:KeyEventRelationship . } }
+  { SELECT (COUNT(DISTINCT ?stressor) AS ?total_Stressors) WHERE { ?stressor a nci:C54571 . } }
+}""" ;
+    schema:keywords "metadata" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "A. Metadata/count-entities.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ003> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Count Key Event Relationships"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ003" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata> ;
+    rdfs:comment "Returns the total number of Key Event Relationships in the dataset."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-kers.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+
+SELECT (COUNT(DISTINCT ?ker) AS ?total_KERs)
+WHERE {
+  ?ker a aopo:KeyEventRelationship .
+}""" ;
+    schema:keywords "metadata" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "A. Metadata/count-kers.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ004> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Count Key Events"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ004" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata> ;
+    rdfs:comment "Returns the total number of Key Events in the dataset."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-kes.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+
+SELECT (COUNT(DISTINCT ?ke) AS ?total_KEs)
+WHERE {
+  ?ke a aopo:KeyEvent .
+}""" ;
+    schema:keywords "metadata" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "A. Metadata/count-kes.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ005> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Count objects using AOP ontology"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ005" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata> ;
+    rdfs:comment "Returns the number of RDF objects that reference the AOP ontology namespace."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-objects-aop-ontology.rq> ;
+    sh:select """SELECT (COUNT(?o) AS ?Objects)
+WHERE {
+  ?s ?p ?o .
+  FILTER regex(?o, "http://aopkb.org/aop_ontology#")
+}""" ;
+    schema:keywords "metadata" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "A. Metadata/count-objects-aop-ontology.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ006> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Count predicates using AOP ontology"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ006" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata> ;
+    rdfs:comment "Returns the number of RDF predicates that reference the AOP ontology namespace."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-predicates-aop-ontology.rq> ;
+    sh:select """SELECT (COUNT(?p) AS ?Predicates)
+WHERE {
+  ?s ?p ?o .
+  FILTER regex(?p, "http://aopkb.org/aop_ontology#")
+}""" ;
+    schema:keywords "metadata" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "A. Metadata/count-predicates-aop-ontology.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ007> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Count stressors"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ007" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata> ;
+    rdfs:comment "Returns the total number of Stressors (chemicals) in the dataset."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-stressors.rq> ;
+    sh:select """PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT (COUNT(DISTINCT ?stressor) AS ?total_Stressors)
+WHERE {
+  ?stressor a nci:C54571 .
+}""" ;
+    schema:keywords "metadata" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "A. Metadata/count-stressors.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ008> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Count total triples"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ008" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata> ;
+    rdfs:comment "Returns the total number of RDF triples in the AOP-Wiki dataset."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-triples.rq> ;
+    sh:select """SELECT (COUNT(DISTINCT *) AS ?Triples)
+WHERE { ?s ?p ?o }""" ;
+    schema:keywords "metadata" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "A. Metadata/count-triples.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ009> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Get dataset metadata"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ009" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata> ;
+    rdfs:comment "Returns the VoID dataset description and creation date for the AOP-Wiki RDF dataset."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/dataset-metadata.rq> ;
+    sh:select """PREFIX pav: <http://purl.org/pav/>
+PREFIX void: <http://rdfs.org/ns/void#>
+
+SELECT DISTINCT ?dataset ?date
+WHERE {
+  ?dataset a void:Dataset ;
+    pav:createdOn ?date .
+}""" ;
+    schema:keywords "metadata" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "A. Metadata/dataset-metadata.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ010> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Search all fields by text"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ010" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata> ;
+    rdfs:comment "Searches all text fields in the AOP-Wiki RDF for a keyword match using regular expressions."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/text-search.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:datatype xsd:string ;
+            sh:defaultValue "nanotube" ;
+            sh:name "Search term" ;
+            sh:order 1 ;
+            sh:path param:search_term ] ;
+    sh:select """PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT ?item ?name ?predicate ?text
+WHERE {
+  VALUES ?search_term { "nanotube" }
+  ?item ?predicate ?text ;
+    dc:title ?name .
+  FILTER regex(?text, ?search_term, "i")
+}
+ORDER BY DESC(?item)""" ;
+    schema:keywords "metadata" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "A. Metadata/text-search.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ011> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Find AOs for all MIEs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ011" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs> ;
+    rdfs:comment "Returns all Molecular Initiating Event to Adverse Outcome links across every AOP. For a single MIE with an autocomplete picker, use \"Get AO for a specific MIE\"."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/ao-for-mie.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT DISTINCT ?MIE ?MolecularInitiatingEventName ?AOwebpage ?AdverseOutcomeName
+WHERE {
+  ?MIE dc:identifier ?MIELookup ;
+    dc:title ?MolecularInitiatingEventName .
+  ?AOPwebpage a aopo:AdverseOutcomePathway ;
+    aopo:has_molecular_initiating_event ?MIELookup ;
+    aopo:has_adverse_outcome ?AOwebpage .
+  ?AOwebpage dc:title ?AdverseOutcomeName .
+}""" ;
+    schema:keywords "AOP" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "B. AOPs/ao-for-mie.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ012> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Find AOPs applicable to mammals"@en ;
+    dcterms:created "2026-06-24"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ012" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs> ;
+    rdfs:comment "Returns every AOP that has taxonomic applicability to a mammalian taxon (Mammalia, NCBI taxon 40674) — species, sub-species and higher mammalian groups. The mammalian taxon set was resolved once from the UniProt taxonomy (rdfs:subClassOf* taxon:40674) over the taxa actually used in AOP-Wiki, then inlined as VALUES so this query is self-contained and always resolves — no live federated call. To refresh the list (e.g. after new species are curated), re-run the UniProt expansion in H. Federated/aops-for-taxon.rq. Currently matches 175 AOPs across 50 mammalian taxa."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/aops-in-mammals.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>
+
+SELECT ?aop ?aopTitle
+  (GROUP_CONCAT(DISTINCT ?species; separator=" | ") AS ?mammalianSpecies)
+WHERE {
+  VALUES ?taxon {
+    ncbitaxon:9258   ncbitaxon:9261   ncbitaxon:9395   ncbitaxon:9483   ncbitaxon:9534   ncbitaxon:9541
+    ncbitaxon:9544   ncbitaxon:9555   ncbitaxon:9595   ncbitaxon:9606   ncbitaxon:9615   ncbitaxon:9627
+    ncbitaxon:9651   ncbitaxon:9666   ncbitaxon:9669   ncbitaxon:9678   ncbitaxon:9685   ncbitaxon:9689
+    ncbitaxon:9696   ncbitaxon:9823   ncbitaxon:9833   ncbitaxon:9872   ncbitaxon:9874   ncbitaxon:9913
+    ncbitaxon:9986   ncbitaxon:10036  ncbitaxon:10090  ncbitaxon:10095  ncbitaxon:10116  ncbitaxon:10117
+    ncbitaxon:10118  ncbitaxon:10141  ncbitaxon:10185  ncbitaxon:29064  ncbitaxon:34880  ncbitaxon:37347
+    ncbitaxon:39108  ncbitaxon:39442  ncbitaxon:58060  ncbitaxon:61383  ncbitaxon:61388  ncbitaxon:69158
+    ncbitaxon:70699  ncbitaxon:94180  ncbitaxon:230844 ncbitaxon:310402 ncbitaxon:419130 ncbitaxon:435435
+    ncbitaxon:447135 ncbitaxon:452597
+  }
+  ?aop a aopo:AdverseOutcomePathway ;
+       dc:title ?aopTitle ;
+       ncbitaxon:131567 ?taxon .
+  ?taxon a ncbitaxon:131567 ;
+         dc:title ?species .
+}
+GROUP BY ?aop ?aopTitle
+ORDER BY ?aopTitle""" ;
+    schema:keywords "AOP" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "B. AOPs/aops-in-mammals.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ013> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Get AO for a specific MIE"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ013" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs> ;
+    rdfs:comment "Returns the Adverse Outcome linked to a specific Molecular Initiating Event."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/get-ao-for-mie.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:defaultValue "18" ;
+            sh:name "MIE" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path param:mie_id ;
+            snorql:autocomplete "keyEvent" ;
+            snorql:valueTemplate "https://identifiers.org/aop.events/{value}" ;
+            snorql:variable "MIEwebpage" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT ?MIEwebpage ?MolecularInitiatingEventName ?AOwebpage ?AdverseOutcomeName
+WHERE {
+  VALUES ?MIEwebpage { <https://identifiers.org/aop.events/18> }
+  ?MIEwebpage dc:identifier ?MIELookup ;
+    dc:title ?MolecularInitiatingEventName .
+  ?AOPwebpage a aopo:AdverseOutcomePathway ;
+    aopo:has_molecular_initiating_event ?MIELookup ;
+    aopo:has_adverse_outcome ?AOwebpage .
+  ?AOwebpage dc:title ?AdverseOutcomeName .
+}""" ;
+    schema:keywords "AOP" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "B. AOPs/get-ao-for-mie.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ014> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Get AOPs for a specific AO"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ014" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs> ;
+    rdfs:comment "Returns all Adverse Outcome Pathways that include a specific Adverse Outcome."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/get-aop-for-ao.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:defaultValue "1276" ;
+            sh:name "AO" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path param:ao_id ;
+            snorql:autocomplete "keyEvent" ;
+            snorql:valueTemplate "https://identifiers.org/aop.events/{value}" ;
+            snorql:variable "AO" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT ?AOP ?AOPTitle
+WHERE {
+  VALUES ?AO { <https://identifiers.org/aop.events/1276> }
+  ?AOP a aopo:AdverseOutcomePathway ;
+    dc:title ?AOPTitle ;
+    aopo:has_adverse_outcome ?AO .
+}""" ;
+    schema:keywords "AOP" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "B. AOPs/get-aop-for-ao.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ015> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "List methods for AOPs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ015" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs> ;
+    rdfs:comment "Returns Key Events with their applicable species and measurement methods for a specific AOP."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/methods-for-aops.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:defaultValue "12" ;
+            sh:name "AOP" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path param:aop_id ;
+            snorql:autocomplete "aop" ;
+            snorql:valueTemplate "https://identifiers.org/aop/{value}" ;
+            snorql:variable "aop" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX mmo: <http://purl.obolibrary.org/obo/MMO_>
+PREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>
+
+SELECT DISTINCT ?aop ?ke
+  (GROUP_CONCAT(DISTINCT ?speciesname; separator=" | ") AS ?speciesnames)
+  ?method
+WHERE {
+  VALUES ?aop { <https://identifiers.org/aop/12> }
+  ?aop aopo:has_key_event ?ke .
+  ?ke ncbitaxon:131567 ?taxon .
+  ?taxon a ncbitaxon:131567 ;
+    dc:title ?speciesname .
+  OPTIONAL { ?ke mmo:0000000 ?method . }
+}
+GROUP BY ?aop ?ke ?method
+ORDER BY ASC(?aop)""" ;
+    schema:keywords "AOP" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "B. AOPs/methods-for-aops.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ016> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "List stressors and their MIEs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ016" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs> ;
+    rdfs:comment "Returns all stressors and the Molecular Initiating Events they are linked to through AOPs."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/stressors-for-ao.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT DISTINCT ?stressor ?stressorLabel ?mie ?mieLabel
+WHERE {
+  ?stressor a nci:C54571 ;
+    dc:title ?stressorLabel .
+  ?aop a aopo:AdverseOutcomePathway ;
+    nci:C54571 ?stressor ;
+    aopo:has_molecular_initiating_event ?mie .
+  ?mie a aopo:KeyEvent ;
+    dc:title ?mieLabel .
+}
+ORDER BY ?stressorLabel""" ;
+    schema:keywords "AOP" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "B. AOPs/stressors-for-ao.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ017> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Gene detection method summary (regex vs BERN2 NER)"@en ;
+    dcterms:created "2026-05-18"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ017" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents> ;
+    rdfs:comment "Counts gene-Key Event associations by detection method. edam:data_1025 holds the union of all detected genes; :geneDetectedByRegex and :geneDetectedByNER record provenance. Shows total NER associations, how many were also found by the regex mapper, and how many were found only by NER."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/gene-detection-method-summary.rq> ;
+    sh:select """PREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>
+
+SELECT
+  (COUNT(*) AS ?ner_total)
+  (SUM(IF(EXISTS { ?ke p:geneDetectedByRegex ?gene }, 1, 0)) AS ?ner_and_regex)
+  (SUM(IF(EXISTS { ?ke p:geneDetectedByRegex ?gene }, 0, 1)) AS ?ner_only)
+WHERE {
+  ?ke p:geneDetectedByNER ?gene .
+}""" ;
+    schema:keywords "key event" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "C. Key Events/gene-detection-method-summary.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ018> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "List annotated genes for AOPs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ018" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents> ;
+    rdfs:comment "Returns all genes annotated in Key Events across AOPs, including the protein identifiers and object names."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/genes-for-aop-annotated.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:name "AOP (blank = all)" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path param:aop_id ;
+            snorql:autocomplete "aop" ;
+            snorql:valueTemplate "https://identifiers.org/aop/{value}" ;
+            snorql:variable "aop" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX pato: <http://purl.obolibrary.org/obo/PATO_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?aop ?aoptitle ?ketitle ?objectname ?prot
+WHERE {
+  # Optional AOP: left blank, ?aop stays unbound and all AOPs are returned.
+  VALUES ?aop { UNDEF }
+  ?aop a aopo:AdverseOutcomePathway ;
+    aopo:has_key_event ?ke ;
+    dc:title ?aoptitle .
+  ?ke pato:0001241 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object dc:title ?objectname ;
+    skos:exactMatch ?prot .
+  ?prot a edam:data_1027 .
+}
+ORDER BY DESC(?aop)""" ;
+    schema:keywords "key event" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "C. Key Events/genes-for-aop-annotated.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ019> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "List identifier-mapped genes for AOPs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ019" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents> ;
+    rdfs:comment "Returns all non-annotated genes from Key Events of AOPs, with HGNC symbols and NCBI gene identifiers. Genes are text-mined from Key Event descriptions by two detectors: an HGNC dictionary matcher (regex) and BERN2 named-entity recognition (NER). The detectedBy column says which found each gene, and the Detection method filter restricts the list, e.g. to genes confirmed by both."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/genes-for-aop-mapped.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:name "AOP (blank = all)" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path param:aop_id ;
+            snorql:autocomplete "aop" ;
+            snorql:valueTemplate "https://identifiers.org/aop/{value}" ;
+            snorql:variable "aop" ],
+        [ a sh:Parameter ;
+            sh:datatype xsd:string ;
+            sh:defaultValue "any" ;
+            sh:name "Detection method" ;
+            sh:order 2 ;
+            sh:path param:method ;
+            snorql:option [ rdfs:label "Any detector" ;
+                    rdf:value "any" ;
+                    sh:order 1 ],
+                [ rdfs:label "Dictionary (incl. both)" ;
+                    rdf:value "regex" ;
+                    sh:order 2 ],
+                [ rdfs:label "BERN2 NER (incl. both)" ;
+                    rdf:value "ner" ;
+                    sh:order 3 ],
+                [ rdfs:label "Both detectors" ;
+                    rdf:value "both" ;
+                    sh:order 4 ],
+                [ rdfs:label "Dictionary only" ;
+                    rdf:value "regex_only" ;
+                    sh:order 5 ],
+                [ rdfs:label "BERN2 NER only" ;
+                    rdf:value "ner_only" ;
+                    sh:order 6 ] ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>
+
+SELECT DISTINCT ?aop ?aoptitle ?ketitle ?HGNC ?id ?detectedBy
+WHERE {
+  # Optional AOP: left blank, ?aop stays unbound and all AOPs are returned.
+  VALUES ?aop { UNDEF }
+  VALUES ?method { "any" }
+  ?aop a aopo:AdverseOutcomePathway ;
+    dc:title ?aoptitle ;
+    aopo:has_key_event ?ke .
+  ?ke a aopo:KeyEvent ;
+    edam:data_1025 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object edam:data_2298 ?HGNC ;
+    skos:exactMatch ?id .
+  ?id a edam:data_1027 ;
+    edam:data_1027 ?ncbi .
+  # Detector provenance for this Key Event–gene link.
+  OPTIONAL { ?ke p:geneDetectedByRegex ?object . BIND(1 AS ?byRegex) }
+  OPTIONAL { ?ke p:geneDetectedByNER ?object . BIND(1 AS ?byNER) }
+  BIND(IF(BOUND(?byRegex) && BOUND(?byNER), "both",
+       IF(BOUND(?byRegex), "regex_only",
+       IF(BOUND(?byNER), "ner_only", "unrecorded"))) AS ?detectedBy)
+  # Detection method filter — "regex" and "ner" include links found by both detectors.
+  FILTER(?method = "any" || ?method = ?detectedBy ||
+    (?method = "regex" && BOUND(?byRegex)) ||
+    (?method = "ner" && BOUND(?byNER)))
+}
+ORDER BY DESC(?aop)""" ;
+    schema:keywords "key event" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "C. Key Events/genes-for-aop-mapped.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ020> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Genes found only by BERN2 NER (not by regex)"@en ;
+    dcterms:created "2026-05-18"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ020" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents> ;
+    rdfs:comment "Lists gene-Key Event associations detected by the BERN2 NER+EL mapper that the legacy regex mapper did not find. These are the net-new genes contributed by named-entity recognition over Key Event descriptions."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/genes-found-only-by-ner.rq> ;
+    sh:select """PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>
+
+SELECT ?ke ?ketitle ?gene ?symbol
+WHERE {
+  ?ke p:geneDetectedByNER ?gene .
+  FILTER NOT EXISTS { ?ke p:geneDetectedByRegex ?gene }
+  OPTIONAL { ?ke dc:title ?ketitle }
+  OPTIONAL { ?gene rdfs:label ?symbol }
+}
+ORDER BY ?ke""" ;
+    schema:keywords "key event" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "C. Key Events/genes-found-only-by-ner.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ021> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Map Key Events to AOPs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ021" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents> ;
+    rdfs:comment "Returns all Key Events and the Adverse Outcome Pathways they belong to, ordered by Key Event name."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/ke-to-aop.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT DISTINCT ?ke ?keLabel ?aop ?aopLabel
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+    aopo:has_key_event ?ke ;
+    dc:title ?aopLabel .
+  ?ke dc:title ?keLabel .
+}
+ORDER BY ?keLabel""" ;
+    schema:keywords "key event" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "C. Key Events/ke-to-aop.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ022> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "List Key Events with Ensembl IDs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ022" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents> ;
+    rdfs:comment "Returns Key Events and their linked Ensembl gene identifiers through gene/protein annotations."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-ensembl.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?keid ?ketitle ?id ?ensembl
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    edam:data_1025 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object skos:exactMatch ?id .
+  ?id a edam:data_1033 ;
+    edam:data_1033 ?ensembl .
+}""" ;
+    schema:keywords "key event" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "C. Key Events/kes-and-ensembl.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ023> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "List Key Events with HGNC symbols"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ023" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents> ;
+    rdfs:comment "Returns Key Events and their linked HGNC gene symbols through gene/protein annotations."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-hgnc.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?keid ?ketitle ?hgnc
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    edam:data_1025 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object edam:data_2298 ?hgnc .
+}""" ;
+    schema:keywords "key event" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "C. Key Events/kes-and-hgnc.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ024> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "List Key Events with annotated NCBI gene IDs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ024" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents> ;
+    rdfs:comment "Returns Key Events with their annotated protein objects and linked NCBI gene identifiers, through AOP membership."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-ncbi-annotated.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX pato: <http://purl.obolibrary.org/obo/PATO_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?keid ?ketitle ?objectname ?prot
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+    rdfs:label ?aop_id ;
+    aopo:has_key_event ?ke .
+  ?ke pato:0001241 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object dc:title ?objectname ;
+    skos:exactMatch ?prot .
+  ?prot a edam:data_1027 .
+}""" ;
+    schema:keywords "key event" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "C. Key Events/kes-and-ncbi-annotated.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ025> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "List Key Events with NCBI gene IDs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ025" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents> ;
+    rdfs:comment "Returns Key Events and their linked NCBI gene identifiers through gene/protein annotations."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-ncbi.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?keid ?ketitle ?id ?ncbi
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    edam:data_1025 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object skos:exactMatch ?id .
+  ?id a edam:data_1027 ;
+    edam:data_1027 ?ncbi .
+}""" ;
+    schema:keywords "key event" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "C. Key Events/kes-and-ncbi.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ026> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "List Key Events with annotated UniProt IDs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ026" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents> ;
+    rdfs:comment "Returns Key Events with their annotated protein objects and linked UniProt identifiers, through AOP membership."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-uniprot-annotated.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX pato: <http://purl.obolibrary.org/obo/PATO_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?keid ?ketitle ?objectname ?uniprotID ?uniprot
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+    rdfs:label ?aop_id ;
+    aopo:has_key_event ?ke .
+  ?ke pato:0001241 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object dc:title ?objectname ;
+    skos:exactMatch ?uniprot .
+  ?uniprot a edam:data_2291 ;
+    edam:data_2291 ?uniprotID .
+}""" ;
+    schema:keywords "key event" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "C. Key Events/kes-and-uniprot-annotated.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ027> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "List Key Events with UniProt IDs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ027" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents> ;
+    rdfs:comment "Returns Key Events and their linked UniProt protein identifiers through gene/protein annotations."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-uniprot.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?keid ?ketitle ?id ?uniprot
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    edam:data_1025 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object skos:exactMatch ?id .
+  ?id a edam:data_2291 ;
+    edam:data_2291 ?uniprot .
+}""" ;
+    schema:keywords "key event" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "C. Key Events/kes-and-uniprot.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ028> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Search Key Events by biological level"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ028" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents> ;
+    rdfs:comment "Returns Key Events with their labels and biological organization levels. Choose a level or leave as All."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/search-ke-by-level.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:datatype xsd:string ;
+            sh:defaultValue "All" ;
+            sh:name "Biological level" ;
+            sh:order 1 ;
+            sh:path param:level ;
+            snorql:option [ rdfs:label "All" ;
+                    rdf:value "All" ;
+                    sh:order 1 ],
+                [ rdfs:label "Molecular" ;
+                    rdf:value "Molecular" ;
+                    sh:order 2 ],
+                [ rdfs:label "Cellular" ;
+                    rdf:value "Cellular" ;
+                    sh:order 3 ],
+                [ rdfs:label "Tissue" ;
+                    rdf:value "Tissue" ;
+                    sh:order 4 ],
+                [ rdfs:label "Organ" ;
+                    rdf:value "Organ" ;
+                    sh:order 5 ],
+                [ rdfs:label "Individual" ;
+                    rdf:value "Individual" ;
+                    sh:order 6 ],
+                [ rdfs:label "Population" ;
+                    rdf:value "Population" ;
+                    sh:order 7 ] ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT DISTINCT ?ke ?label ?bioLevel
+WHERE {
+  VALUES ?level { "All" }
+  ?ke a aopo:KeyEvent ;
+    dc:title ?label ;
+    nci:C25664 ?bioLevel .
+  # "All" returns every level.
+  FILTER(?level = "All" || ?bioLevel = ?level)
+}
+ORDER BY ?bioLevel""" ;
+    schema:keywords "key event" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "C. Key Events/search-ke-by-level.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ029> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "List KERs in an AOP"@en ;
+    dcterms:created "2026-05-24"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ029" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KERs> ;
+    rdfs:comment "Returns all Key Event Relationships in a specific AOP, with the upstream and downstream Key Event titles for each."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/D.%20KERs/list-kers-for-aop.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:defaultValue "12" ;
+            sh:name "AOP" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path param:aop_id ;
+            snorql:autocomplete "aop" ;
+            snorql:valueTemplate "https://identifiers.org/aop/{value}" ;
+            snorql:variable "aop" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT ?KER ?upstreamKE ?upstreamTitle ?downstreamKE ?downstreamTitle
+WHERE {
+  VALUES ?aop { <https://identifiers.org/aop/12> }
+  ?aop aopo:has_key_event_relationship ?KER .
+  ?KER aopo:has_upstream_key_event ?upstreamKE ;
+       aopo:has_downstream_key_event ?downstreamKE .
+  ?upstreamKE dc:title ?upstreamTitle .
+  ?downstreamKE dc:title ?downstreamTitle .
+}
+ORDER BY ?upstreamKE""" ;
+    schema:keywords "key event relationship" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "D. KERs/list-kers-for-aop.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ030> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Find stressors for an adverse outcome"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ030" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Stressors> ;
+    rdfs:comment "Searches for Adverse Outcomes by name and returns linked AOPs, MIEs, stressors, and chemical annotations."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/E.%20Stressors/stressors-for-ao-searched.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:datatype xsd:string ;
+            sh:defaultValue "fibrosis" ;
+            sh:name "Adverse outcome: pick one, or type part of a name" ;
+            sh:order 1 ;
+            sh:path param:ao_name ;
+            snorql:autocomplete "keyEvent" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT ?AO ?AOname ?AOP ?MIETitle
+  (CONCAT('"', GROUP_CONCAT(?StressorName; SEPARATOR='","'), '"') AS ?StressorNames)
+  (CONCAT('"', GROUP_CONCAT(?ChemicalName; SEPARATOR='","'), '"') AS ?ChemicalNames)
+WHERE {
+  VALUES ?ao_name { "fibrosis" }
+  ?AO a aopo:KeyEvent ;
+    dc:identifier ?AOLookup ;
+    dc:title ?AOname .
+  ?AOP a aopo:AdverseOutcomePathway ;
+    aopo:has_adverse_outcome ?AOLookup ;
+    aopo:has_molecular_initiating_event ?MIE ;
+    nci:C54571 ?Stressor .
+  ?MIE dc:title ?MIETitle .
+  ?Stressor dc:title ?StressorName .
+  OPTIONAL {
+    ?Stressor aopo:has_chemical_entity ?Chemical .
+    ?Chemical dc:title ?ChemicalName .
+  }
+  # A picked Key Event gives its numeric id, matched exactly; any other text is a
+  # case-insensitive substring of the adverse outcome name.
+  FILTER(IF(regex(?ao_name, "^[0-9]+$"),
+    STR(?AO) = CONCAT("https://identifiers.org/aop.events/", ?ao_name),
+    regex(?AOname, ?ao_name, "i")))
+}
+GROUP BY ?AO ?AOname ?AOP ?MIETitle
+ORDER BY DESC(?AO)""" ;
+    schema:keywords "stressor" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "E. Stressors/stressors-for-ao-searched.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ031> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "List chemicals for adverse outcomes"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ031" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Chemicals> ;
+    rdfs:comment "Returns Adverse Outcomes with their linked AOPs and aggregated chemical names from stressor annotations."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/F.%20Chemicals/chemicals-for-ao.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT ?AO ?AOname ?AOP
+  (CONCAT('"', GROUP_CONCAT(?ChemicalName; SEPARATOR='","'), '"') AS ?ChemicalNames)
+WHERE {
+  ?AO a aopo:KeyEvent ;
+    dc:identifier ?AOLookup ;
+    dc:title ?AOname .
+  ?AOP a aopo:AdverseOutcomePathway ;
+    aopo:has_adverse_outcome ?AOLookup ;
+    nci:C54571 ?Stressor .
+  ?Stressor dc:title ?StressorName .
+  OPTIONAL {
+    ?Stressor aopo:has_chemical_entity ?Chemical .
+    ?Chemical dc:title ?ChemicalName .
+  }
+}
+GROUP BY ?AO ?AOname ?AOP
+ORDER BY DESC(?AO)""" ;
+    schema:keywords "chemical" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "F. Chemicals/chemicals-for-ao.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ032> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "List chemicals for AOPs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ032" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Chemicals> ;
+    rdfs:comment "Returns all AOPs with their associated stressor chemicals and CAS registry numbers."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/F.%20Chemicals/chemicals-for-aop.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:name "AOP (blank = all)" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path param:aop_id ;
+            snorql:autocomplete "aop" ;
+            snorql:valueTemplate "https://identifiers.org/aop/{value}" ;
+            snorql:variable "aop" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT ?aop ?aoptitle ?CASID ?chemicalname
+WHERE {
+  # Optional AOP: left blank, ?aop stays unbound and all AOPs are returned.
+  VALUES ?aop { UNDEF }
+  ?aop a aopo:AdverseOutcomePathway ;
+    nci:C54571 ?Stressor ;
+    dc:title ?aoptitle .
+  ?Stressor aopo:has_chemical_entity ?Chemical .
+  ?Chemical cheminf:000446 ?CASID ;
+    dc:title ?chemicalname .
+}""" ;
+    schema:keywords "chemical" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "F. Chemicals/chemicals-for-aop.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ033> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Get matching identifiers for chemicals"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ033" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Chemicals> ;
+    rdfs:comment "Returns all chemicals with their CAS numbers and cross-referenced database identifiers."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/F.%20Chemicals/get-matching-ids-for-chems.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:datatype xsd:string ;
+            sh:name "Chemical: pick one, or type part of a name (blank = all)" ;
+            sh:order 1 ;
+            sh:path param:chem_name ;
+            snorql:autocomplete "chemical" ] ;
+    sh:select """PREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?CASID ?ChemicalName ?MatchingIDs
+WHERE {
+  # Optional chemical: left blank, all chemicals are returned. A picked chemical gives its
+  # CAS number, which is matched exactly; any other text is a case-insensitive name substring.
+  VALUES ?chem_name { UNDEF }
+  ?CAS a cheminf:000000 ;
+    dc:title ?ChemicalName ;
+    cheminf:000446 ?CASID ;
+    skos:exactMatch ?MatchingIDs .
+  FILTER(!BOUND(?chem_name) ||
+    IF(regex(?chem_name, "^[0-9]+-[0-9]+-[0-9]$"),
+       STR(?CASID) = ?chem_name,
+       regex(?ChemicalName, ?chem_name, "i")))
+}""" ;
+    schema:keywords "chemical" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "F. Chemicals/get-matching-ids-for-chems.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ034> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Export all AOPs with full details"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ034" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport> ;
+    rdfs:comment "Returns all AOPs with their status, MIEs, Adverse Outcomes, stressors, and number of Key Events."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-aops-full.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT DISTINCT ?aop ?aopTitle ?status
+  (GROUP_CONCAT(DISTINCT ?mieTitle; separator=", ") AS ?MIEs)
+  (GROUP_CONCAT(DISTINCT ?aoTitle; separator=", ") AS ?AOs)
+  (GROUP_CONCAT(DISTINCT ?stressorTitle; separator=", ") AS ?Stressors)
+  (COUNT(DISTINCT ?ke) AS ?numKEs)
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+    dc:title ?aopTitle .
+  OPTIONAL { ?aop nci:C25688 ?status . }
+  OPTIONAL {
+    ?aop aopo:has_molecular_initiating_event ?mie .
+    ?mie dc:title ?mieTitle .
+  }
+  OPTIONAL {
+    ?aop aopo:has_adverse_outcome ?ao .
+    ?ao dc:title ?aoTitle .
+  }
+  OPTIONAL {
+    ?aop nci:C54571 ?stressor .
+    ?stressor dc:title ?stressorTitle .
+  }
+  OPTIONAL {
+    ?aop aopo:has_key_event ?ke .
+  }
+}
+GROUP BY ?aop ?aopTitle ?status
+ORDER BY ?aopTitle""" ;
+    schema:keywords "export" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "G. Data Export/all-aops-full.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ035> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Export all AOPs"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ035" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport> ;
+    rdfs:comment "Returns all Adverse Outcome Pathways with their names."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-aops.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT ?AOP ?AOPName
+WHERE {
+  ?AOP a aopo:AdverseOutcomePathway ;
+    dc:title ?AOPName .
+}""" ;
+    schema:keywords "export" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "G. Data Export/all-aops.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ036> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Export all chemicals"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ036" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport> ;
+    rdfs:comment "Returns all chemicals in the AOP-Wiki with their CAS registry numbers."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-chemicals.rq> ;
+    sh:select """PREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT ?CAS ?ChemicalName
+WHERE {
+  ?cas a cheminf:000000 ;
+    dc:title ?ChemicalName ;
+    cheminf:000446 ?CAS .
+}""" ;
+    schema:keywords "export" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "G. Data Export/all-chemicals.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ037> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Export all Key Event components"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ037" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport> ;
+    rdfs:comment "Returns all Key Events with their biological event components including processes, objects, and actions."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-ke-components.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT DISTINCT ?ke ?keTitle ?bioEvent
+  ?process ?processName ?object ?objectName ?action
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    dc:title ?keTitle .
+  OPTIONAL {
+    ?ke aopo:hasBiologicalEvent ?bioEvent .
+    ?bioEvent aopo:hasProcess ?process .
+    ?process dc:title ?processName .
+  }
+  OPTIONAL {
+    ?ke aopo:hasBiologicalEvent ?bioEvent .
+    ?bioEvent aopo:hasObject ?object .
+    ?object dc:title ?objectName .
+  }
+  OPTIONAL {
+    ?ke aopo:hasBiologicalEvent ?bioEvent .
+    ?bioEvent aopo:hasAction ?action .
+  }
+}
+ORDER BY ?ke""" ;
+    schema:keywords "export" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "G. Data Export/all-ke-components.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ038> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Export all Key Events with full details"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ038" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport> ;
+    rdfs:comment "Returns all Key Events with their biological level, AOP membership, and descriptions."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-ke-full.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT DISTINCT ?ke ?keTitle ?bioLevel
+  (GROUP_CONCAT(DISTINCT ?aop; separator=", ") AS ?inAOPs)
+  ?description
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    dc:title ?keTitle .
+  OPTIONAL { ?ke nci:C25664 ?bioLevel . }
+  OPTIONAL {
+    ?aop a aopo:AdverseOutcomePathway ;
+      aopo:has_key_event ?ke ;
+      dc:title ?aopTitle .
+  }
+  OPTIONAL {
+    ?ke dc:description ?description .
+  }
+}
+GROUP BY ?ke ?keTitle ?bioLevel ?description""" ;
+    schema:keywords "export" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "G. Data Export/all-ke-full.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ039> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Export AOP to AO mappings"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ039" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport> ;
+    rdfs:comment "Returns all Adverse Outcome Pathways and their linked Adverse Outcomes, ordered by AOP."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/aop-to-ao.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT DISTINCT ?aop ?aopLabel ?ao ?aoLabel
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+    aopo:has_adverse_outcome ?ao ;
+    dc:title ?aopLabel .
+  ?ao dc:title ?aoLabel .
+}
+ORDER BY ?aop""" ;
+    schema:keywords "export" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "G. Data Export/aop-to-ao.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ040> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Find AOPs applicable to a taxonomic group (e.g. mammals)"@en ;
+    dcterms:created "2026-06-24"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ040" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Federated> ;
+    rdfs:comment "Expands a higher NCBI taxon (default 40674 = Mammalia) into all its descendant species via the UniProt taxonomy, then returns every AOP whose taxonomic applicability falls within that group. The taxa come from UniProt."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/aops-for-taxon.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:defaultValue "40674" ;
+            sh:name "NCBI Taxon ID (40674 = Mammalia)" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path param:taxon_id ;
+            snorql:valueTemplate "http://purl.uniprot.org/taxonomy/{value}" ;
+            snorql:variable "taxonGroup" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?aop ?aopTitle
+  (GROUP_CONCAT(DISTINCT ?species; separator=" | ") AS ?mammalianSpecies)
+WHERE {
+  # Fetch the taxa in the group from UniProt once, as AOP-Wiki taxon IRIs, then join
+  # locally on the IRI.
+  SERVICE <https://sparql.uniprot.org/sparql> {
+    VALUES ?taxonGroup { <http://purl.uniprot.org/taxonomy/40674> }
+    # The group and everything under it. UniProt stores every ancestor of a taxon, so no
+    # property path is needed (Virtuoso is slow to federate a path with a variable).
+    { ?taxon rdfs:subClassOf ?taxonGroup }
+    UNION
+    { ?taxonGroup a up:Taxon . BIND(?taxonGroup AS ?taxon) }
+    BIND(IRI(CONCAT("http://purl.bioontology.org/ontology/NCBITAXON/", STRAFTER(STR(?taxon), "taxonomy/"))) AS ?taxon2)
+  }
+  ?aop a aopo:AdverseOutcomePathway ;
+       dc:title ?aopTitle ;
+       ncbitaxon:131567 ?taxon2 .
+  ?taxon2 a ncbitaxon:131567 ;
+          dc:title ?species .
+}
+GROUP BY ?aop ?aopTitle
+ORDER BY ?aopTitle""" ;
+    spex:federatesWith <https://sparql.uniprot.org/sparql> ;
+    schema:keywords "federated" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "H. Federated/aops-for-taxon.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ041> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Find applicable species in taxonomic tree"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ041" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Federated> ;
+    rdfs:comment "Queries the UniProt taxonomy to find all species under a given taxon that have Key Events or Key Event Relationships in the AOP-Wiki."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/applicable-to-taxon-tree.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:defaultValue "39107" ;
+            sh:name "NCBI Taxon ID" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path param:taxon_id ;
+            snorql:valueTemplate "http://purl.uniprot.org/taxonomy/{value}" ;
+            snorql:variable "taxonGroup" ] ;
+    sh:select """PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?tax
+  (GROUP_CONCAT(DISTINCT ?name; separator=" | ") AS ?names)
+  (COUNT(DISTINCT ?keker) AS ?n)
+WHERE {
+  # Fetch the taxa under the given taxon from UniProt once, as AOP-Wiki taxon IRIs,
+  # then join locally on the IRI.
+  SERVICE <https://sparql.uniprot.org/sparql> {
+    VALUES ?taxonGroup { <http://purl.uniprot.org/taxonomy/39107> }
+    # The group and everything under it. UniProt stores every ancestor of a taxon, so no
+    # property path is needed (Virtuoso is slow to federate a path with a variable).
+    { ?taxon rdfs:subClassOf ?taxonGroup }
+    UNION
+    { ?taxonGroup a up:Taxon . BIND(?taxonGroup AS ?taxon) }
+    BIND(STRAFTER(STR(?taxon), "taxonomy/") AS ?tax)
+    BIND(IRI(CONCAT("http://purl.bioontology.org/ontology/NCBITAXON/", ?tax)) AS ?taxon2)
+  }
+  ?keker ncbitaxon:131567 ?taxon2 .
+  ?taxon2 a ncbitaxon:131567 ;
+    dc:title ?name .
+}
+GROUP BY ?tax
+ORDER BY DESC(?n)""" ;
+    spex:federatesWith <https://sparql.uniprot.org/sparql> ;
+    schema:keywords "federated" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "H. Federated/applicable-to-taxon-tree.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ042> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Find WikiPathways for AOP chemicals"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ042" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Federated> ;
+    rdfs:comment "Finds human WikiPathways pathways that contain stressor chemicals of an AOP, matched on ChEBI. Leave the AOP blank to list all AOPs."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/pathways-with-chem.rq> ;
+    sh:parameter [ a sh:Parameter ;
+            sh:name "AOP (blank = all)" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path param:aop_id ;
+            snorql:autocomplete "aop" ;
+            snorql:valueTemplate "https://identifiers.org/aop/{value}" ;
+            snorql:variable "LinkedAOPURI" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
+
+SELECT ?ChemicalName ?ChEBI ?LinkedStressor
+  (GROUP_CONCAT(DISTINCT ?LinkedAOP; separator=', ') AS ?AOPs)
+  (STR(?PathwayID) AS ?Pathway_ID)
+  (STR(?PathwayTitle) AS ?PathwayName)
+  ?PathwayURI
+WHERE {
+  # Fetch human pathway metabolites from WikiPathways once, then join locally on the ChEBI
+  # number. Joining the other way round sends one remote request per chemical and times out.
+  SERVICE <https://sparql.wikipathways.org/sparql> {
+    ?metabolite wp:bdbChEBI ?wpChebi ;
+      dcterms:isPartOf ?PathwayURI .
+    ?PathwayURI a wp:Pathway ;
+      dcterms:identifier ?PathwayID ;
+      dc:title ?PathwayTitle ;
+      wp:organismName "Homo sapiens" .
+  }
+  BIND(STRAFTER(STR(?wpChebi), "CHEBI:") AS ?ChEBI)
+  ?chebiRef cheminf:000407 ?ChEBI .
+  ?cheLook a cheminf:000000 ;
+    dc:title ?ChemicalName ;
+    dcterms:isPartOf ?LinkedStressor ;
+    skos:exactMatch ?chebiRef .
+  # Optional AOP: left blank, ?LinkedAOPURI stays unbound and all AOPs are returned.
+  VALUES ?LinkedAOPURI { UNDEF }
+  ?LinkedStressor dcterms:isPartOf ?LinkedAOPURI .
+  ?LinkedAOPURI a aopo:AdverseOutcomePathway ;
+    rdfs:label ?LinkedAOP .
+}
+GROUP BY ?ChemicalName ?ChEBI ?LinkedStressor ?PathwayID ?PathwayTitle ?PathwayURI
+ORDER BY ?ChemicalName ?PathwayTitle""" ;
+    spex:federatesWith <https://sparql.wikipathways.org/sparql> ;
+    schema:keywords "federated" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "H. Federated/pathways-with-chem.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ043> a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label "Find ToxCast assays for Key Events"@en ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:identifier "AOPQ043" ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Federated> ;
+    rdfs:comment "Returns Key Events with their annotated proteins and linked ToxCast assay information from the AOP-DB endpoint."@en ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/toxcast-assays-for-kes.rq> ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX mmo: <http://purl.obolibrary.org/obo/MMO_>
+PREFIX pato: <http://purl.obolibrary.org/obo/PATO_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?keid ?ketitle ?objectname ?prot ?assaytitle ?assay
+WHERE {
+  # Fetch the protein-assay links from AOP-DB once (a few hundred), then join locally.
+  # With the SERVICE call last, Virtuoso sends one request per protein and times out.
+  SERVICE <https://aopdb.rdf.bigcat-bioinformatics.org/sparql> {
+    ?prot mmo:0000441 ?assay .
+    ?assay dc:title ?assaytitle .
+  }
+  ?aop a aopo:AdverseOutcomePathway ;
+    rdfs:label ?aop_id ;
+    aopo:has_key_event ?ke .
+  ?ke pato:0001241 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object dc:title ?objectname ;
+    skos:exactMatch ?prot .
+  ?prot a edam:data_1027 .
+}""" ;
+    spex:federatesWith <https://aopdb.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:keywords "federated" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    schema:version "1.0.0" ;
+    snorql:alias "H. Federated/toxcast-assays-for-kes.rq" ;
+    snorql:expect [ snorql:minResults 1 ] .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KERs> a skos:Concept ;
+    skos:inScheme <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> ;
+    skos:prefLabel "Key Event Relationships"@en ;
+    sh:order 4 .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Stressors> a skos:Concept ;
+    skos:inScheme <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> ;
+    skos:prefLabel "Stressors"@en ;
+    sh:order 5 .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Chemicals> a skos:Concept ;
+    skos:inScheme <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> ;
+    skos:prefLabel "Chemicals"@en ;
+    sh:order 6 .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Federated> a skos:Concept ;
+    skos:inScheme <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> ;
+    skos:prefLabel "Federated"@en ;
+    sh:order 8 .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs> a skos:Concept ;
+    skos:inScheme <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> ;
+    skos:prefLabel "AOPs"@en ;
+    sh:order 2 .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport> a skos:Concept ;
+    skos:inScheme <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> ;
+    skos:prefLabel "Data Export"@en ;
+    sh:order 7 .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> a skos:ConceptScheme ;
+    skos:prefLabel "Categories of AOP-Wiki SPARQL examples"@en .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata> a skos:Concept ;
+    skos:inScheme <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> ;
+    skos:prefLabel "Metadata"@en ;
+    sh:order 1 .
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents> a skos:Concept ;
+    skos:inScheme <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> ;
+    skos:prefLabel "Key Events"@en ;
+    sh:order 3 .
+
+<https://orcid.org/0000-0003-2230-0840> a schema:Person ;
+    schema:name "Marvin Martens" ;
+    schema:sameAs <https://github.com/marvinm2> .
+

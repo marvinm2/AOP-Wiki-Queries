@@ -1,0 +1,18 @@
+# title: Count all entities
+# category: Metadata
+# description: Returns the total number of AOPs, Key Events, Key Event Relationships, and Stressors in the AOP-Wiki RDF.
+#
+# AOPQ002 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ002
+# Generated from A. Metadata/count-entities.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT ?total_AOPs ?total_KEs ?total_KERs ?total_Stressors
+WHERE {
+  # One count per subquery: counting all four in one pattern multiplies them.
+  { SELECT (COUNT(DISTINCT ?aop) AS ?total_AOPs) WHERE { ?aop a aopo:AdverseOutcomePathway . } }
+  { SELECT (COUNT(DISTINCT ?ke) AS ?total_KEs) WHERE { ?ke a aopo:KeyEvent . } }
+  { SELECT (COUNT(DISTINCT ?ker) AS ?total_KERs) WHERE { ?ker a aopo:KeyEventRelationship . } }
+  { SELECT (COUNT(DISTINCT ?stressor) AS ?total_Stressors) WHERE { ?stressor a nci:C54571 . } }
+}

@@ -1,0 +1,23 @@
+# title: List chemicals for AOPs
+# category: Chemicals
+# description: Returns all AOPs with their associated stressor chemicals and CAS registry numbers.
+#
+# AOPQ032 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ032
+# Generated from F. Chemicals/chemicals-for-aop.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT ?aop ?aoptitle ?CASID ?chemicalname
+WHERE {
+  # Optional AOP: left blank, ?aop stays unbound and all AOPs are returned.
+  VALUES ?aop { UNDEF }
+  ?aop a aopo:AdverseOutcomePathway ;
+    nci:C54571 ?Stressor ;
+    dc:title ?aoptitle .
+  ?Stressor aopo:has_chemical_entity ?Chemical .
+  ?Chemical cheminf:000446 ?CASID ;
+    dc:title ?chemicalname .
+}

@@ -1,0 +1,44 @@
+{
+ "id": "AOPQ002",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ002",
+ "label": "Count all entities",
+ "description": "Returns the total number of AOPs, Key Events, Key Event Relationships, and Stressors in the AOP-Wiki RDF.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+ ],
+ "keywords": [
+  "metadata"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-entities.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT ?total_AOPs ?total_KEs ?total_KERs ?total_Stressors\nWHERE {\n  # One count per subquery: counting all four in one pattern multiplies them.\n  { SELECT (COUNT(DISTINCT ?aop) AS ?total_AOPs) WHERE { ?aop a aopo:AdverseOutcomePathway . } }\n  { SELECT (COUNT(DISTINCT ?ke) AS ?total_KEs) WHERE { ?ke a aopo:KeyEvent . } }\n  { SELECT (COUNT(DISTINCT ?ker) AS ?total_KERs) WHERE { ?ker a aopo:KeyEventRelationship . } }\n  { SELECT (COUNT(DISTINCT ?stressor) AS ?total_Stressors) WHERE { ?stressor a nci:C54571 . } }\n}",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "A. Metadata/count-entities.ttl",
+ "aliases": [
+  "A. Metadata/count-entities.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

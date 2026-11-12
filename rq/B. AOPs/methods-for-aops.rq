@@ -1,0 +1,26 @@
+# title: List methods for AOPs
+# category: AOPs
+# description: Returns Key Events with their applicable species and measurement methods for a specific AOP.
+# param: aop_id|autocomplete:aop|12|AOP
+#
+# AOPQ015 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ015
+# Generated from B. AOPs/methods-for-aops.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX mmo: <http://purl.obolibrary.org/obo/MMO_>
+PREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>
+
+SELECT DISTINCT ?aop ?ke
+  (GROUP_CONCAT(DISTINCT ?speciesname; separator=" | ") AS ?speciesnames)
+  ?method
+WHERE {
+  VALUES ?aop { <https://identifiers.org/aop/{{aop_id}}> }
+  ?aop aopo:has_key_event ?ke .
+  ?ke ncbitaxon:131567 ?taxon .
+  ?taxon a ncbitaxon:131567 ;
+    dc:title ?speciesname .
+  OPTIONAL { ?ke mmo:0000000 ?method . }
+}
+GROUP BY ?aop ?ke ?method
+ORDER BY ASC(?aop)

@@ -1,0 +1,44 @@
+{
+ "id": "AOPQ007",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ007",
+ "label": "Count stressors",
+ "description": "Returns the total number of Stressors (chemicals) in the dataset.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+ ],
+ "keywords": [
+  "metadata"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/count-stressors.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT (COUNT(DISTINCT ?stressor) AS ?total_Stressors)\nWHERE {\n  ?stressor a nci:C54571 .\n}",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "A. Metadata/count-stressors.ttl",
+ "aliases": [
+  "A. Metadata/count-stressors.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

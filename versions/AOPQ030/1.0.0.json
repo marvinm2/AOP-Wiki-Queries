@@ -1,0 +1,58 @@
+{
+ "id": "AOPQ030",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ030",
+ "label": "Find stressors for an adverse outcome",
+ "description": "Searches for Adverse Outcomes by name and returns linked AOPs, MIEs, stressors, and chemical annotations.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Stressors"
+ ],
+ "keywords": [
+  "stressor"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/E.%20Stressors/stressors-for-ao-searched.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT ?AO ?AOname ?AOP ?MIETitle\n  (CONCAT('\"', GROUP_CONCAT(?StressorName; SEPARATOR='\",\"'), '\"') AS ?StressorNames)\n  (CONCAT('\"', GROUP_CONCAT(?ChemicalName; SEPARATOR='\",\"'), '\"') AS ?ChemicalNames)\nWHERE {\n  VALUES ?ao_name { \"fibrosis\" }\n  ?AO a aopo:KeyEvent ;\n    dc:identifier ?AOLookup ;\n    dc:title ?AOname .\n  ?AOP a aopo:AdverseOutcomePathway ;\n    aopo:has_adverse_outcome ?AOLookup ;\n    aopo:has_molecular_initiating_event ?MIE ;\n    nci:C54571 ?Stressor .\n  ?MIE dc:title ?MIETitle .\n  ?Stressor dc:title ?StressorName .\n  OPTIONAL {\n    ?Stressor aopo:has_chemical_entity ?Chemical .\n    ?Chemical dc:title ?ChemicalName .\n  }\n  # A picked Key Event gives its numeric id, matched exactly; any other text is a\n  # case-insensitive substring of the adverse outcome name.\n  FILTER(IF(regex(?ao_name, \"^[0-9]+$\"),\n    STR(?AO) = CONCAT(\"https://identifiers.org/aop.events/\", ?ao_name),\n    regex(?AOname, ?ao_name, \"i\")))\n}\nGROUP BY ?AO ?AOname ?AOP ?MIETitle\nORDER BY DESC(?AO)",
+ "params": [
+  {
+   "name": "ao_name",
+   "variable": "ao_name",
+   "label": "Adverse outcome: pick one, or type part of a name",
+   "description": null,
+   "order": 1,
+   "kind": "literal",
+   "valueTemplate": null,
+   "default": "fibrosis",
+   "optional": false,
+   "autocomplete": "keyEvent",
+   "options": null
+  }
+ ],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "E. Stressors/stressors-for-ao-searched.ttl",
+ "aliases": [
+  "E. Stressors/stressors-for-ao-searched.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

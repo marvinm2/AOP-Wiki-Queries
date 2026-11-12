@@ -1,0 +1,18 @@
+# title: Search all fields by text
+# category: Metadata
+# description: Searches all text fields in the AOP-Wiki RDF for a keyword match using regular expressions.
+# param: search_term|string|nanotube|Search term
+#
+# AOPQ010 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ010
+# Generated from A. Metadata/text-search.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT ?item ?name ?predicate ?text
+WHERE {
+  VALUES ?search_term { "{{search_term}}" }
+  ?item ?predicate ?text ;
+    dc:title ?name .
+  FILTER regex(?text, ?search_term, "i")
+}
+ORDER BY DESC(?item)

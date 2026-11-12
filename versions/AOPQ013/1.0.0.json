@@ -1,0 +1,58 @@
+{
+ "id": "AOPQ013",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ013",
+ "label": "Get AO for a specific MIE",
+ "description": "Returns the Adverse Outcome linked to a specific Molecular Initiating Event.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs"
+ ],
+ "keywords": [
+  "AOP"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/get-ao-for-mie.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT ?MIEwebpage ?MolecularInitiatingEventName ?AOwebpage ?AdverseOutcomeName\nWHERE {\n  VALUES ?MIEwebpage { <https://identifiers.org/aop.events/18> }\n  ?MIEwebpage dc:identifier ?MIELookup ;\n    dc:title ?MolecularInitiatingEventName .\n  ?AOPwebpage a aopo:AdverseOutcomePathway ;\n    aopo:has_molecular_initiating_event ?MIELookup ;\n    aopo:has_adverse_outcome ?AOwebpage .\n  ?AOwebpage dc:title ?AdverseOutcomeName .\n}",
+ "params": [
+  {
+   "name": "mie_id",
+   "variable": "MIEwebpage",
+   "label": "MIE",
+   "description": null,
+   "order": 1,
+   "kind": "iri",
+   "valueTemplate": "https://identifiers.org/aop.events/{value}",
+   "default": "18",
+   "optional": false,
+   "autocomplete": "keyEvent",
+   "options": null
+  }
+ ],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "B. AOPs/get-ao-for-mie.ttl",
+ "aliases": [
+  "B. AOPs/get-ao-for-mie.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

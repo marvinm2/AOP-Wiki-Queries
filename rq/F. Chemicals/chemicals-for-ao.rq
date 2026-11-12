@@ -1,0 +1,28 @@
+# title: List chemicals for adverse outcomes
+# category: Chemicals
+# description: Returns Adverse Outcomes with their linked AOPs and aggregated chemical names from stressor annotations.
+#
+# AOPQ031 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ031
+# Generated from F. Chemicals/chemicals-for-ao.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT ?AO ?AOname ?AOP
+  (CONCAT('"', GROUP_CONCAT(?ChemicalName; SEPARATOR='","'), '"') AS ?ChemicalNames)
+WHERE {
+  ?AO a aopo:KeyEvent ;
+    dc:identifier ?AOLookup ;
+    dc:title ?AOname .
+  ?AOP a aopo:AdverseOutcomePathway ;
+    aopo:has_adverse_outcome ?AOLookup ;
+    nci:C54571 ?Stressor .
+  ?Stressor dc:title ?StressorName .
+  OPTIONAL {
+    ?Stressor aopo:has_chemical_entity ?Chemical .
+    ?Chemical dc:title ?ChemicalName .
+  }
+}
+GROUP BY ?AO ?AOname ?AOP
+ORDER BY DESC(?AO)

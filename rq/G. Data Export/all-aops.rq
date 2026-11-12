@@ -1,0 +1,15 @@
+# title: Export all AOPs
+# category: Data Export
+# description: Returns all Adverse Outcome Pathways with their names.
+#
+# AOPQ035 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ035
+# Generated from G. Data Export/all-aops.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT ?AOP ?AOPName
+WHERE {
+  ?AOP a aopo:AdverseOutcomePathway ;
+    dc:title ?AOPName .
+}

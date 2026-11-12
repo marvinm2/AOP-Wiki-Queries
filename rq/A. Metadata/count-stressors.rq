@@ -1,0 +1,13 @@
+# title: Count stressors
+# category: Metadata
+# description: Returns the total number of Stressors (chemicals) in the dataset.
+#
+# AOPQ007 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ007
+# Generated from A. Metadata/count-stressors.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT (COUNT(DISTINCT ?stressor) AS ?total_Stressors)
+WHERE {
+  ?stressor a nci:C54571 .
+}

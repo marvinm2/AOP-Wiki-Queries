@@ -1,0 +1,58 @@
+{
+ "id": "AOPQ010",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ010",
+ "label": "Search all fields by text",
+ "description": "Searches all text fields in the AOP-Wiki RDF for a keyword match using regular expressions.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+ ],
+ "keywords": [
+  "metadata"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/A.%20Metadata/text-search.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT ?item ?name ?predicate ?text\nWHERE {\n  VALUES ?search_term { \"nanotube\" }\n  ?item ?predicate ?text ;\n    dc:title ?name .\n  FILTER regex(?text, ?search_term, \"i\")\n}\nORDER BY DESC(?item)",
+ "params": [
+  {
+   "name": "search_term",
+   "variable": "search_term",
+   "label": "Search term",
+   "description": null,
+   "order": 1,
+   "kind": "literal",
+   "valueTemplate": null,
+   "default": "nanotube",
+   "optional": false,
+   "autocomplete": null,
+   "options": null
+  }
+ ],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "A. Metadata/text-search.ttl",
+ "aliases": [
+  "A. Metadata/text-search.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

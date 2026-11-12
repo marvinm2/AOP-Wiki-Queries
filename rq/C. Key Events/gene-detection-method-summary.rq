@@ -1,0 +1,16 @@
+# title: Gene detection method summary (regex vs BERN2 NER)
+# category: Key Events
+# description: Counts gene-Key Event associations by detection method. edam:data_1025 holds the union of all detected genes; :geneDetectedByRegex and :geneDetectedByNER record provenance. Shows total NER associations, how many were also found by the regex mapper, and how many were found only by NER.
+#
+# AOPQ017 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ017
+# Generated from C. Key Events/gene-detection-method-summary.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>
+
+SELECT
+  (COUNT(*) AS ?ner_total)
+  (SUM(IF(EXISTS { ?ke p:geneDetectedByRegex ?gene }, 1, 0)) AS ?ner_and_regex)
+  (SUM(IF(EXISTS { ?ke p:geneDetectedByRegex ?gene }, 0, 1)) AS ?ner_only)
+WHERE {
+  ?ke p:geneDetectedByNER ?gene .
+}

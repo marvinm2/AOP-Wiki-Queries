@@ -1,0 +1,12 @@
+# title: Count objects using AOP ontology
+# category: Metadata
+# description: Returns the number of RDF objects that reference the AOP ontology namespace.
+#
+# AOPQ005 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ005
+# Generated from A. Metadata/count-objects-aop-ontology.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+SELECT (COUNT(?o) AS ?Objects)
+WHERE {
+  ?s ?p ?o .
+  FILTER regex(?o, "http://aopkb.org/aop_ontology#")
+}

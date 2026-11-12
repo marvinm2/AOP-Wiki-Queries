@@ -1,0 +1,350 @@
+{
+ "schema": 1,
+ "examples": {
+  "AOPQ001": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "A. Metadata/count-aops.ttl"
+   }
+  ],
+  "AOPQ002": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "A. Metadata/count-entities.ttl"
+   }
+  ],
+  "AOPQ003": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "A. Metadata/count-kers.ttl"
+   }
+  ],
+  "AOPQ004": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "A. Metadata/count-kes.ttl"
+   }
+  ],
+  "AOPQ005": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "A. Metadata/count-objects-aop-ontology.ttl"
+   }
+  ],
+  "AOPQ006": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "A. Metadata/count-predicates-aop-ontology.ttl"
+   }
+  ],
+  "AOPQ007": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "A. Metadata/count-stressors.ttl"
+   }
+  ],
+  "AOPQ008": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "A. Metadata/count-triples.ttl"
+   }
+  ],
+  "AOPQ009": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "A. Metadata/dataset-metadata.ttl"
+   }
+  ],
+  "AOPQ010": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "A. Metadata/text-search.ttl"
+   }
+  ],
+  "AOPQ011": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "B. AOPs/ao-for-mie.ttl"
+   }
+  ],
+  "AOPQ012": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "B. AOPs/aops-in-mammals.ttl"
+   }
+  ],
+  "AOPQ013": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "B. AOPs/get-ao-for-mie.ttl"
+   }
+  ],
+  "AOPQ014": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "B. AOPs/get-aop-for-ao.ttl"
+   }
+  ],
+  "AOPQ015": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "B. AOPs/methods-for-aops.ttl"
+   }
+  ],
+  "AOPQ016": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "B. AOPs/stressors-for-ao.ttl"
+   }
+  ],
+  "AOPQ017": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "C. Key Events/gene-detection-method-summary.ttl"
+   }
+  ],
+  "AOPQ018": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "C. Key Events/genes-for-aop-annotated.ttl"
+   }
+  ],
+  "AOPQ019": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "C. Key Events/genes-for-aop-mapped.ttl"
+   }
+  ],
+  "AOPQ020": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "C. Key Events/genes-found-only-by-ner.ttl"
+   }
+  ],
+  "AOPQ021": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "C. Key Events/ke-to-aop.ttl"
+   }
+  ],
+  "AOPQ022": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "C. Key Events/kes-and-ensembl.ttl"
+   }
+  ],
+  "AOPQ023": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "C. Key Events/kes-and-hgnc.ttl"
+   }
+  ],
+  "AOPQ024": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "C. Key Events/kes-and-ncbi-annotated.ttl"
+   }
+  ],
+  "AOPQ025": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "C. Key Events/kes-and-ncbi.ttl"
+   }
+  ],
+  "AOPQ026": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "C. Key Events/kes-and-uniprot-annotated.ttl"
+   }
+  ],
+  "AOPQ027": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "C. Key Events/kes-and-uniprot.ttl"
+   }
+  ],
+  "AOPQ028": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "C. Key Events/search-ke-by-level.ttl"
+   }
+  ],
+  "AOPQ029": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "D. KERs/list-kers-for-aop.ttl"
+   }
+  ],
+  "AOPQ030": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "E. Stressors/stressors-for-ao-searched.ttl"
+   }
+  ],
+  "AOPQ031": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "F. Chemicals/chemicals-for-ao.ttl"
+   }
+  ],
+  "AOPQ032": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "F. Chemicals/chemicals-for-aop.ttl"
+   }
+  ],
+  "AOPQ033": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "F. Chemicals/get-matching-ids-for-chems.ttl"
+   }
+  ],
+  "AOPQ034": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "G. Data Export/all-aops-full.ttl"
+   }
+  ],
+  "AOPQ035": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "G. Data Export/all-aops.ttl"
+   }
+  ],
+  "AOPQ036": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "G. Data Export/all-chemicals.ttl"
+   }
+  ],
+  "AOPQ037": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "G. Data Export/all-ke-components.ttl"
+   }
+  ],
+  "AOPQ038": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "G. Data Export/all-ke-full.ttl"
+   }
+  ],
+  "AOPQ039": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "G. Data Export/aop-to-ao.ttl"
+   }
+  ],
+  "AOPQ040": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "H. Federated/aops-for-taxon.ttl"
+   }
+  ],
+  "AOPQ041": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "H. Federated/applicable-to-taxon-tree.ttl"
+   }
+  ],
+  "AOPQ042": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "H. Federated/pathways-with-chem.ttl"
+   }
+  ],
+  "AOPQ043": [
+   {
+    "version": "1.0.0",
+    "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde",
+    "date": "2026-11-12",
+    "path": "H. Federated/toxcast-assays-for-kes.ttl"
+   }
+  ]
+ },
+ "releases": {}
+}

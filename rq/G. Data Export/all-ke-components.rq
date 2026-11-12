@@ -1,0 +1,31 @@
+# title: Export all Key Event components
+# category: Data Export
+# description: Returns all Key Events with their biological event components including processes, objects, and actions.
+#
+# AOPQ037 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ037
+# Generated from G. Data Export/all-ke-components.ttl in marvinm2/AOP-Wiki-Queries at b61004db0307; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT DISTINCT ?ke ?keTitle ?bioEvent
+  ?process ?processName ?object ?objectName ?action
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    dc:title ?keTitle .
+  OPTIONAL {
+    ?ke aopo:hasBiologicalEvent ?bioEvent .
+    ?bioEvent aopo:hasProcess ?process .
+    ?process dc:title ?processName .
+  }
+  OPTIONAL {
+    ?ke aopo:hasBiologicalEvent ?bioEvent .
+    ?bioEvent aopo:hasObject ?object .
+    ?object dc:title ?objectName .
+  }
+  OPTIONAL {
+    ?ke aopo:hasBiologicalEvent ?bioEvent .
+    ?bioEvent aopo:hasAction ?action .
+  }
+}
+ORDER BY ?ke

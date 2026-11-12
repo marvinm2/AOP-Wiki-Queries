@@ -1,0 +1,60 @@
+{
+ "id": "AOPQ042",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ042",
+ "label": "Find WikiPathways for AOP chemicals",
+ "description": "Finds human WikiPathways pathways that contain stressor chemicals of an AOP, matched on ChEBI. Leave the AOP blank to list all AOPs.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Federated"
+ ],
+ "keywords": [
+  "federated"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [
+  "https://sparql.wikipathways.org/sparql"
+ ],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/pathways-with-chem.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX dcterms: <http://purl.org/dc/terms/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\nPREFIX wp: <http://vocabularies.wikipathways.org/wp#>\n\nSELECT ?ChemicalName ?ChEBI ?LinkedStressor\n  (GROUP_CONCAT(DISTINCT ?LinkedAOP; separator=', ') AS ?AOPs)\n  (STR(?PathwayID) AS ?Pathway_ID)\n  (STR(?PathwayTitle) AS ?PathwayName)\n  ?PathwayURI\nWHERE {\n  # Fetch human pathway metabolites from WikiPathways once, then join locally on the ChEBI\n  # number. Joining the other way round sends one remote request per chemical and times out.\n  SERVICE <https://sparql.wikipathways.org/sparql> {\n    ?metabolite wp:bdbChEBI ?wpChebi ;\n      dcterms:isPartOf ?PathwayURI .\n    ?PathwayURI a wp:Pathway ;\n      dcterms:identifier ?PathwayID ;\n      dc:title ?PathwayTitle ;\n      wp:organismName \"Homo sapiens\" .\n  }\n  BIND(STRAFTER(STR(?wpChebi), \"CHEBI:\") AS ?ChEBI)\n  ?chebiRef cheminf:000407 ?ChEBI .\n  ?cheLook a cheminf:000000 ;\n    dc:title ?ChemicalName ;\n    dcterms:isPartOf ?LinkedStressor ;\n    skos:exactMatch ?chebiRef .\n  # Optional AOP: left blank, ?LinkedAOPURI stays unbound and all AOPs are returned.\n  VALUES ?LinkedAOPURI { UNDEF }\n  ?LinkedStressor dcterms:isPartOf ?LinkedAOPURI .\n  ?LinkedAOPURI a aopo:AdverseOutcomePathway ;\n    rdfs:label ?LinkedAOP .\n}\nGROUP BY ?ChemicalName ?ChEBI ?LinkedStressor ?PathwayID ?PathwayTitle ?PathwayURI\nORDER BY ?ChemicalName ?PathwayTitle",
+ "params": [
+  {
+   "name": "aop_id",
+   "variable": "LinkedAOPURI",
+   "label": "AOP (blank = all)",
+   "description": null,
+   "order": 1,
+   "kind": "iri",
+   "valueTemplate": "https://identifiers.org/aop/{value}",
+   "default": "",
+   "optional": true,
+   "autocomplete": "aop",
+   "options": null
+  }
+ ],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "H. Federated/pathways-with-chem.ttl",
+ "aliases": [
+  "H. Federated/pathways-with-chem.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}
