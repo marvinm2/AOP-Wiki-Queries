@@ -1,0 +1,48 @@
+@prefix aopcat: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> .
+@prefix aopq: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix param: <https://w3id.org/snorql/param#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix snorql: <https://w3id.org/snorql/ns#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+aopq:AOPQ031 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    dcterms:identifier "AOPQ031" ;
+    rdfs:label "List chemicals for adverse outcomes"@en ;
+    rdfs:comment "Returns Adverse Outcomes with their linked AOPs and aggregated chemical names from stressor annotations."@en ;
+    schema:version "1.0.0" ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject aopcat:Chemicals ;
+    schema:keywords "chemical" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    snorql:alias "F. Chemicals/chemicals-for-ao.rq" ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/F.%20Chemicals/chemicals-for-ao.rq> ;
+    snorql:expect [ snorql:minResults 1 ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT ?AO ?AOname ?AOP
+  (CONCAT('"', GROUP_CONCAT(?ChemicalName; SEPARATOR='","'), '"') AS ?ChemicalNames)
+WHERE {
+  ?AO a aopo:KeyEvent ;
+    dc:identifier ?AOLookup ;
+    dc:title ?AOname .
+  ?AOP a aopo:AdverseOutcomePathway ;
+    aopo:has_adverse_outcome ?AOLookup ;
+    nci:C54571 ?Stressor .
+  ?Stressor dc:title ?StressorName .
+  OPTIONAL {
+    ?Stressor aopo:has_chemical_entity ?Chemical .
+    ?Chemical dc:title ?ChemicalName .
+  }
+}
+GROUP BY ?AO ?AOname ?AOP
+ORDER BY DESC(?AO)""" .

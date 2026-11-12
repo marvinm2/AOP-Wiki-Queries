@@ -1,0 +1,17 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix schema: <https://schema.org/> .
+@prefix snorql: <https://w3id.org/snorql/ns#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+
+# The collection of AOP-Wiki SPARQL examples in this repository. Every example has a
+# permanent identifier AOPQnnn; its IRI is the uriSpace below followed by the
+# identifier. Files can be renamed or moved without breaking links.
+
+<https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples> a snorql:ExampleCollection, schema:Dataset ;
+    schema:name "AOP-Wiki SPARQL examples" ;
+    schema:description "Example SPARQL queries for the AOP-Wiki RDF SPARQL endpoint, shown in the query editor at https://aopwiki.rdf.bigcat-bioinformatics.org/."@en ;
+    schema:url <https://aopwiki.rdf.bigcat-bioinformatics.org/> ;
+    schema:codeRepository <https://github.com/marvinm2/AOP-Wiki-Queries> ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    void:uriSpace "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/" ;
+    snorql:identifierPrefix "AOPQ" .

@@ -1,0 +1,27 @@
+@prefix aopcat: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# Categories of the examples. The query editor builds its tree of examples from
+# these, in sh:order. An example names its category with dcterms:subject.
+# Folders in this repository are only for keeping the files tidy.
+
+aopcat: a skos:ConceptScheme ;
+    skos:prefLabel "Categories of AOP-Wiki SPARQL examples"@en .
+
+aopcat:Metadata a skos:Concept ; skos:inScheme aopcat: ; sh:order 1 ;
+    skos:prefLabel "Metadata"@en .
+aopcat:AOPs a skos:Concept ; skos:inScheme aopcat: ; sh:order 2 ;
+    skos:prefLabel "AOPs"@en .
+aopcat:KeyEvents a skos:Concept ; skos:inScheme aopcat: ; sh:order 3 ;
+    skos:prefLabel "Key Events"@en .
+aopcat:KERs a skos:Concept ; skos:inScheme aopcat: ; sh:order 4 ;
+    skos:prefLabel "Key Event Relationships"@en .
+aopcat:Stressors a skos:Concept ; skos:inScheme aopcat: ; sh:order 5 ;
+    skos:prefLabel "Stressors"@en .
+aopcat:Chemicals a skos:Concept ; skos:inScheme aopcat: ; sh:order 6 ;
+    skos:prefLabel "Chemicals"@en .
+aopcat:DataExport a skos:Concept ; skos:inScheme aopcat: ; sh:order 7 ;
+    skos:prefLabel "Data Export"@en .
+aopcat:Federated a skos:Concept ; skos:inScheme aopcat: ; sh:order 8 ;
+    skos:prefLabel "Federated"@en .

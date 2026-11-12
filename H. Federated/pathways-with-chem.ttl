@@ -1,0 +1,71 @@
+@prefix aopcat: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> .
+@prefix aopq: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix param: <https://w3id.org/snorql/param#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix snorql: <https://w3id.org/snorql/ns#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+aopq:AOPQ042 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    dcterms:identifier "AOPQ042" ;
+    rdfs:label "Find WikiPathways for AOP chemicals"@en ;
+    rdfs:comment "Finds human WikiPathways pathways that contain stressor chemicals of an AOP, matched on ChEBI. Leave the AOP blank to list all AOPs."@en ;
+    schema:version "1.0.0" ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject aopcat:Federated ;
+    schema:keywords "federated" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    spex:federatesWith <https://sparql.wikipathways.org/sparql> ;
+    snorql:alias "H. Federated/pathways-with-chem.rq" ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/pathways-with-chem.rq> ;
+    snorql:expect [ snorql:minResults 1 ] ;
+    sh:parameter [ a sh:Parameter ; sh:path param:aop_id ;
+        snorql:variable "LinkedAOPURI" ;
+        sh:name "AOP (blank = all)" ; sh:order 1 ;
+        sh:nodeKind sh:IRI ; snorql:valueTemplate "https://identifiers.org/aop/{value}" ;
+        snorql:autocomplete "aop" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
+
+SELECT ?ChemicalName ?ChEBI ?LinkedStressor
+  (GROUP_CONCAT(DISTINCT ?LinkedAOP; separator=', ') AS ?AOPs)
+  (STR(?PathwayID) AS ?Pathway_ID)
+  (STR(?PathwayTitle) AS ?PathwayName)
+  ?PathwayURI
+WHERE {
+  # Fetch human pathway metabolites from WikiPathways once, then join locally on the ChEBI
+  # number. Joining the other way round sends one remote request per chemical and times out.
+  SERVICE <https://sparql.wikipathways.org/sparql> {
+    ?metabolite wp:bdbChEBI ?wpChebi ;
+      dcterms:isPartOf ?PathwayURI .
+    ?PathwayURI a wp:Pathway ;
+      dcterms:identifier ?PathwayID ;
+      dc:title ?PathwayTitle ;
+      wp:organismName "Homo sapiens" .
+  }
+  BIND(STRAFTER(STR(?wpChebi), "CHEBI:") AS ?ChEBI)
+  ?chebiRef cheminf:000407 ?ChEBI .
+  ?cheLook a cheminf:000000 ;
+    dc:title ?ChemicalName ;
+    dcterms:isPartOf ?LinkedStressor ;
+    skos:exactMatch ?chebiRef .
+  # Optional AOP: left blank, ?LinkedAOPURI stays unbound and all AOPs are returned.
+  VALUES ?LinkedAOPURI { UNDEF }
+  ?LinkedStressor dcterms:isPartOf ?LinkedAOPURI .
+  ?LinkedAOPURI a aopo:AdverseOutcomePathway ;
+    rdfs:label ?LinkedAOP .
+}
+GROUP BY ?ChemicalName ?ChEBI ?LinkedStressor ?PathwayID ?PathwayTitle ?PathwayURI
+ORDER BY ?ChemicalName ?PathwayTitle""" .

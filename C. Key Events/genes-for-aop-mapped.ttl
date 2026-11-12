@@ -1,0 +1,77 @@
+@prefix aopcat: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> .
+@prefix aopq: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix param: <https://w3id.org/snorql/param#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix snorql: <https://w3id.org/snorql/ns#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+aopq:AOPQ019 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    dcterms:identifier "AOPQ019" ;
+    rdfs:label "List identifier-mapped genes for AOPs"@en ;
+    rdfs:comment "Returns all non-annotated genes from Key Events of AOPs, with HGNC symbols and NCBI gene identifiers. Genes are text-mined from Key Event descriptions by two detectors: an HGNC dictionary matcher (regex) and BERN2 named-entity recognition (NER). The detectedBy column says which found each gene, and the Detection method filter restricts the list, e.g. to genes confirmed by both."@en ;
+    schema:version "1.0.0" ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject aopcat:KeyEvents ;
+    schema:keywords "key event" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    snorql:alias "C. Key Events/genes-for-aop-mapped.rq" ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/genes-for-aop-mapped.rq> ;
+    snorql:expect [ snorql:minResults 1 ] ;
+    sh:parameter [ a sh:Parameter ; sh:path param:aop_id ;
+        snorql:variable "aop" ;
+        sh:name "AOP (blank = all)" ; sh:order 1 ;
+        sh:nodeKind sh:IRI ; snorql:valueTemplate "https://identifiers.org/aop/{value}" ;
+        snorql:autocomplete "aop" ] ;
+    sh:parameter [ a sh:Parameter ; sh:path param:method ;
+        sh:name "Detection method" ; sh:order 2 ;
+        sh:defaultValue "any" ;
+        sh:datatype xsd:string ;
+        snorql:option [ rdf:value "any" ; rdfs:label "Any detector" ; sh:order 1 ] ;
+        snorql:option [ rdf:value "regex" ; rdfs:label "Dictionary (incl. both)" ; sh:order 2 ] ;
+        snorql:option [ rdf:value "ner" ; rdfs:label "BERN2 NER (incl. both)" ; sh:order 3 ] ;
+        snorql:option [ rdf:value "both" ; rdfs:label "Both detectors" ; sh:order 4 ] ;
+        snorql:option [ rdf:value "regex_only" ; rdfs:label "Dictionary only" ; sh:order 5 ] ;
+        snorql:option [ rdf:value "ner_only" ; rdfs:label "BERN2 NER only" ; sh:order 6 ] ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>
+
+SELECT DISTINCT ?aop ?aoptitle ?ketitle ?HGNC ?id ?detectedBy
+WHERE {
+  # Optional AOP: left blank, ?aop stays unbound and all AOPs are returned.
+  VALUES ?aop { UNDEF }
+  VALUES ?method { "any" }
+  ?aop a aopo:AdverseOutcomePathway ;
+    dc:title ?aoptitle ;
+    aopo:has_key_event ?ke .
+  ?ke a aopo:KeyEvent ;
+    edam:data_1025 ?object ;
+    dc:title ?ketitle ;
+    rdfs:label ?keid .
+  ?object edam:data_2298 ?HGNC ;
+    skos:exactMatch ?id .
+  ?id a edam:data_1027 ;
+    edam:data_1027 ?ncbi .
+  # Detector provenance for this Key Event–gene link.
+  OPTIONAL { ?ke p:geneDetectedByRegex ?object . BIND(1 AS ?byRegex) }
+  OPTIONAL { ?ke p:geneDetectedByNER ?object . BIND(1 AS ?byNER) }
+  BIND(IF(BOUND(?byRegex) && BOUND(?byNER), "both",
+       IF(BOUND(?byRegex), "regex_only",
+       IF(BOUND(?byNER), "ner_only", "unrecorded"))) AS ?detectedBy)
+  # Detection method filter — "regex" and "ner" include links found by both detectors.
+  FILTER(?method = "any" || ?method = ?detectedBy ||
+    (?method = "regex" && BOUND(?byRegex)) ||
+    (?method = "ner" && BOUND(?byNER)))
+}
+ORDER BY DESC(?aop)""" .
