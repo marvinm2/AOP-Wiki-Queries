@@ -1,0 +1,51 @@
+@prefix aopcat: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> .
+@prefix aopq: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix param: <https://w3id.org/snorql/param#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix snorql: <https://w3id.org/snorql/ns#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+aopq:AOPQ037 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    dcterms:identifier "AOPQ037" ;
+    rdfs:label "Export all Key Event components"@en ;
+    rdfs:comment "Returns all Key Events with their biological event components including processes, objects, and actions."@en ;
+    schema:version "1.0.0" ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject aopcat:DataExport ;
+    schema:keywords "export" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    snorql:alias "G. Data Export/all-ke-components.rq" ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-ke-components.rq> ;
+    snorql:expect [ snorql:minResults 1 ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT DISTINCT ?ke ?keTitle ?bioEvent
+  ?process ?processName ?object ?objectName ?action
+WHERE {
+  ?ke a aopo:KeyEvent ;
+    dc:title ?keTitle .
+  OPTIONAL {
+    ?ke aopo:hasBiologicalEvent ?bioEvent .
+    ?bioEvent aopo:hasProcess ?process .
+    ?process dc:title ?processName .
+  }
+  OPTIONAL {
+    ?ke aopo:hasBiologicalEvent ?bioEvent .
+    ?bioEvent aopo:hasObject ?object .
+    ?object dc:title ?objectName .
+  }
+  OPTIONAL {
+    ?ke aopo:hasBiologicalEvent ?bioEvent .
+    ?bioEvent aopo:hasAction ?action .
+  }
+}
+ORDER BY ?ke""" .

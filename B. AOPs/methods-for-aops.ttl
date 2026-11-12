@@ -1,0 +1,51 @@
+@prefix aopcat: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> .
+@prefix aopq: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix param: <https://w3id.org/snorql/param#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix snorql: <https://w3id.org/snorql/ns#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+aopq:AOPQ015 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    dcterms:identifier "AOPQ015" ;
+    rdfs:label "List methods for AOPs"@en ;
+    rdfs:comment "Returns Key Events with their applicable species and measurement methods for a specific AOP."@en ;
+    schema:version "1.0.0" ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject aopcat:AOPs ;
+    schema:keywords "AOP" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    snorql:alias "B. AOPs/methods-for-aops.rq" ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/methods-for-aops.rq> ;
+    snorql:expect [ snorql:minResults 1 ] ;
+    sh:parameter [ a sh:Parameter ; sh:path param:aop_id ;
+        snorql:variable "aop" ;
+        sh:name "AOP" ; sh:order 1 ;
+        sh:defaultValue "12" ;
+        sh:nodeKind sh:IRI ; snorql:valueTemplate "https://identifiers.org/aop/{value}" ;
+        snorql:autocomplete "aop" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX mmo: <http://purl.obolibrary.org/obo/MMO_>
+PREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>
+
+SELECT DISTINCT ?aop ?ke
+  (GROUP_CONCAT(DISTINCT ?speciesname; separator=" | ") AS ?speciesnames)
+  ?method
+WHERE {
+  VALUES ?aop { <https://identifiers.org/aop/12> }
+  ?aop aopo:has_key_event ?ke .
+  ?ke ncbitaxon:131567 ?taxon .
+  ?taxon a ncbitaxon:131567 ;
+    dc:title ?speciesname .
+  OPTIONAL { ?ke mmo:0000000 ?method . }
+}
+GROUP BY ?aop ?ke ?method
+ORDER BY ASC(?aop)""" .

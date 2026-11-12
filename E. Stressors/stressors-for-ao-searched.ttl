@@ -1,0 +1,61 @@
+@prefix aopcat: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> .
+@prefix aopq: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix param: <https://w3id.org/snorql/param#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix snorql: <https://w3id.org/snorql/ns#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+aopq:AOPQ030 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    dcterms:identifier "AOPQ030" ;
+    rdfs:label "Find stressors for an adverse outcome"@en ;
+    rdfs:comment "Searches for Adverse Outcomes by name and returns linked AOPs, MIEs, stressors, and chemical annotations."@en ;
+    schema:version "1.0.0" ;
+    dcterms:created "2026-03-11"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject aopcat:Stressors ;
+    schema:keywords "stressor" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    snorql:alias "E. Stressors/stressors-for-ao-searched.rq" ;
+    prov:wasDerivedFrom <https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/E.%20Stressors/stressors-for-ao-searched.rq> ;
+    snorql:expect [ snorql:minResults 1 ] ;
+    sh:parameter [ a sh:Parameter ; sh:path param:ao_name ;
+        sh:name "Adverse outcome: pick one, or type part of a name" ; sh:order 1 ;
+        sh:defaultValue "fibrosis" ;
+        sh:datatype xsd:string ;
+        snorql:autocomplete "keyEvent" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT ?AO ?AOname ?AOP ?MIETitle
+  (CONCAT('"', GROUP_CONCAT(?StressorName; SEPARATOR='","'), '"') AS ?StressorNames)
+  (CONCAT('"', GROUP_CONCAT(?ChemicalName; SEPARATOR='","'), '"') AS ?ChemicalNames)
+WHERE {
+  VALUES ?ao_name { "fibrosis" }
+  ?AO a aopo:KeyEvent ;
+    dc:identifier ?AOLookup ;
+    dc:title ?AOname .
+  ?AOP a aopo:AdverseOutcomePathway ;
+    aopo:has_adverse_outcome ?AOLookup ;
+    aopo:has_molecular_initiating_event ?MIE ;
+    nci:C54571 ?Stressor .
+  ?MIE dc:title ?MIETitle .
+  ?Stressor dc:title ?StressorName .
+  OPTIONAL {
+    ?Stressor aopo:has_chemical_entity ?Chemical .
+    ?Chemical dc:title ?ChemicalName .
+  }
+  # A picked Key Event gives its numeric id, matched exactly; any other text is a
+  # case-insensitive substring of the adverse outcome name.
+  FILTER(IF(regex(?ao_name, "^[0-9]+$"),
+    STR(?AO) = CONCAT("https://identifiers.org/aop.events/", ?ao_name),
+    regex(?AOname, ?ao_name, "i")))
+}
+ORDER BY DESC(?AO)""" .
