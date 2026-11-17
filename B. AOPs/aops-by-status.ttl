@@ -1,0 +1,45 @@
+@prefix aopcat: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> .
+@prefix aopq: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix param: <https://w3id.org/snorql/param#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix snorql: <https://w3id.org/snorql/ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+aopq:AOPQ048 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    dcterms:identifier "AOPQ048" ;
+    rdfs:label "AOPs by OECD status"@en ;
+    rdfs:comment "Lists the AOPs with a given status, such as the AOPs endorsed by the OECD WPHA/WNT. The status is in nci:C25688, which holds both the OECD status and the SAAOP status of an AOP, so one AOP can have two values. Most AOPs have no status at all."@en ;
+    schema:version "1.0.0" ;
+    dcterms:created "2026-11-17"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject aopcat:AOPs ;
+    schema:keywords "OECD", "endorsed", "status", "SAAOP", "WPHA", "WNT" ;
+    schema:educationalLevel "beginner" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    snorql:expect [ snorql:minResults 1 ] ;
+    sh:parameter [ a sh:Parameter ; sh:path param:status ;
+        sh:name "Status" ; sh:order 1 ;
+        sh:defaultValue "WPHA/WNT Endorsed" ;
+        sh:datatype xsd:string ;
+        snorql:option [ rdf:value "WPHA/WNT Endorsed" ; rdfs:label "WPHA/WNT Endorsed" ; sh:order 1 ] ;
+        snorql:option [ rdf:value "Under Review" ; rdfs:label "Under Review" ; sh:order 2 ] ;
+        snorql:option [ rdf:value "Under Development" ; rdfs:label "Under Development" ; sh:order 3 ] ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT ?aop ?title (GROUP_CONCAT(DISTINCT ?otherStatus; separator=" | ") AS ?allStatuses)
+WHERE {
+  VALUES ?status { "WPHA/WNT Endorsed" }
+  ?aop a aopo:AdverseOutcomePathway ;
+       dc:title ?title ;
+       nci:C25688 ?status ;
+       nci:C25688 ?otherStatus .
+}
+GROUP BY ?aop ?title
+ORDER BY ?aop""" .

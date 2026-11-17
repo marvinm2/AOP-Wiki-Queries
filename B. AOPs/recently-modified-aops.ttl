@@ -1,0 +1,37 @@
+@prefix aopcat: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> .
+@prefix aopq: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix param: <https://w3id.org/snorql/param#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix snorql: <https://w3id.org/snorql/ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+aopq:AOPQ045 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    dcterms:identifier "AOPQ045" ;
+    rdfs:label "Most recently modified AOPs"@en ;
+    rdfs:comment "Lists the 25 AOPs modified most recently in AOP-Wiki, with their creation and modification timestamps. dcterms:created and dcterms:modified are xsd:dateTime values, so ORDER BY, MAX and comparisons such as FILTER(?modified >= \"2026-01-01T00:00:00\"^^xsd:dateTime) work on them directly."@en ;
+    schema:version "1.0.0" ;
+    dcterms:created "2026-11-17"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject aopcat:AOPs, aopcat:Metadata ;
+    schema:keywords "modified", "created", "date", "recent", "dateTime" ;
+    schema:educationalLevel "beginner" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    snorql:expect [ snorql:minResults 1 ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+SELECT ?aop ?title ?created ?modified
+WHERE {
+  ?aop a aopo:AdverseOutcomePathway ;
+       dc:title ?title ;
+       dcterms:created ?created ;
+       dcterms:modified ?modified .
+}
+ORDER BY DESC(?modified)
+LIMIT 25""" .
