@@ -1,0 +1,42 @@
+@prefix aopcat: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> .
+@prefix aopq: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix param: <https://w3id.org/snorql/param#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix snorql: <https://w3id.org/snorql/ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+aopq:AOPQ044 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    dcterms:identifier "AOPQ044" ;
+    rdfs:label "AOPs applicable to an NCBI taxon"@en ;
+    rdfs:comment "Lists the AOPs whose taxonomic applicability (ncbitaxon:131567) is a given NCBI Taxonomy id, with the names AOP-Wiki uses for that taxon. Match the taxon IRI directly: since November 2026 the common-species terms (WCS_9606 and similar) are written as NCBITaxon IRIs too. Applicability given as free text (user-created terms such as mammals) is a plain string and is not matched; see the free-text example for those. The graph has no taxonomic hierarchy, so a query for Mammalia does not return AOPs for human or rat."@en ;
+    schema:version "1.0.0" ;
+    dcterms:created "2026-11-17"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject aopcat:AOPs ;
+    schema:keywords "taxon", "species", "NCBI Taxonomy", "applicability" ;
+    schema:educationalLevel "intermediate" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    snorql:expect [ snorql:minResults 1 ] ;
+    sh:parameter [ a sh:Parameter ; sh:path param:taxon ;
+        sh:name "NCBI Taxonomy id" ; sh:order 1 ;
+        sh:defaultValue "9606" ;
+        sh:nodeKind sh:IRI ; snorql:valueTemplate "http://purl.bioontology.org/ontology/NCBITAXON/{value}" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>
+
+SELECT ?aop ?title (GROUP_CONCAT(DISTINCT ?taxonName; separator=" | ") AS ?taxonNames)
+WHERE {
+  VALUES ?taxon { ncbitaxon:9606 }
+  ?aop a aopo:AdverseOutcomePathway ;
+       dc:title ?title ;
+       ncbitaxon:131567 ?taxon .
+  OPTIONAL { ?taxon dc:title ?taxonName }
+}
+GROUP BY ?aop ?title
+ORDER BY ?aop""" .

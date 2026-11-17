@@ -1,0 +1,44 @@
+@prefix aopcat: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/> .
+@prefix aopq: <https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix param: <https://w3id.org/snorql/param#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix snorql: <https://w3id.org/snorql/ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+aopq:AOPQ047 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    dcterms:identifier "AOPQ047" ;
+    rdfs:label "Weight of evidence for a KER"@en ;
+    rdfs:comment "Returns the weight-of-evidence text of one Key Event Relationship: biological plausibility (nci:C80263), empirical support (edam:data_2042), uncertainties and inconsistencies (nci:C71478) and quantitative understanding (edam:operation_3799), with its upstream and downstream Key Events. The predicates come from NCIt and EDAM, so their names say little; their rdfs:label in this endpoint names the AOP-Wiki field. Only about 700 KERs have this text, so each field is OPTIONAL."@en ;
+    schema:version "1.0.0" ;
+    dcterms:created "2026-11-17"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0003-2230-0840> ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.html> ;
+    dcterms:subject aopcat:KERs ;
+    schema:keywords "weight of evidence", "biological plausibility", "empirical support", "uncertainty", "quantitative understanding" ;
+    schema:educationalLevel "intermediate" ;
+    schema:target <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql> ;
+    snorql:expect [ snorql:minResults 1 ] ;
+    sh:parameter [ a sh:Parameter ; sh:path param:ker_id ;
+        snorql:variable "ker" ;
+        sh:name "KER" ; sh:order 1 ;
+        sh:defaultValue "1035" ;
+        sh:nodeKind sh:IRI ; snorql:valueTemplate "https://identifiers.org/aop.relationships/{value}" ] ;
+    sh:select """PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT ?upstreamTitle ?downstreamTitle ?biologicalPlausibility ?empiricalSupport ?uncertainties ?quantitativeUnderstanding
+WHERE {
+  VALUES ?ker { <https://identifiers.org/aop.relationships/1035> }
+  ?ker aopo:has_upstream_key_event/dc:title ?upstreamTitle ;
+       aopo:has_downstream_key_event/dc:title ?downstreamTitle .
+  OPTIONAL { ?ker nci:C80263 ?biologicalPlausibility }
+  OPTIONAL { ?ker edam:data_2042 ?empiricalSupport }
+  OPTIONAL { ?ker nci:C71478 ?uncertainties }
+  OPTIONAL { ?ker edam:operation_3799 ?quantitativeUnderstanding }
+}""" .
