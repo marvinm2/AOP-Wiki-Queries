@@ -1,0 +1,57 @@
+{
+ "id": "AOPQ044",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ044",
+ "label": "AOPs applicable to an NCBI taxon",
+ "description": "Lists the AOPs whose taxonomic applicability (ncbitaxon:131567) is a given NCBI Taxonomy id, with the names AOP-Wiki uses for that taxon. Match the taxon IRI directly: since November 2026 the common-species terms (WCS_9606 and similar) are written as NCBITaxon IRIs too. Applicability given as free text (user-created terms such as mammals) is a plain string and is not matched; see the free-text example for those. The graph has no taxonomic hierarchy, so a query for Mammalia does not return AOPs for human or rat.",
+ "version": "1.0.0",
+ "created": "2026-11-17",
+ "modified": "2026-11-17",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs"
+ ],
+ "keywords": [
+  "applicability",
+  "NCBI Taxonomy",
+  "species",
+  "taxon"
+ ],
+ "level": "intermediate",
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>\n\nSELECT ?aop ?title (GROUP_CONCAT(DISTINCT ?taxonName; separator=\" | \") AS ?taxonNames)\nWHERE {\n  VALUES ?taxon { ncbitaxon:9606 }\n  ?aop a aopo:AdverseOutcomePathway ;\n       dc:title ?title ;\n       ncbitaxon:131567 ?taxon .\n  OPTIONAL { ?taxon dc:title ?taxonName }\n}\nGROUP BY ?aop ?title\nORDER BY ?aop",
+ "params": [
+  {
+   "name": "taxon",
+   "variable": "taxon",
+   "label": "NCBI Taxonomy id",
+   "description": null,
+   "order": 1,
+   "kind": "iri",
+   "valueTemplate": "http://purl.bioontology.org/ontology/NCBITAXON/{value}",
+   "default": "9606",
+   "optional": false,
+   "autocomplete": null,
+   "options": null
+  }
+ ],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "B. AOPs/aops-for-ncbi-taxon.ttl",
+ "aliases": [],
+ "commit": "66c5fec9c9f7c248dd9a276e9762a32b5174872a"
+}

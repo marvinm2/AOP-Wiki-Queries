@@ -1,0 +1,23 @@
+# title: Weight of evidence for a KER
+# category: Key Event Relationships
+# description: Returns the weight-of-evidence text of one Key Event Relationship: biological plausibility (nci:C80263), empirical support (edam:data_2042), uncertainties and inconsistencies (nci:C71478) and quantitative understanding (edam:operation_3799), with its upstream and downstream Key Events. The predicates come from NCIt and EDAM, so their names say little; their rdfs:label in this endpoint names the AOP-Wiki field. Only about 700 KERs have this text, so each field is OPTIONAL.
+# param: ker_id|string|1035|KER
+#
+# AOPQ047 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ047
+# Generated from D. KERs/ker-weight-of-evidence.ttl in marvinm2/AOP-Wiki-Queries at a5ff42ecefa8; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT ?upstreamTitle ?downstreamTitle ?biologicalPlausibility ?empiricalSupport ?uncertainties ?quantitativeUnderstanding
+WHERE {
+  VALUES ?ker { <https://identifiers.org/aop.relationships/{{ker_id}}> }
+  ?ker aopo:has_upstream_key_event/dc:title ?upstreamTitle ;
+       aopo:has_downstream_key_event/dc:title ?downstreamTitle .
+  OPTIONAL { ?ker nci:C80263 ?biologicalPlausibility }
+  OPTIONAL { ?ker edam:data_2042 ?empiricalSupport }
+  OPTIONAL { ?ker nci:C71478 ?uncertainties }
+  OPTIONAL { ?ker edam:operation_3799 ?quantitativeUnderstanding }
+}

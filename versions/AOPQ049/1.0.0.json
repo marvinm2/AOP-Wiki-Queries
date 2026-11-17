@@ -1,0 +1,71 @@
+{
+ "id": "AOPQ049",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ049",
+ "label": "What the predicates on AOPs, Key Events and KERs mean",
+ "description": "Lists every predicate used on AOPs, Key Events or Key Event Relationships with its rdfs:label, rdfs:comment and number of uses. Many predicates are reused ontology terms whose own names are vague (nci:C25664 is Scale in NCIt, but here holds the level of biological organisation); the labels and comments in this endpoint say what AOP-Wiki stores under each. A good first query before writing others.",
+ "version": "1.0.0",
+ "created": "2026-11-17",
+ "modified": "2026-11-17",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+ ],
+ "keywords": [
+  "data model",
+  "label",
+  "predicate",
+  "schema",
+  "vocabulary"
+ ],
+ "level": "beginner",
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?predicate ?label ?comment (COUNT(*) AS ?uses)\nWHERE {\n  VALUES ?type { \"AdverseOutcomePathway\" }\n  BIND(IRI(CONCAT(\"http://aopkb.org/aop_ontology#\", ?type)) AS ?class)\n  ?subject a ?class ;\n           ?predicate ?object .\n  OPTIONAL { ?predicate rdfs:label ?label }\n  OPTIONAL { ?predicate rdfs:comment ?comment }\n}\nGROUP BY ?predicate ?label ?comment\nORDER BY DESC(?uses)",
+ "params": [
+  {
+   "name": "type",
+   "variable": "type",
+   "label": "Entity type",
+   "description": null,
+   "order": 1,
+   "kind": "literal",
+   "valueTemplate": null,
+   "default": "AdverseOutcomePathway",
+   "optional": false,
+   "autocomplete": null,
+   "options": [
+    {
+     "value": "AdverseOutcomePathway",
+     "label": "AOP"
+    },
+    {
+     "value": "KeyEvent",
+     "label": "Key Event"
+    },
+    {
+     "value": "KeyEventRelationship",
+     "label": "Key Event Relationship"
+    }
+   ]
+  }
+ ],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "A. Metadata/predicate-meanings.ttl",
+ "aliases": [],
+ "commit": "66c5fec9c9f7c248dd9a276e9762a32b5174872a"
+}

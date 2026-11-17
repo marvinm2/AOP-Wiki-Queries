@@ -1,0 +1,58 @@
+{
+ "id": "AOPQ029",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ029",
+ "label": "List KERs in an AOP",
+ "description": "Returns all Key Event Relationships in a specific AOP, with the upstream and downstream Key Event titles for each.",
+ "version": "1.0.0",
+ "created": "2026-05-24",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KERs"
+ ],
+ "keywords": [
+  "key event relationship"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/D.%20KERs/list-kers-for-aop.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT ?KER ?upstreamKE ?upstreamTitle ?downstreamKE ?downstreamTitle\nWHERE {\n  VALUES ?aop { <https://identifiers.org/aop/12> }\n  ?aop aopo:has_key_event_relationship ?KER .\n  ?KER aopo:has_upstream_key_event ?upstreamKE ;\n       aopo:has_downstream_key_event ?downstreamKE .\n  ?upstreamKE dc:title ?upstreamTitle .\n  ?downstreamKE dc:title ?downstreamTitle .\n}\nORDER BY ?upstreamKE",
+ "params": [
+  {
+   "name": "aop_id",
+   "variable": "aop",
+   "label": "AOP",
+   "description": null,
+   "order": 1,
+   "kind": "iri",
+   "valueTemplate": "https://identifiers.org/aop/{value}",
+   "default": "12",
+   "optional": false,
+   "autocomplete": "aop",
+   "options": null
+  }
+ ],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "D. KERs/list-kers-for-aop.ttl",
+ "aliases": [
+  "D. KERs/list-kers-for-aop.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

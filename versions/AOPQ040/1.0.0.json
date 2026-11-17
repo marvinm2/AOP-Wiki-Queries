@@ -1,0 +1,60 @@
+{
+ "id": "AOPQ040",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ040",
+ "label": "Find AOPs applicable to a taxonomic group (e.g. mammals)",
+ "description": "Expands a higher NCBI taxon (default 40674 = Mammalia) into all its descendant species via the UniProt taxonomy, then returns every AOP whose taxonomic applicability falls within that group. The taxa come from UniProt.",
+ "version": "1.0.0",
+ "created": "2026-06-24",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Federated"
+ ],
+ "keywords": [
+  "federated"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [
+  "https://sparql.uniprot.org/sparql"
+ ],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/aops-for-taxon.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX up: <http://purl.uniprot.org/core/>\n\nSELECT ?aop ?aopTitle\n  (GROUP_CONCAT(DISTINCT ?species; separator=\" | \") AS ?mammalianSpecies)\nWHERE {\n  # Fetch the taxa in the group from UniProt once, as AOP-Wiki taxon IRIs, then join\n  # locally on the IRI.\n  SERVICE <https://sparql.uniprot.org/sparql> {\n    VALUES ?taxonGroup { <http://purl.uniprot.org/taxonomy/40674> }\n    # The group and everything under it. UniProt stores every ancestor of a taxon, so no\n    # property path is needed (Virtuoso is slow to federate a path with a variable).\n    { ?taxon rdfs:subClassOf ?taxonGroup }\n    UNION\n    { ?taxonGroup a up:Taxon . BIND(?taxonGroup AS ?taxon) }\n    BIND(IRI(CONCAT(\"http://purl.bioontology.org/ontology/NCBITAXON/\", STRAFTER(STR(?taxon), \"taxonomy/\"))) AS ?taxon2)\n  }\n  ?aop a aopo:AdverseOutcomePathway ;\n       dc:title ?aopTitle ;\n       ncbitaxon:131567 ?taxon2 .\n  ?taxon2 a ncbitaxon:131567 ;\n          dc:title ?species .\n}\nGROUP BY ?aop ?aopTitle\nORDER BY ?aopTitle",
+ "params": [
+  {
+   "name": "taxon_id",
+   "variable": "taxonGroup",
+   "label": "NCBI Taxon ID (40674 = Mammalia)",
+   "description": null,
+   "order": 1,
+   "kind": "iri",
+   "valueTemplate": "http://purl.uniprot.org/taxonomy/{value}",
+   "default": "40674",
+   "optional": false,
+   "autocomplete": null,
+   "options": null
+  }
+ ],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "H. Federated/aops-for-taxon.ttl",
+ "aliases": [
+  "H. Federated/aops-for-taxon.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

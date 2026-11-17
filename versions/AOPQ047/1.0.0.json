@@ -1,0 +1,58 @@
+{
+ "id": "AOPQ047",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ047",
+ "label": "Weight of evidence for a KER",
+ "description": "Returns the weight-of-evidence text of one Key Event Relationship: biological plausibility (nci:C80263), empirical support (edam:data_2042), uncertainties and inconsistencies (nci:C71478) and quantitative understanding (edam:operation_3799), with its upstream and downstream Key Events. The predicates come from NCIt and EDAM, so their names say little; their rdfs:label in this endpoint names the AOP-Wiki field. Only about 700 KERs have this text, so each field is OPTIONAL.",
+ "version": "1.0.0",
+ "created": "2026-11-17",
+ "modified": "2026-11-17",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KERs"
+ ],
+ "keywords": [
+  "biological plausibility",
+  "empirical support",
+  "quantitative understanding",
+  "uncertainty",
+  "weight of evidence"
+ ],
+ "level": "intermediate",
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT ?upstreamTitle ?downstreamTitle ?biologicalPlausibility ?empiricalSupport ?uncertainties ?quantitativeUnderstanding\nWHERE {\n  VALUES ?ker { <https://identifiers.org/aop.relationships/1035> }\n  ?ker aopo:has_upstream_key_event/dc:title ?upstreamTitle ;\n       aopo:has_downstream_key_event/dc:title ?downstreamTitle .\n  OPTIONAL { ?ker nci:C80263 ?biologicalPlausibility }\n  OPTIONAL { ?ker edam:data_2042 ?empiricalSupport }\n  OPTIONAL { ?ker nci:C71478 ?uncertainties }\n  OPTIONAL { ?ker edam:operation_3799 ?quantitativeUnderstanding }\n}",
+ "params": [
+  {
+   "name": "ker_id",
+   "variable": "ker",
+   "label": "KER",
+   "description": null,
+   "order": 1,
+   "kind": "iri",
+   "valueTemplate": "https://identifiers.org/aop.relationships/{value}",
+   "default": "1035",
+   "optional": false,
+   "autocomplete": null,
+   "options": null
+  }
+ ],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "D. KERs/ker-weight-of-evidence.ttl",
+ "aliases": [],
+ "commit": "66c5fec9c9f7c248dd9a276e9762a32b5174872a"
+}

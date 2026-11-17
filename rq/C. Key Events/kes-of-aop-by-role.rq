@@ -1,0 +1,20 @@
+# title: Key Events of an AOP with their role
+# category: AOPs
+# description: Lists every Key Event of an AOP once, with its role in that AOP: MIE (molecular initiating event), AO (adverse outcome) or KE. aopo:has_key_event already includes the MIEs and AOs, so counting aopo:has_key_event, aopo:has_molecular_initiating_event and aopo:has_adverse_outcome together counts them twice. The role belongs to the AOP, not the Key Event: the same Key Event can be an MIE in one AOP and an intermediate KE in another.
+# param: aop_id|autocomplete:aop|12|AOP
+#
+# AOPQ046 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ046
+# Generated from C. Key Events/kes-of-aop-by-role.ttl in marvinm2/AOP-Wiki-Queries at a5ff42ecefa8; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+SELECT ?ke ?title ?role
+WHERE {
+  VALUES ?aop { <https://identifiers.org/aop/{{aop_id}}> }
+  ?aop aopo:has_key_event ?ke .
+  ?ke dc:title ?title .
+  BIND(IF(EXISTS { ?aop aopo:has_molecular_initiating_event ?ke }, "MIE",
+       IF(EXISTS { ?aop aopo:has_adverse_outcome ?ke }, "AO", "KE")) AS ?role)
+}
+ORDER BY ?role ?title

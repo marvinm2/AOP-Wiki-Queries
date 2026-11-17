@@ -1,0 +1,44 @@
+{
+ "id": "AOPQ025",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ025",
+ "label": "List Key Events with NCBI gene IDs",
+ "description": "Returns Key Events and their linked NCBI gene identifiers through gene/protein annotations.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+ ],
+ "keywords": [
+  "key event"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/kes-and-ncbi.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n\nSELECT DISTINCT ?keid ?ketitle ?id ?ncbi\nWHERE {\n  ?ke a aopo:KeyEvent ;\n    edam:data_1025 ?object ;\n    dc:title ?ketitle ;\n    rdfs:label ?keid .\n  ?object skos:exactMatch ?id .\n  ?id a edam:data_1027 ;\n    edam:data_1027 ?ncbi .\n}",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "C. Key Events/kes-and-ncbi.ttl",
+ "aliases": [
+  "C. Key Events/kes-and-ncbi.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

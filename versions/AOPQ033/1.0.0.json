@@ -1,0 +1,58 @@
+{
+ "id": "AOPQ033",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ033",
+ "label": "Get matching identifiers for chemicals",
+ "description": "Returns all chemicals with their CAS numbers and cross-referenced database identifiers.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Chemicals"
+ ],
+ "keywords": [
+  "chemical"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/F.%20Chemicals/get-matching-ids-for-chems.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n\nSELECT ?CASID ?ChemicalName ?MatchingIDs\nWHERE {\n  # Optional chemical: left blank, all chemicals are returned. A picked chemical gives its\n  # CAS number, which is matched exactly; any other text is a case-insensitive name substring.\n  VALUES ?chem_name { UNDEF }\n  ?CAS a cheminf:000000 ;\n    dc:title ?ChemicalName ;\n    cheminf:000446 ?CASID ;\n    skos:exactMatch ?MatchingIDs .\n  FILTER(!BOUND(?chem_name) ||\n    IF(regex(?chem_name, \"^[0-9]+-[0-9]+-[0-9]$\"),\n       STR(?CASID) = ?chem_name,\n       regex(?ChemicalName, ?chem_name, \"i\")))\n}",
+ "params": [
+  {
+   "name": "chem_name",
+   "variable": "chem_name",
+   "label": "Chemical: pick one, or type part of a name (blank = all)",
+   "description": null,
+   "order": 1,
+   "kind": "literal",
+   "valueTemplate": null,
+   "default": "",
+   "optional": true,
+   "autocomplete": "chemical",
+   "options": null
+  }
+ ],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "F. Chemicals/get-matching-ids-for-chems.ttl",
+ "aliases": [
+  "F. Chemicals/get-matching-ids-for-chems.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

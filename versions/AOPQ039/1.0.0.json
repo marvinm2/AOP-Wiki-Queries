@@ -1,0 +1,44 @@
+{
+ "id": "AOPQ039",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ039",
+ "label": "Export AOP to AO mappings",
+ "description": "Returns all Adverse Outcome Pathways and their linked Adverse Outcomes, ordered by AOP.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport"
+ ],
+ "keywords": [
+  "export"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/aop-to-ao.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT DISTINCT ?aop ?aopLabel ?ao ?aoLabel\nWHERE {\n  ?aop a aopo:AdverseOutcomePathway ;\n    aopo:has_adverse_outcome ?ao ;\n    dc:title ?aopLabel .\n  ?ao dc:title ?aoLabel .\n}\nORDER BY ?aop",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "G. Data Export/aop-to-ao.ttl",
+ "aliases": [
+  "G. Data Export/aop-to-ao.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

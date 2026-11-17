@@ -1,0 +1,72 @@
+{
+ "id": "AOPQ048",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ048",
+ "label": "AOPs by OECD status",
+ "description": "Lists the AOPs with a given status, such as the AOPs endorsed by the OECD WPHA/WNT. The status is in nci:C25688, which holds both the OECD status and the SAAOP status of an AOP, so one AOP can have two values. Most AOPs have no status at all.",
+ "version": "1.0.0",
+ "created": "2026-11-17",
+ "modified": "2026-11-17",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs"
+ ],
+ "keywords": [
+  "endorsed",
+  "OECD",
+  "SAAOP",
+  "status",
+  "WNT",
+  "WPHA"
+ ],
+ "level": "beginner",
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT ?aop ?title (GROUP_CONCAT(DISTINCT ?otherStatus; separator=\" | \") AS ?allStatuses)\nWHERE {\n  VALUES ?status { \"WPHA/WNT Endorsed\" }\n  ?aop a aopo:AdverseOutcomePathway ;\n       dc:title ?title ;\n       nci:C25688 ?status ;\n       nci:C25688 ?otherStatus .\n}\nGROUP BY ?aop ?title\nORDER BY ?aop",
+ "params": [
+  {
+   "name": "status",
+   "variable": "status",
+   "label": "Status",
+   "description": null,
+   "order": 1,
+   "kind": "literal",
+   "valueTemplate": null,
+   "default": "WPHA/WNT Endorsed",
+   "optional": false,
+   "autocomplete": null,
+   "options": [
+    {
+     "value": "WPHA/WNT Endorsed",
+     "label": "WPHA/WNT Endorsed"
+    },
+    {
+     "value": "Under Review",
+     "label": "Under Review"
+    },
+    {
+     "value": "Under Development",
+     "label": "Under Development"
+    }
+   ]
+  }
+ ],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "B. AOPs/aops-by-status.ttl",
+ "aliases": [],
+ "commit": "66c5fec9c9f7c248dd9a276e9762a32b5174872a"
+}

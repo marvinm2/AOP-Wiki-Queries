@@ -1,0 +1,22 @@
+# title: AOPs applicable to an NCBI taxon
+# category: AOPs
+# description: Lists the AOPs whose taxonomic applicability (ncbitaxon:131567) is a given NCBI Taxonomy id, with the names AOP-Wiki uses for that taxon. Match the taxon IRI directly: since November 2026 the common-species terms (WCS_9606 and similar) are written as NCBITaxon IRIs too. Applicability given as free text (user-created terms such as mammals) is a plain string and is not matched; see the free-text example for those. The graph has no taxonomic hierarchy, so a query for Mammalia does not return AOPs for human or rat.
+# param: taxon|string|9606|NCBI Taxonomy id
+#
+# AOPQ044 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ044
+# Generated from B. AOPs/aops-for-ncbi-taxon.ttl in marvinm2/AOP-Wiki-Queries at a5ff42ecefa8; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>
+
+SELECT ?aop ?title (GROUP_CONCAT(DISTINCT ?taxonName; separator=" | ") AS ?taxonNames)
+WHERE {
+  VALUES ?taxon { <http://purl.bioontology.org/ontology/NCBITAXON/{{taxon}}> }
+  ?aop a aopo:AdverseOutcomePathway ;
+       dc:title ?title ;
+       ncbitaxon:131567 ?taxon .
+  OPTIONAL { ?taxon dc:title ?taxonName }
+}
+GROUP BY ?aop ?title
+ORDER BY ?aop

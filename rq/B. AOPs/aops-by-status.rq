@@ -1,0 +1,22 @@
+# title: AOPs by OECD status
+# category: AOPs
+# description: Lists the AOPs with a given status, such as the AOPs endorsed by the OECD WPHA/WNT. The status is in nci:C25688, which holds both the OECD status and the SAAOP status of an AOP, so one AOP can have two values. Most AOPs have no status at all.
+# param: status|enum:WPHA/WNT Endorsed=WPHA/WNT Endorsed,Under Review=Under Review,Under Development=Under Development|WPHA/WNT Endorsed|Status
+#
+# AOPQ048 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ048
+# Generated from B. AOPs/aops-by-status.ttl in marvinm2/AOP-Wiki-Queries at a5ff42ecefa8; edit the .ttl file, not this one.
+
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+SELECT ?aop ?title (GROUP_CONCAT(DISTINCT ?otherStatus; separator=" | ") AS ?allStatuses)
+WHERE {
+  VALUES ?status { "{{status}}" }
+  ?aop a aopo:AdverseOutcomePathway ;
+       dc:title ?title ;
+       nci:C25688 ?status ;
+       nci:C25688 ?otherStatus .
+}
+GROUP BY ?aop ?title
+ORDER BY ?aop

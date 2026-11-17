@@ -1,0 +1,21 @@
+# title: What the predicates on AOPs, Key Events and KERs mean
+# category: Metadata
+# description: Lists every predicate used on AOPs, Key Events or Key Event Relationships with its rdfs:label, rdfs:comment and number of uses. Many predicates are reused ontology terms whose own names are vague (nci:C25664 is Scale in NCIt, but here holds the level of biological organisation); the labels and comments in this endpoint say what AOP-Wiki stores under each. A good first query before writing others.
+# param: type|enum:AdverseOutcomePathway=AOP,KeyEvent=Key Event,KeyEventRelationship=Key Event Relationship|AdverseOutcomePathway|Entity type
+#
+# AOPQ049 version 1.0.0, https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ049
+# Generated from A. Metadata/predicate-meanings.ttl in marvinm2/AOP-Wiki-Queries at a5ff42ecefa8; edit the .ttl file, not this one.
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?predicate ?label ?comment (COUNT(*) AS ?uses)
+WHERE {
+  VALUES ?type { "{{type}}" }
+  BIND(IRI(CONCAT("http://aopkb.org/aop_ontology#", ?type)) AS ?class)
+  ?subject a ?class ;
+           ?predicate ?object .
+  OPTIONAL { ?predicate rdfs:label ?label }
+  OPTIONAL { ?predicate rdfs:comment ?comment }
+}
+GROUP BY ?predicate ?label ?comment
+ORDER BY DESC(?uses)

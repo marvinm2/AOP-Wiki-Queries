@@ -1,0 +1,44 @@
+{
+ "id": "AOPQ037",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ037",
+ "label": "Export all Key Event components",
+ "description": "Returns all Key Events with their biological event components including processes, objects, and actions.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport"
+ ],
+ "keywords": [
+  "export"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-ke-components.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\n\nSELECT DISTINCT ?ke ?keTitle ?bioEvent\n  ?process ?processName ?object ?objectName ?action\nWHERE {\n  ?ke a aopo:KeyEvent ;\n    dc:title ?keTitle .\n  OPTIONAL {\n    ?ke aopo:hasBiologicalEvent ?bioEvent .\n    ?bioEvent aopo:hasProcess ?process .\n    ?process dc:title ?processName .\n  }\n  OPTIONAL {\n    ?ke aopo:hasBiologicalEvent ?bioEvent .\n    ?bioEvent aopo:hasObject ?object .\n    ?object dc:title ?objectName .\n  }\n  OPTIONAL {\n    ?ke aopo:hasBiologicalEvent ?bioEvent .\n    ?bioEvent aopo:hasAction ?action .\n  }\n}\nORDER BY ?ke",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "G. Data Export/all-ke-components.ttl",
+ "aliases": [
+  "G. Data Export/all-ke-components.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

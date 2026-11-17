@@ -1,0 +1,44 @@
+{
+ "id": "AOPQ038",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ038",
+ "label": "Export all Key Events with full details",
+ "description": "Returns all Key Events with their biological level, AOP membership, and descriptions.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport"
+ ],
+ "keywords": [
+  "export"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-ke-full.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT DISTINCT ?ke ?keTitle ?bioLevel\n  (GROUP_CONCAT(DISTINCT ?aop; separator=\", \") AS ?inAOPs)\n  ?description\nWHERE {\n  ?ke a aopo:KeyEvent ;\n    dc:title ?keTitle .\n  OPTIONAL { ?ke nci:C25664 ?bioLevel . }\n  OPTIONAL {\n    ?aop a aopo:AdverseOutcomePathway ;\n      aopo:has_key_event ?ke ;\n      dc:title ?aopTitle .\n  }\n  OPTIONAL {\n    ?ke dc:description ?description .\n  }\n}\nGROUP BY ?ke ?keTitle ?bioLevel ?description",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "G. Data Export/all-ke-full.ttl",
+ "aliases": [
+  "G. Data Export/all-ke-full.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

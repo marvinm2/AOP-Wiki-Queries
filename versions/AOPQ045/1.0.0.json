@@ -1,0 +1,45 @@
+{
+ "id": "AOPQ045",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ045",
+ "label": "Most recently modified AOPs",
+ "description": "Lists the 25 AOPs modified most recently in AOP-Wiki, with their creation and modification timestamps. dcterms:created and dcterms:modified are xsd:dateTime values, so ORDER BY, MAX and comparisons such as FILTER(?modified >= \"2026-01-01T00:00:00\"^^xsd:dateTime) work on them directly.",
+ "version": "1.0.0",
+ "created": "2026-11-17",
+ "modified": "2026-11-17",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs",
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Metadata"
+ ],
+ "keywords": [
+  "created",
+  "date",
+  "dateTime",
+  "modified",
+  "recent"
+ ],
+ "level": "beginner",
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nSELECT ?aop ?title ?created ?modified\nWHERE {\n  ?aop a aopo:AdverseOutcomePathway ;\n       dc:title ?title ;\n       dcterms:created ?created ;\n       dcterms:modified ?modified .\n}\nORDER BY DESC(?modified)\nLIMIT 25",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "B. AOPs/recently-modified-aops.ttl",
+ "aliases": [],
+ "commit": "66c5fec9c9f7c248dd9a276e9762a32b5174872a"
+}

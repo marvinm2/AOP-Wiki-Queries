@@ -1,0 +1,44 @@
+{
+ "id": "AOPQ017",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ017",
+ "label": "Gene detection method summary (regex vs BERN2 NER)",
+ "description": "Counts gene-Key Event associations by detection method. edam:data_1025 holds the union of all detected genes; :geneDetectedByRegex and :geneDetectedByNER record provenance. Shows total NER associations, how many were also found by the regex mapper, and how many were found only by NER.",
+ "version": "1.0.0",
+ "created": "2026-05-18",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/KeyEvents"
+ ],
+ "keywords": [
+  "key event"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/C.%20Key%20Events/gene-detection-method-summary.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX p: <https://aopwiki.rdf.bigcat-bioinformatics.org/>\n\nSELECT\n  (COUNT(*) AS ?ner_total)\n  (SUM(IF(EXISTS { ?ke p:geneDetectedByRegex ?gene }, 1, 0)) AS ?ner_and_regex)\n  (SUM(IF(EXISTS { ?ke p:geneDetectedByRegex ?gene }, 0, 1)) AS ?ner_only)\nWHERE {\n  ?ke p:geneDetectedByNER ?gene .\n}",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "C. Key Events/gene-detection-method-summary.ttl",
+ "aliases": [
+  "C. Key Events/gene-detection-method-summary.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

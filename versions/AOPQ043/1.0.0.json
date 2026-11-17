@@ -1,0 +1,46 @@
+{
+ "id": "AOPQ043",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ043",
+ "label": "Find ToxCast assays for Key Events",
+ "description": "Returns Key Events with their annotated proteins and linked ToxCast assay information from the AOP-DB endpoint.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/Federated"
+ ],
+ "keywords": [
+  "federated"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [
+  "https://aopdb.rdf.bigcat-bioinformatics.org/sparql"
+ ],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/H.%20Federated/toxcast-assays-for-kes.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX edam: <http://edamontology.org/>\nPREFIX mmo: <http://purl.obolibrary.org/obo/MMO_>\nPREFIX pato: <http://purl.obolibrary.org/obo/PATO_>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n\nSELECT DISTINCT ?keid ?ketitle ?objectname ?prot ?assaytitle ?assay\nWHERE {\n  # Fetch the protein-assay links from AOP-DB once (a few hundred), then join locally.\n  # With the SERVICE call last, Virtuoso sends one request per protein and times out.\n  SERVICE <https://aopdb.rdf.bigcat-bioinformatics.org/sparql> {\n    ?prot mmo:0000441 ?assay .\n    ?assay dc:title ?assaytitle .\n  }\n  ?aop a aopo:AdverseOutcomePathway ;\n    rdfs:label ?aop_id ;\n    aopo:has_key_event ?ke .\n  ?ke pato:0001241 ?object ;\n    dc:title ?ketitle ;\n    rdfs:label ?keid .\n  ?object dc:title ?objectname ;\n    skos:exactMatch ?prot .\n  ?prot a edam:data_1027 .\n}",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "H. Federated/toxcast-assays-for-kes.ttl",
+ "aliases": [
+  "H. Federated/toxcast-assays-for-kes.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

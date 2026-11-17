@@ -1,0 +1,44 @@
+{
+ "id": "AOPQ034",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ034",
+ "label": "Export all AOPs with full details",
+ "description": "Returns all AOPs with their status, MIEs, Adverse Outcomes, stressors, and number of Key Events.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/DataExport"
+ ],
+ "keywords": [
+  "export"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/G.%20Data%20Export/all-aops-full.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT DISTINCT ?aop ?aopTitle ?status\n  (GROUP_CONCAT(DISTINCT ?mieTitle; separator=\", \") AS ?MIEs)\n  (GROUP_CONCAT(DISTINCT ?aoTitle; separator=\", \") AS ?AOs)\n  (GROUP_CONCAT(DISTINCT ?stressorTitle; separator=\", \") AS ?Stressors)\n  (COUNT(DISTINCT ?ke) AS ?numKEs)\nWHERE {\n  ?aop a aopo:AdverseOutcomePathway ;\n    dc:title ?aopTitle .\n  OPTIONAL { ?aop nci:C25688 ?status . }\n  OPTIONAL {\n    ?aop aopo:has_molecular_initiating_event ?mie .\n    ?mie dc:title ?mieTitle .\n  }\n  OPTIONAL {\n    ?aop aopo:has_adverse_outcome ?ao .\n    ?ao dc:title ?aoTitle .\n  }\n  OPTIONAL {\n    ?aop nci:C54571 ?stressor .\n    ?stressor dc:title ?stressorTitle .\n  }\n  OPTIONAL {\n    ?aop aopo:has_key_event ?ke .\n  }\n}\nGROUP BY ?aop ?aopTitle ?status\nORDER BY ?aopTitle",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "G. Data Export/all-aops-full.ttl",
+ "aliases": [
+  "G. Data Export/all-aops-full.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}

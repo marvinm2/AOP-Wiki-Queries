@@ -1,0 +1,44 @@
+{
+ "id": "AOPQ016",
+ "iri": "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/AOPQ016",
+ "label": "List stressors and their MIEs",
+ "description": "Returns all stressors and the Molecular Initiating Events they are linked to through AOPs.",
+ "version": "1.0.0",
+ "created": "2026-03-11",
+ "modified": "2026-11-12",
+ "creators": [
+  {
+   "iri": "https://orcid.org/0000-0003-2230-0840",
+   "name": "Marvin Martens"
+  }
+ ],
+ "contributors": [],
+ "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+ "categories": [
+  "https://aopwiki.rdf.bigcat-bioinformatics.org/.well-known/sparql-examples/category/AOPs"
+ ],
+ "keywords": [
+  "AOP"
+ ],
+ "level": null,
+ "target": "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql",
+ "federatesWith": [],
+ "references": [],
+ "derivedFrom": [
+  "https://github.com/marvinm2/AOP-Wiki-Queries/blob/8812ee8cc5216a5a07bddcdeddbf400339a76d37/B.%20AOPs/stressors-for-ao.rq"
+ ],
+ "testedAgainst": null,
+ "deprecated": false,
+ "replacedBy": null,
+ "queryType": "select",
+ "query": "PREFIX aopo: <http://aopkb.org/aop_ontology#>\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\nPREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nSELECT DISTINCT ?stressor ?stressorLabel ?mie ?mieLabel\nWHERE {\n  ?stressor a nci:C54571 ;\n    dc:title ?stressorLabel .\n  ?aop a aopo:AdverseOutcomePathway ;\n    nci:C54571 ?stressor ;\n    aopo:has_molecular_initiating_event ?mie .\n  ?mie a aopo:KeyEvent ;\n    dc:title ?mieLabel .\n}\nORDER BY ?stressorLabel",
+ "params": [],
+ "expect": {
+  "minResults": 1
+ },
+ "path": "B. AOPs/stressors-for-ao.ttl",
+ "aliases": [
+  "B. AOPs/stressors-for-ao.rq"
+ ],
+ "commit": "23d5204c3c7aab0398cba4a34475ba4849675bde"
+}
